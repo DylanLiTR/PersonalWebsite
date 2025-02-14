@@ -1,32 +1,139 @@
-#game-container {
-  position: relative;
+/* Spotify Player Container */
+.spotify-player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  height: 100vh;
-  overflow: hidden;
-}
-#spotify-player {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  background: black;
+  background-color: rgba(0, 0, 0, 0.75);
   color: white;
-  padding: 10px;
-  border-radius: 5px;
+  padding: 16px;
+  box-sizing: border-box;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pixel-font {
+  font-family: 'Press Start 2P';
+}
+
+/* Player Container (Track Info + Controls) */
+.player-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Track Info (Album Art + Track Details) */
+.track-info {
   display: flex;
   align-items: center;
+  gap: 16px;
+}
+
+.album-art {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+}
+
+.track-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.track-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.artist-names {
+  color: #a0a0a0;
+  font-size: 14px;
+}
+
+/* Player Controls */
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.play-status {
+  font-size: 14px;
+}
+
+.play-status.playing {
+  color: #1db954; /* Spotify green */
+}
+
+.play-status.paused {
+  color: #a0a0a0;
+}
+
+/* Playlist Buttons (to the right of the player) */
+.playlist-container {
+  border-left: solid #bbbbbb;
+  border-width: 2px;
+  padding-left: 12px;
+}
+
+.playlist-title {
+  padding-bottom: 4px;
+  font-size: 14px;
+}
+
+.playlist-buttons {
+  display: flex;
   gap: 10px;
 }
-#spotify-player img {
-  width: 50px;
-  height: 50px;
-  border-radius: 4px;
-}
-#spotify-player button {
-  background: #1DB954; /* Spotify green */
+
+.playlist-button {
+  background-color: #7171712c;
   color: white;
   border: none;
-  padding: 5px 10px;
+  padding: 4px 8px;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 20px;
+}
+
+.playlist-button:hover {
+  background-color: #1ed75f43;
+}
+
+/* Draggable Overlay */
+.overlay {
+  position: absolute;
+  z-index: 100;
+  background-color: #282828;
+  border-radius: 12px;
+  padding: 6px;
+  padding-bottom: 2px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.close-button {
+  font-family: courier;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: black; /* Black background */
+  border: none;
+  color: white;
+  font-size: 20px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 6px 6px 6px 6px;
+}
+
+.close-button:hover {
+  color: #1db954;
 }
 

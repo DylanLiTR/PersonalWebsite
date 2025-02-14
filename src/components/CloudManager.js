@@ -1,15 +1,27 @@
-import { getRandomCloud } from "./utils";
-
 export const FAR_CLOUD_SPEED = 0.05;
 export const CLOSE_CLOUD_SPEED = 0.2;
 
 const CLOUD_SPRITES = [
-  { key: "big_cloud", weight: 0.5 },
-  { key: "otter_cloud", weight: 0.09 },
-  { key: "cinnamoroll_cloud", weight: 0.01 },
-  { key: "small_cloud_1", weight: 0.2 },
-  { key: "small_cloud_2", weight: 0.2 },
+  { key: "cloud_big", weight: 0.5 },
+  { key: "cloud_otter", weight: 0.09 },
+  { key: "cloud_Cinnamoroll", weight: 0.01 },
+  { key: "cloud_small_1", weight: 0.2 },
+  { key: "cloud_small_2", weight: 0.2 },
 ];
+
+function getRandomCloud(cloudSprites) {
+  const totalWeight = cloudSprites.reduce((sum, cloud) => sum + cloud.weight, 0);
+  let random = Math.random() * totalWeight;
+
+  for (const cloud of cloudSprites) {
+    if (random < cloud.weight) {
+      return cloud.key;
+    }
+    random -= cloud.weight;
+  }
+
+  return cloudSprites[0].key;
+}
 
 export default class CloudManager {
   constructor(scene) {

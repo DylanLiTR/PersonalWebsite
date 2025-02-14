@@ -1,178 +1,157 @@
-import { useState, useEffect } from "react";
-import { loginWithSpotify, handleCallback } from "./SpotifyAuth";
+import React, { useState, useEffect, useRef } from 'react';
+import '../fonts/fonts.css';
+import '../App.css';
 
-export default function SpotifyPlayer() {
-  const [accessToken, setAccessToken] = useState(() => {
-    const token = localStorage.getItem('spotify_access_token');
-    console.log('Initial access token from localStorage:', token);
-    return token;
-  });
-  const [player, setPlayer] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+const SpotifyPlayer = () => {
+  const [currentTrack, setCurrentTrack] = useState(null);
   const [error, setError] = useState(null);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [selectedPlaylist, setSelectedPlaylist] = useState(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const overlayRef = useRef(null);
 
-  useEffect(() => {
-    // Handle the callback from Spotify
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get("code");
-    console.log('URL code parameter:', code);
-    
-    if (code) {
-      handleCallback(code).then(token => {
-        console.log('Received token after callback:', token);
-        if (token) {
-          setAccessToken(token);
-          // Clear the URL parameters
-          window.history.pushState({}, null, '/');
-        }
-      });
-    }
-  }, []);
+  const playlists = [
+    { id: '76dYmvEpokqCq7HqleQd4x', name: '🌊' },
+    { id: '4P9nNPCGiCHXRq1Zz5oCB2', name: '♾️' },
+    { id: '7hYQbCLuMQK1TNtWRG4Y9g', name: '⛰️' },
+  ];
 
-  const checkPremiumStatus = async (token) => {
-    try {
-      const response = await fetch('https://api.spotify.com/v1/me', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      const data = await response.json();
-      console.log('User profile:', data);
-      return data.product === 'premium';
-    } catch (error) {
-      console.error('Error checking premium status:', error);
-      return false;
-    }
+  const handlePlaylistClick = (playlistId) => {
+    setSelectedPlaylist(playlistId);
+    setShowOverlay(true);
   };
-  
-  // In your SpotifyPlayer component, update the player initialization useEffect:
-  useEffect(() => {
-    if (!accessToken) return;
-  
-    // Check premium status before initializing player
-    checkPremiumStatus(accessToken).then(isPremium => {
-      if (!isPremium) {
-        setError('Spotify Premium is required to use the Web Playback SDK');
+
+  const closeOverlay = () => {
+    setShowOverlay(false);
+    setSelectedPlaylist(null);
+  };
+
+  // Dragging logic
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    const overlay = overlayRef.current;
+    const offsetX = e.clientX - overlay.getBoundingClientRect().left;
+    const offsetY = e.clientY - overlay.getBoundingClientRect().top;
+
+    const handleMouseMove = (e) => {
+      setPosition({
+        x: Math.max(0, Math.min(window.innerWidth - overlay.getBoundingClientRect().width, e.clientX - offsetX)),
+        y: Math.max(0, Math.min(window.innerHeight - overlay.getBoundingClientRect().height, e.clientY - offsetY)),
+      });
+    };
+
+    const handleMouseUp = () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+  };
+
+  // Fetch currently playing track
+  const getCurrentTrack = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/currently-playing');
+      if (response.status === 204) {
+        setCurrentTrack(null);
         return;
       }
-  
-      const script = document.createElement("script");
-      script.src = "https://sdk.scdn.co/spotify-player.js";
-      script.async = true;
-  
-      document.body.appendChild(script);
-  
-      window.onSpotifyWebPlaybackSDKReady = () => {
-        const spotifyPlayer = new window.Spotify.Player({
-          name: "Pixel Art Player",
-          getOAuthToken: cb => {
-            console.log('Token requested by player');
-            cb(accessToken);
-          },
-          volume: 0.5,
-        });
-
-        spotifyPlayer.addListener('ready', ({ device_id }) => {
-          console.log('Player ready with Device ID:', device_id);
-        });
-
-        spotifyPlayer.addListener('not_ready', ({ device_id }) => {
-          console.log('Device ID is not ready:', device_id);
-        });
-
-        spotifyPlayer.addListener('initialization_error', ({ message }) => {
-          console.error('Player initialization error:', message);
-          setError(`Initialization error: ${message}`);
-        });
-
-        spotifyPlayer.addListener('authentication_error', ({ message }) => {
-          console.error('Player authentication error:', message);
-          setError(`Authentication error: ${message}`);
-        });
-
-        spotifyPlayer.addListener('account_error', ({ message }) => {
-          console.error('Player account error:', message);
-          setError(`Account error: ${message}`);
-        });
-
-        spotifyPlayer.addListener('player_state_changed', state => {
-          console.log('Player state changed:', state);
-          setIsPlaying(!state?.paused);
-        });
-
-        console.log('Attempting to connect to Spotify...');
-        spotifyPlayer.connect().then(success => {
-          if (success) {
-            console.log('Successfully connected to Spotify!');
-            setPlayer(spotifyPlayer);
-          } else {
-            console.error('Failed to connect to Spotify');
-            setError('Failed to connect to Spotify');
-          }
-        });
-      }
-    });
-
-    return () => {
-      if (player) {
-        console.log('Disconnecting player...');
-        player.disconnect();
-      }
-      document.body.removeChild(script);
-    };
-  }, [accessToken]);
-
-  const handlePlayPause = async () => {
-    console.log('Play/Pause clicked');
-    if (!player) {
-      console.error('Player not initialized');
-      return;
-    }
-    try {
-      await player.togglePlay();
-    } catch (err) {
-      console.error('Error toggling play:', err);
+      const data = await response.json();
+      setCurrentTrack(data);
+    } catch (error) {
+      console.error('Error:', error);
+      setError('Failed to fetch current track');
     }
   };
 
-  const handlePrevious = async () => {
-    console.log('Previous clicked');
-    if (!player) {
-      console.error('Player not initialized');
-      return;
-    }
-    try {
-      await player.previousTrack();
-    } catch (err) {
-      console.error('Error going to previous track:', err);
-    }
-  };
+  // Poll for currently playing track
+  useEffect(() => {
+    getCurrentTrack();
+    const interval = setInterval(getCurrentTrack, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
-  const handleNext = async () => {
-    console.log('Next clicked');
-    if (!player) {
-      console.error('Player not initialized');
-      return;
-    }
-    try {
-      await player.nextTrack();
-    } catch (err) {
-      console.error('Error going to next track:', err);
-    }
-  };
-
-  if (!accessToken) {
-    return <button onClick={loginWithSpotify}>Login to Spotify</button>;
+  if (error) {
+    console.log(error);
+    return;
   }
 
   return (
-    <div className="spotify-player">
-      {error && <div style={{color: 'red'}}>{error}</div>}
-      <button onClick={handlePrevious}>⏮</button>
-      <button onClick={handlePlayPause}>
-        {isPlaying ? '⏸' : '▶'}
-      </button>
-      <button onClick={handleNext}>⏭</button>
+    <div className="spotify-player pixel-font">
+      <div className="player-container">
+        <div className="track-info">
+          {currentTrack?.item?.album?.images?.[0] && (
+            <img 
+              src={currentTrack.item.album.images[0].url} 
+              alt="Album Art" 
+              className="album-art"
+            />
+          )}
+          <div className="track-details">
+            <div className="player-controls">
+              {currentTrack?.is_playing ? (
+                <span className="play-status playing">▶ Léi is playing</span>
+              ) : (
+                <span className="play-status paused">❚❚ Léi has paused</span>
+              )}
+            </div>
+            <div className="track-name">
+              {currentTrack?.item?.name || 'No track playing'}
+            </div>
+            <div className="artist-names">
+              {currentTrack?.item?.artists?.map(artist => artist.name).join(', ')}
+            </div>
+          </div>
+          <div className="playlist-container">
+            {/* Playlist Buttons (to the right of the player) */}
+            <div className="playlist-title">Léi's Playlists</div>
+            <div className="playlist-buttons">
+              {playlists.map((playlist) => (
+                <button
+                  key={playlist.id}
+                  onClick={() => handlePlaylistClick(playlist.id)}
+                  className="playlist-button pixel-button"
+                >
+                  {playlist.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Draggable Overlay with Spotify Embed */}
+      {showOverlay && (
+        <div
+          className="overlay"
+          ref={overlayRef}
+          style={{
+            position: 'fixed',
+            left: `${position.x}px`,
+            top: `${position.y}px`,
+            cursor: 'move',
+          }}
+          onMouseDown={handleMouseDown}
+        >
+          <button onClick={closeOverlay} className="close-button">
+            &times;
+          </button>
+          <div className="iframe-container">
+            <iframe
+              style={{ borderRadius: '12px' }}
+              src={`https://open.spotify.com/embed/playlist/${selectedPlaylist}?utm_source=generator&theme=0`}
+              width="300"
+              height="360"
+              allowFullScreen=""
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default SpotifyPlayer;

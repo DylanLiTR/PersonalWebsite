@@ -1,7 +1,8 @@
 import Phaser from "phaser";
 
-import { DEFAULT_ZOOM, MIN_ZOOM, MAX_ZOOM, SPRITE_DIR } from "../components/constants";
+import { DEFAULT_ZOOM, MIN_ZOOM, MAX_ZOOM, ROOM_SIZE } from "../components/constants";
 import CloudManager from "../components/CloudManager";
+import { trimTo } from "../components/utils"
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -9,91 +10,21 @@ export default class MainScene extends Phaser.Scene {
   }
 
   preload() {
-    this.cloudImages = {
-      // Background
-      big_cloud: "Room/Big Cloud.png",
-      otter_cloud: "Room/Otter Cloud.png",
-      cinnamoroll_cloud: "Room/Cinnamoroll Cloud.png",
-      small_cloud_1: "Room/Small Cloud 1.png",
-      small_cloud_2: "Room/Small Cloud 2.png",
-    }
+    this.load.json('assets', '/src/assets/sprites/sprites.json');
 
-    this.imageAssets = {
-      // Icons
-      aseprite: "Desk/Display/Aseprite.png",
-      chrome: "Desk/Display/Chrome.png",
-      discord: "Desk/Display/Discord.png",
-      floorp: "Desk/Display/Floorp.png",
-      leetcode: "Desk/Display/LeetCode.png",
-      notion: "Desk/Display/Notion.png",
-      spotify: "Desk/Display/Spotify.png",
-      ticktick: "Desk/Display/TickTick.png",
-    };
+    // Load images dynamically based on the JSON file
+    this.load.on('filecomplete-json-assets', () => {
+      const assets = this.cache.json.get('assets');
+      assets.images.forEach((asset) => {
+        this.load.image(asset.key, asset.path);
+      });
 
-    this.drawOnStart = {
-      // Background and room
-      room: "Room/Foundation.png",
-
-      // Furniture
-      lamp: "Lamp.png",
-      nightstand: "Nightstand.png",
-      piano: "Piano/Piano.png",
-      bench: "Piano/Bench.png",
-      wardrobe: "Wardrobe.png",
-
-      // Sports
-      tennis_bag: "Tennis.png",
-
-      // Bed
-      bed: "Bed/Foundation.png",
-      blanket: "Bed/Blanket.png",
-      right_pillow: "Bed/Pillow Right.png",
-      left_pillow: "Bed/Pillow Left.png",
-
-      // Desk
-      desk: "Desk/Desk.png",
-
-      // Display
-      monitor: "Desk/Display/Monitor.png",
-      screen: "Desk/Display/Screen.png",
-      laptop: "Desk/Laptop.png",
-      // headphones: "Desk/Headphones.png",
-      office_chair: "Desk/Chair.png",
-
-      // Duo
-      duolingo_s: "Bed/Duo/Shadow.png",
-      duolingo: "Bed/Duo/Duo.png",
-
-      // Pikachu
-      pikachu_s: "Bed/Pikachu/Shadow.png",
-      pikachu: "Bed/Pikachu/Fat Pikachu.png",
-
-      // Characters
-      dylan_s: "Me/Shadow.png",
-      dylan: "Me/Me.png",
-
-      hockey_bag: "Hockey/Bag.png",
-      hockey_sticks: "Hockey/Sticks.png",
-    };
-
-    for (let key in this.cloudImages) {
-      this.load.image(key, SPRITE_DIR + this.cloudImages[key]);
-    }
-
-    for (let key in this.imageAssets) {
-      this.load.image(key, SPRITE_DIR + this.imageAssets[key]);
-    }
-
-    for (let key in this.drawOnStart) {
-      this.load.image(key, SPRITE_DIR + this.drawOnStart[key]);
-    }
+      // Start loading the images
+      this.load.start();
+    });
   }
 
   create() {
-    const { width, height } = this.scale;
-    const halfWidth = width / 2;
-    const halfHeight = height / 2;
-
     this.zoom = DEFAULT_ZOOM;
     let cam = this.cameras.main;
     cam.setZoom(this.zoom);
@@ -156,16 +87,32 @@ export default class MainScene extends Phaser.Scene {
     // Resize objects accordingly
     this.scale.on("resize", (gameSize) => this.resizeScene(gameSize));
 
+    const assets = this.cache.json.get('assets');
+    const { width, height } = this.scale;
+    const xOffset = width / 2 - ROOM_SIZE / 2;
+    const yOffset = height / 2 - ROOM_SIZE / 2;
+
+    // Add images or sprites to the scene
     this.objects = {};
-    for (const key in this.drawOnStart) {
-      this.objects[key] = this.add.image(halfWidth, halfHeight, key).setOrigin(0.5).setDepth(1);
-    }
+    assets.images.forEach((asset) => {
+      if (!asset.draw) return;
+      if (asset.type === 'static') {
+        this.objects[asset.key] = this.add.image(xOffset + asset.boundingBox.x, yOffset + asset.boundingBox.y, asset.key).setOrigin(0).setDepth(1);
+      } else if (asset.type === 'sprite') {
+        const trimmedKey = trimTo(asset.key, '_');
+        this.objects[trimmedKey] = this.add.sprite(xOffset + asset.boundingBox.x, yOffset + asset.boundingBox.y, asset.key).setOrigin(0).setDepth(1).setInteractive();
+        this.enableHover(trimmedKey);
+      }
+    });
   }
 
   update() {
     // Update clouds
     this.cloudManager.update();
+    this.applyIntertia();
+  }
 
+  applyIntertia() {
     // Apply inertia if not dragging
     if (!this.isDragging && (this.dragVelocity.x !== 0 || this.dragVelocity.y !== 0)) {
       const camera = this.cameras.main;
@@ -204,13 +151,31 @@ export default class MainScene extends Phaser.Scene {
 
   // Handle window resizing
   resizeScene(gameSize) {
+    const assets = this.cache.json.get('assets');
     const { width, height } = gameSize;
-    const halfWidth = width / 2;
-    const halfHeight = height / 2;
+    const xOffset = width / 2 - ROOM_SIZE / 2;
+    const yOffset = height / 2 - ROOM_SIZE / 2;
 
     // Center the room to the new size
-    for (const key in this.drawOnStart) {
-      this.objects[key].setPosition(halfWidth, halfHeight);
-    }
+    assets.images.forEach((asset) => {
+      this.objects[trimTo(asset.key, '_')].setPosition(xOffset + asset.boundingBox.x, yOffset + asset.boundingBox.y);
+    });
+  }
+
+  enableHover(spriteName) {
+    this.objects[spriteName].on('pointerover', () => {
+      this.objects[spriteName].setTexture(spriteName + '_hover'); // Change to hover image
+      this.objects[spriteName].x -= 1;
+      this.objects[spriteName].y -= 1;
+      this.input.setDefaultCursor('pointer'); // Change cursor to pointer
+    });
+
+    // Revert cursor and sprite texture when hover ends
+    this.objects[spriteName].on('pointerout', () => {
+      this.objects[spriteName].setTexture(spriteName + '_sprite'); // Revert to normal image
+      this.objects[spriteName].x += 1;
+      this.objects[spriteName].y += 1;
+      this.input.setDefaultCursor('default'); // Revert cursor to default
+    });
   }
 }

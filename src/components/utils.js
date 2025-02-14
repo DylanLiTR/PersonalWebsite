@@ -1,13 +1,12 @@
-export function getRandomCloud(cloudSprites) {
-  const totalWeight = cloudSprites.reduce((sum, cloud) => sum + cloud.weight, 0);
-  let random = Math.random() * totalWeight;
+export function trimTo(str, char) {
+  // Find the index of the last char
+  const lastUnderscoreIndex = str.lastIndexOf(char);
 
-  for (const cloud of cloudSprites) {
-    if (random < cloud.weight) {
-      return cloud.key;
-    }
-    random -= cloud.weight;
+  // If char is found, trim the string up to that index
+  if (lastUnderscoreIndex !== -1) {
+      return str.substring(0, lastUnderscoreIndex);
   }
 
-  return cloudSprites[0].key;
+  // If char is not found, return the original string
+  return str;
 }

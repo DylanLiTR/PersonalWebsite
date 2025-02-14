@@ -1,0 +1,628 @@
+{
+  "images": [
+    {
+      "path": "/src/assets/sprites/room/background.png",
+      "draw": false,
+      "key": "background",
+      "type": "static",
+      "boundingBox":       {
+        "x": 0,
+        "height": 256,
+        "width": 256,
+        "y": 0
+      }
+    },
+    {
+      "path": "/src/assets/sprites/room/cloud_small_2.png",
+      "draw": false,
+      "key": "cloud_small_2",
+      "type": "static",
+      "boundingBox":       {
+        "x": -2,
+        "height": 10,
+        "width": 20,
+        "y": 0
+      }
+    },
+    {
+      "path": "/src/assets/sprites/room/cloud_small_1.png",
+      "draw": false,
+      "key": "cloud_small_1",
+      "type": "static",
+      "boundingBox":       {
+        "x": 0,
+        "height": 9,
+        "width": 17,
+        "y": 0
+      }
+    },
+    {
+      "path": "/src/assets/sprites/room/cloud_big.png",
+      "draw": false,
+      "key": "cloud_big",
+      "type": "static",
+      "boundingBox":       {
+        "x": 0,
+        "height": 18,
+        "width": 32,
+        "y": 0
+      }
+    },
+    {
+      "path": "/src/assets/sprites/room/cloud_otter.png",
+      "draw": false,
+      "key": "cloud_otter",
+      "type": "static",
+      "boundingBox":       {
+        "x": 0,
+        "height": 18,
+        "width": 40,
+        "y": 0
+      }
+    },
+    {
+      "path": "/src/assets/sprites/room/cloud_Cinnamoroll.png",
+      "draw": false,
+      "key": "cloud_Cinnamoroll",
+      "type": "static",
+      "boundingBox":       {
+        "x": 0,
+        "height": 17,
+        "width": 55,
+        "y": 0
+      }
+    },
+    {
+      "path": "/src/assets/sprites/room/room_base.png",
+      "draw": true,
+      "key": "room_base",
+      "type": "static",
+      "boundingBox":       {
+        "x": 14,
+        "height": 197,
+        "width": 228,
+        "y": 30
+      }
+    },
+    {
+      "path": "/src/assets/sprites/bed/bed_base.png",
+      "draw": true,
+      "key": "bed_base",
+      "type": "static",
+      "boundingBox":       {
+        "x": 91,
+        "height": 69,
+        "width": 88,
+        "y": 89
+      }
+    },
+    {
+      "path": "/src/assets/sprites/bed/blanket.png",
+      "draw": true,
+      "key": "blanket",
+      "type": "static",
+      "boundingBox":       {
+        "x": 92,
+        "height": 52,
+        "width": 89,
+        "y": 100
+      }
+    },
+    {
+      "path": "/src/assets/sprites/bed/right_pillow.png",
+      "draw": true,
+      "key": "right_pillow",
+      "type": "static",
+      "boundingBox":       {
+        "x": 113,
+        "height": 16,
+        "width": 22,
+        "y": 99
+      }
+    },
+    {
+      "path": "/src/assets/sprites/bed/left_pillow.png",
+      "draw": true,
+      "key": "left_pillow",
+      "type": "static",
+      "boundingBox":       {
+        "x": 99,
+        "height": 16,
+        "width": 20,
+        "y": 107
+      }
+    },
+    {
+      "path": "/src/assets/sprites/bed/duo/duo_shadow.png",
+      "draw": true,
+      "key": "duo_shadow",
+      "type": "sprite",
+      "boundingBox":       {
+        "x": 134,
+        "height": 8,
+        "width": 17,
+        "y": 107
+      }
+    },
+    {
+      "path": "/src/assets/sprites/bed/duo/duo_sprite.png",
+      "draw": true,
+      "key": "duo_sprite",
+      "type": "sprite",
+      "boundingBox":       {
+        "x": 133,
+        "height": 18,
+        "width": 18,
+        "y": 97
+      }
+    },
+    {
+      "path": "/src/assets/sprites/bed/duo/duo_right.png",
+      "draw": false,
+      "key": "duo_right",
+      "type": "static",
+      "boundingBox":       {
+        "x": 133,
+        "height": 18,
+        "width": 18,
+        "y": 97
+      }
+    },
+    {
+      "path": "/src/assets/sprites/bed/duo/duo_hover.png",
+      "draw": false,
+      "key": "duo_hover",
+      "type": "static",
+      "boundingBox":       {
+        "x": 132,
+        "height": 20,
+        "width": 20,
+        "y": 96
+      }
+    },
+    {
+      "path": "/src/assets/sprites/bed/Pikachu/pikachu_shadow.png",
+      "draw": false,
+      "key": "pikachu_shadow",
+      "type": "sprite",
+      "boundingBox":       {
+        "x": 150,
+        "height": 8,
+        "width": 17,
+        "y": 114
+      }
+    },
+    {
+      "path": "/src/assets/sprites/bed/Pikachu/Pikachu_sprite.png",
+      "draw": true,
+      "key": "Pikachu_sprite",
+      "type": "sprite",
+      "boundingBox":       {
+        "x": 151,
+        "height": 21,
+        "width": 19,
+        "y": 100
+      }
+    },
+    {
+      "path": "/src/assets/sprites/bed/Pikachu/Pikachu_hover.png",
+      "draw": false,
+      "key": "Pikachu_hover",
+      "type": "static",
+      "boundingBox":       {
+        "x": 150,
+        "height": 23,
+        "width": 21,
+        "y": 99
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/desk.png",
+      "draw": true,
+      "key": "desk",
+      "type": "static",
+      "boundingBox":       {
+        "x": 176,
+        "height": 48,
+        "width": 56,
+        "y": 125
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/display/monitor.png",
+      "draw": true,
+      "key": "monitor",
+      "type": "static",
+      "boundingBox":       {
+        "x": 181,
+        "height": 36,
+        "width": 33,
+        "y": 100
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/display/screen_sprite.png",
+      "draw": true,
+      "key": "screen_sprite",
+      "type": "sprite",
+      "boundingBox":       {
+        "x": 182,
+        "height": 32,
+        "width": 30,
+        "y": 102
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/display/screen_hover.png",
+      "draw": false,
+      "key": "screen_hover",
+      "type": "static",
+      "boundingBox":       {
+        "x": 181,
+        "height": 34,
+        "width": 32,
+        "y": 101
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/display/Spotify.png",
+      "draw": false,
+      "key": "Spotify",
+      "type": "static",
+      "boundingBox":       {
+        "x": 203,
+        "height": 14,
+        "width": 7,
+        "y": 116
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/display/LeetCode.png",
+      "draw": false,
+      "key": "LeetCode",
+      "type": "static",
+      "boundingBox":       {
+        "x": 184,
+        "height": 6,
+        "width": 5,
+        "y": 106
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/display/Notion.png",
+      "draw": false,
+      "key": "Notion",
+      "type": "static",
+      "boundingBox":       {
+        "x": 192,
+        "height": 15,
+        "width": 9,
+        "y": 110
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/display/TickTick.png",
+      "draw": false,
+      "key": "TickTick",
+      "type": "static",
+      "boundingBox":       {
+        "x": 184,
+        "height": 6,
+        "width": 6,
+        "y": 114
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/display/Chrome.png",
+      "draw": false,
+      "key": "Chrome",
+      "type": "static",
+      "boundingBox":       {
+        "x": 182,
+        "height": 3,
+        "width": 3,
+        "y": 117
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/display/Discord.png",
+      "draw": false,
+      "key": "Discord",
+      "type": "static",
+      "boundingBox":       {
+        "x": 202,
+        "height": 8,
+        "width": 9,
+        "y": 115
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/display/Aseprite.png",
+      "draw": false,
+      "key": "Aseprite",
+      "type": "static",
+      "boundingBox":       {
+        "x": 203,
+        "height": 8,
+        "width": 7,
+        "y": 114
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/display/Floorp.png",
+      "draw": false,
+      "key": "Floorp",
+      "type": "static",
+      "boundingBox":       {
+        "x": 184,
+        "height": 8,
+        "width": 6,
+        "y": 113
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/display/Meta.png",
+      "draw": false,
+      "key": "Meta",
+      "type": "static",
+      "boundingBox":       {
+        "x": 193,
+        "height": 5,
+        "width": 7,
+        "y": 86
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/display/UWaterloo.png",
+      "draw": false,
+      "key": "UWaterloo",
+      "type": "static",
+      "boundingBox":       {
+        "x": 157,
+        "height": 8,
+        "width": 7,
+        "y": 62
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/laptop_sprite.png",
+      "draw": true,
+      "key": "laptop_sprite",
+      "type": "sprite",
+      "boundingBox":       {
+        "x": 184,
+        "height": 17,
+        "width": 16,
+        "y": 123
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/laptop_hover.png",
+      "draw": false,
+      "key": "laptop_hover",
+      "type": "static",
+      "boundingBox":       {
+        "x": 183,
+        "height": 19,
+        "width": 18,
+        "y": 122
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/office_chair_sprite.png",
+      "draw": true,
+      "key": "office_chair_sprite",
+      "type": "sprite",
+      "boundingBox":       {
+        "x": 164,
+        "height": 36,
+        "width": 28,
+        "y": 132
+      }
+    },
+    {
+      "path": "/src/assets/sprites/desk/office_chair_hover.png",
+      "draw": false,
+      "key": "office_chair_hover",
+      "type": "static",
+      "boundingBox":       {
+        "x": 163,
+        "height": 38,
+        "width": 30,
+        "y": 131
+      }
+    },
+    {
+      "path": "/src/assets/sprites/nightstand.png",
+      "draw": true,
+      "key": "nightstand",
+      "type": "static",
+      "boundingBox":       {
+        "x": 83,
+        "height": 18,
+        "width": 16,
+        "y": 121
+      }
+    },
+    {
+      "path": "/src/assets/sprites/lamp.png",
+      "draw": true,
+      "key": "lamp",
+      "type": "static",
+      "boundingBox":       {
+        "x": 76,
+        "height": 40,
+        "width": 12,
+        "y": 101
+      }
+    },
+    {
+      "path": "/src/assets/sprites/piano/piano_sprite.png",
+      "draw": true,
+      "key": "piano_sprite",
+      "type": "sprite",
+      "boundingBox":       {
+        "x": 45,
+        "height": 41,
+        "width": 40,
+        "y": 117
+      }
+    },
+    {
+      "path": "/src/assets/sprites/piano/piano_hover.png",
+      "draw": false,
+      "key": "piano_hover",
+      "type": "static",
+      "boundingBox":       {
+        "x": 44,
+        "height": 43,
+        "width": 42,
+        "y": 116
+      }
+    },
+    {
+      "path": "/src/assets/sprites/piano/piano_bench.png",
+      "draw": true,
+      "key": "piano_bench",
+      "type": "static",
+      "boundingBox":       {
+        "x": 64,
+        "height": 23,
+        "width": 24,
+        "y": 139
+      }
+    },
+    {
+      "path": "/src/assets/sprites/wardrobe.png",
+      "draw": true,
+      "key": "wardrobe",
+      "type": "static",
+      "boundingBox":       {
+        "x": 18,
+        "height": 68,
+        "width": 34,
+        "y": 104
+      }
+    },
+    {
+      "path": "/src/assets/sprites/tennis/tennis_bag_sprite.png",
+      "draw": true,
+      "key": "tennis_bag_sprite",
+      "type": "sprite",
+      "boundingBox":       {
+        "x": 16,
+        "height": 17,
+        "width": 24,
+        "y": 105
+      }
+    },
+    {
+      "path": "/src/assets/sprites/tennis/tennis_bag_hover.png",
+      "draw": false,
+      "key": "tennis_bag_hover",
+      "type": "static",
+      "boundingBox":       {
+        "x": 15,
+        "height": 19,
+        "width": 26,
+        "y": 104
+      }
+    },
+    {
+      "path": "/src/assets/sprites/npc/npc_shadow.png",
+      "draw": true,
+      "key": "npc_shadow",
+      "type": "sprite",
+      "boundingBox":       {
+        "x": 101,
+        "height": 8,
+        "width": 16,
+        "y": 152
+      }
+    },
+    {
+      "path": "/src/assets/sprites/npc/npc_sprite.png",
+      "draw": true,
+      "key": "npc_sprite",
+      "type": "sprite",
+      "boundingBox":       {
+        "x": 100,
+        "height": 42,
+        "width": 19,
+        "y": 118
+      }
+    },
+    {
+      "path": "/src/assets/sprites/npc/npc_hover.png",
+      "draw": false,
+      "key": "npc_hover",
+      "type": "static",
+      "boundingBox":       {
+        "x": 99,
+        "height": 44,
+        "width": 21,
+        "y": 117
+      }
+    },
+    {
+      "path": "/src/assets/sprites/hockey/hockey_sticks.png",
+      "draw": true,
+      "key": "hockey_sticks",
+      "type": "static",
+      "boundingBox":       {
+        "x": 232,
+        "height": 34,
+        "width": 8,
+        "y": 135
+      }
+    },
+    {
+      "path": "/src/assets/sprites/hockey/hockey_bag_sprite.png",
+      "draw": true,
+      "key": "hockey_bag_sprite",
+      "type": "sprite",
+      "boundingBox":       {
+        "x": 192,
+        "height": 22,
+        "width": 28,
+        "y": 165
+      }
+    },
+    {
+      "path": "/src/assets/sprites/hockey/hockey_bag_hover.png",
+      "draw": false,
+      "key": "hockey_bag_hover",
+      "type": "static",
+      "boundingBox":       {
+        "x": 191,
+        "height": 24,
+        "width": 30,
+        "y": 164
+      }
+    },
+    {
+      "path": "/src/assets/sprites/references/bigblock.png",
+      "draw": false,
+      "key": "bigblock",
+      "type": "static",
+      "boundingBox":       {
+        "x": 0,
+        "height": 16,
+        "width": 16,
+        "y": 0
+      }
+    },
+    {
+      "path": "/src/assets/sprites/references/block.png",
+      "draw": false,
+      "key": "block",
+      "type": "static",
+      "boundingBox":       {
+        "x": 0,
+        "height": 8,
+        "width": 8,
+        "y": 0
+      }
+    }
+  ]
+}

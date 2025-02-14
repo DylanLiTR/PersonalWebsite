@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Phaser from "phaser";
 import MainScene from "./scenes/MainScene";
 import SpotifyPlayer from './components/SpotifyPlayer';
+import './App.css';
 
 function App() {
   useEffect(() => {
