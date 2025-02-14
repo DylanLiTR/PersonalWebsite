@@ -3,6 +3,7 @@ import Phaser from "phaser";
 import { DEFAULT_ZOOM, MIN_ZOOM, MAX_ZOOM, ROOM_SIZE } from "../components/constants";
 import CloudManager from "../components/CloudManager";
 import { trimTo } from "../components/utils"
+import AnimationManager from "../components/AnimationManager";
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -39,6 +40,58 @@ export default class MainScene extends Phaser.Scene {
       this.cloudManager.spawnCloud();
     }
 
+    // Enable camera controls
+    this.enablePanning();
+    this.enableZooming();
+
+    // Resize objects accordingly
+    this.initialWidth = this.scale.width;
+    this.initialHeight = this.scale.height;
+    this.scale.on("resize", (gameSize) => this.resizeScene(gameSize));
+
+    const assets = this.cache.json.get('assets');
+    const { width, height } = this.scale;
+    const xOffset = width / 2 - ROOM_SIZE / 2;
+    const yOffset = height / 2 - ROOM_SIZE / 2;
+
+    // Add images or sprites to the scene
+    this.objects = {};
+    this.offsets = [];
+    assets.images.forEach((asset) => {
+      if (!asset.draw) return;
+      if (asset.type === 'static') {
+        this.objects[asset.key] = this.add.image(xOffset + asset.boundingBox.x, yOffset + asset.boundingBox.y, asset.key).setOrigin(0).setDepth(1);
+        this.offsets.push({ key: asset.key, xBound: asset.boundingBox.x, yBound: asset.boundingBox.y });
+      } else if (asset.type === 'sprite') {
+        const trimmedKey = trimTo(asset.key, '_');
+        this.objects[trimmedKey] = this.add.sprite(xOffset + asset.boundingBox.x, yOffset + asset.boundingBox.y, asset.key).setOrigin(0).setDepth(1).setInteractive();
+        this.hoverOutline(trimmedKey);
+        this.offsets.push({ key: trimmedKey, xBound: asset.boundingBox.x, yBound: asset.boundingBox.y });
+      }
+    });
+
+    // Initialize AnimationManager
+    this.animationManager = new AnimationManager(this);
+
+    const duoTextures = [{ texture: 'duo_sprite', duration: 10000 }, { texture: 'duo_right', duration: 5000 }];
+    this.animationManager.addSprite(this.objects['duo'], duoTextures);
+  }
+
+  update() {
+    // Update clouds
+    this.cloudManager.update();
+    this.applyIntertia();
+  }
+
+  enableZooming() {
+    // Zoom in/out with the mouse wheel or pinch gesture
+    this.input.on("wheel", (pointer, dx, dy) => {
+      if (dy > 0) this.changeZoom(0.9); // Zoom out
+      if (dy < 0) this.changeZoom(1.1); // Zoom in
+    });
+  }
+
+  enablePanning() {
     // Panning and inertia variables
     this.isDragging = false;
     this.dragStart = new Phaser.Math.Vector2();
@@ -77,39 +130,6 @@ export default class MainScene extends Phaser.Scene {
         this.dragStart.set(pointer.x, pointer.y);
       }
     });
-
-    // Zoom in/out with the mouse wheel or pinch gesture
-    this.input.on("wheel", (pointer, dx, dy) => {
-      if (dy > 0) this.changeZoom(0.9); // Zoom out
-      if (dy < 0) this.changeZoom(1.1); // Zoom in
-    });
-
-    // Resize objects accordingly
-    this.scale.on("resize", (gameSize) => this.resizeScene(gameSize));
-
-    const assets = this.cache.json.get('assets');
-    const { width, height } = this.scale;
-    const xOffset = width / 2 - ROOM_SIZE / 2;
-    const yOffset = height / 2 - ROOM_SIZE / 2;
-
-    // Add images or sprites to the scene
-    this.objects = {};
-    assets.images.forEach((asset) => {
-      if (!asset.draw) return;
-      if (asset.type === 'static') {
-        this.objects[asset.key] = this.add.image(xOffset + asset.boundingBox.x, yOffset + asset.boundingBox.y, asset.key).setOrigin(0).setDepth(1);
-      } else if (asset.type === 'sprite') {
-        const trimmedKey = trimTo(asset.key, '_');
-        this.objects[trimmedKey] = this.add.sprite(xOffset + asset.boundingBox.x, yOffset + asset.boundingBox.y, asset.key).setOrigin(0).setDepth(1).setInteractive();
-        this.enableHover(trimmedKey);
-      }
-    });
-  }
-
-  update() {
-    // Update clouds
-    this.cloudManager.update();
-    this.applyIntertia();
   }
 
   applyIntertia() {
@@ -151,19 +171,22 @@ export default class MainScene extends Phaser.Scene {
 
   // Handle window resizing
   resizeScene(gameSize) {
-    const assets = this.cache.json.get('assets');
     const { width, height } = gameSize;
     const xOffset = width / 2 - ROOM_SIZE / 2;
     const yOffset = height / 2 - ROOM_SIZE / 2;
 
     // Center the room to the new size
-    assets.images.forEach((asset) => {
-      this.objects[trimTo(asset.key, '_')].setPosition(xOffset + asset.boundingBox.x, yOffset + asset.boundingBox.y);
+    this.offsets.forEach((obj) => {
+      this.objects[obj.key].setPosition(xOffset + obj.xBound, yOffset + obj.yBound);
     });
+    this.calcBounds();
   }
 
-  enableHover(spriteName) {
+  hoverOutline(spriteName) {
+    var prevTexture = spriteName + '_sprite';
     this.objects[spriteName].on('pointerover', () => {
+      prevTexture = this.objects[spriteName].texture.key;
+      this.animationManager.pauseSprite(this.objects[spriteName]);
       this.objects[spriteName].setTexture(spriteName + '_hover'); // Change to hover image
       this.objects[spriteName].x -= 1;
       this.objects[spriteName].y -= 1;
@@ -172,10 +195,11 @@ export default class MainScene extends Phaser.Scene {
 
     // Revert cursor and sprite texture when hover ends
     this.objects[spriteName].on('pointerout', () => {
-      this.objects[spriteName].setTexture(spriteName + '_sprite'); // Revert to normal image
+      this.objects[spriteName].setTexture(prevTexture); // Revert to previous image
       this.objects[spriteName].x += 1;
       this.objects[spriteName].y += 1;
       this.input.setDefaultCursor('default'); // Revert cursor to default
+      this.animationManager.resumeSprite(this.objects[spriteName]);
     });
   }
 }
