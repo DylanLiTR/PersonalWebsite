@@ -72,6 +72,36 @@ const SpotifyPlayer = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Pixelate album image
+  const canvasRef = useRef(null);
+  useEffect(() => {
+    if (!currentTrack?.item?.album?.images?.[0]?.url) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+
+    const img = new Image();
+    img.crossOrigin = "anonymous"; // Allow cross-origin loading if needed
+    img.src = currentTrack.item.album.images[0].url;
+
+    img.onload = () => {
+      // Set canvas dimensions to match the image
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      // Default number of blocks for downsampling
+      const blocks = 24;
+
+      // Step 1: Draw the image at a smaller size (downsample)
+      ctx.imageSmoothingEnabled = true; // Improve quality of first step
+      ctx.drawImage(img, 0, 0, blocks, blocks);
+
+      // Step 2: Scale the downsampled image back up (pixelate)
+      ctx.imageSmoothingEnabled = false; // Disable smoothing for pixelation
+      ctx.drawImage(canvas, 0, 0, blocks, blocks, 0, 0, canvas.width, canvas.height);
+    };
+  }, [currentTrack]);
+
   if (error) {
     console.log(error);
     return;
@@ -81,12 +111,15 @@ const SpotifyPlayer = () => {
     <div className="spotify-player pixel-font">
       <div className="player-container">
         <div className="track-info">
-          {currentTrack?.item?.album?.images?.[0] && (
+          {/* {currentTrack?.item?.album?.images?.[0] && (
             <img 
               src={currentTrack.item.album.images[0].url} 
               alt="Album Art" 
               className="album-art"
             />
+          )} */}
+          {currentTrack?.item?.album?.images?.[0] && (
+            <canvas ref={canvasRef} className="album-art" />
           )}
           <div className="track-details">
             <div className="player-controls">

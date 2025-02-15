@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-import { DEFAULT_ZOOM, MIN_ZOOM, MAX_ZOOM, ROOM_SIZE } from "../components/constants";
+import { DEFAULT_ZOOM, MIN_ZOOM, MAX_ZOOM, ROOM_SIZE, MINIMAP_XOFFSET, MINIMAP_YOFFSET } from "../components/constants";
 import CloudManager from "../components/CloudManager";
 import { trimTo } from "../components/utils"
 import AnimationManager from "../components/AnimationManager";
@@ -29,6 +29,7 @@ export default class MainScene extends Phaser.Scene {
     this.zoom = DEFAULT_ZOOM;
     let cam = this.cameras.main;
     cam.setZoom(this.zoom);
+    cam.setScroll(-cam.width / 2, -cam.height / 2);
     cam.setBackgroundColor("#87CEEB"); // sky colour
     this.calcBounds();
 
@@ -50,9 +51,8 @@ export default class MainScene extends Phaser.Scene {
     this.scale.on("resize", (gameSize) => this.resizeScene(gameSize));
 
     const assets = this.cache.json.get('assets');
-    const { width, height } = this.scale;
-    const xOffset = width / 2 - ROOM_SIZE / 2;
-    const yOffset = height / 2 - ROOM_SIZE / 2;
+    const xOffset = -ROOM_SIZE / 2;
+    const yOffset = -ROOM_SIZE / 2;
 
     // Add images or sprites to the scene
     this.objects = {};
@@ -75,12 +75,16 @@ export default class MainScene extends Phaser.Scene {
 
     const duoTextures = [{ texture: 'duo_sprite', duration: 10000 }, { texture: 'duo_right', duration: 5000 }];
     this.animationManager.addSprite(this.objects['duo'], duoTextures);
+
+    this.createMinimap();
   }
 
   update() {
     // Update clouds
     this.cloudManager.update();
     this.applyIntertia();
+
+    this.updateMinimap();
   }
 
   enableZooming() {
@@ -162,18 +166,17 @@ export default class MainScene extends Phaser.Scene {
   }
   
   calcBounds() {
-    const ratio = (this.zoom - MIN_ZOOM) / this.zoom;
-    const paddingLR = this.scale.width / 2 * ratio;
-    const paddingTB = this.scale.height / 2 * ratio;
-    this.cameras.main.setBounds(paddingLR, paddingTB, this.scale.width - paddingLR * 2, this.scale.height - paddingTB * 2);
+    const scaledWidth = this.cameras.main.width / this.zoom;
+    const scaledHeight = this.cameras.main.height / this.zoom;
+    this.cameras.main.setBounds(-scaledWidth, -scaledHeight, scaledWidth * 2, scaledHeight * 2);
     // console.log(paddingLR, paddingTB);
   }
 
   // Handle window resizing
   resizeScene(gameSize) {
     const { width, height } = gameSize;
-    const xOffset = width / 2 - ROOM_SIZE / 2;
-    const yOffset = height / 2 - ROOM_SIZE / 2;
+    const xOffset = - ROOM_SIZE / 2;
+    const yOffset = - ROOM_SIZE / 2;
 
     // Center the room to the new size
     this.offsets.forEach((obj) => {
@@ -201,5 +204,40 @@ export default class MainScene extends Phaser.Scene {
       this.input.setDefaultCursor('default'); // Revert cursor to default
       this.animationManager.resumeSprite(this.objects[spriteName]);
     });
+  }
+
+  createMinimap() {
+    const scale = 8;
+    const zoom = MIN_ZOOM / 16;
+    this.minimap = this.cameras.add(MINIMAP_XOFFSET, MINIMAP_YOFFSET, this.cameras.main.width / scale, this.cameras.main.height / scale).setZoom(zoom).setName('mini');
+    this.minimap.setBackgroundColor(0x76BDDA);
+    this.minimap.scrollX = -this.minimap.width / 2;
+    this.minimap.scrollY = -this.minimap.height / 2;
+
+    this.cameraRect = this.add.rectangle(0, 0, 0, 0, 0xffffff, 0.5)
+      .setOrigin(0.5)
+      .setScrollFactor(0)
+      .setDepth(10);
+
+    this.cameras.main.ignore(this.cameraRect);
+  }
+
+  updateMinimap() {
+    const main = this.cameras.main;
+    const mini = this.minimap;
+
+    // Calculate the scale of the minimap relative to the game world
+    const scaleX = mini.width / main.width;
+    const scaleY = mini.height / main.height;
+
+    // Calculate the position and size of the rectangle
+    const rectX = main.scrollX + main.width / 2 + mini.width / 2 - MINIMAP_XOFFSET;
+    const rectY = main.scrollY + main.height / 2 + mini.height / 2 - MINIMAP_YOFFSET;
+    const rectWidth = main.width / main.zoom;
+    const rectHeight = main.height / main.zoom;
+
+    // Update the rectangle's position and size
+    this.cameraRect.setPosition(rectX + mini.x, rectY + mini.y)
+      .setSize(rectWidth, rectHeight);
   }
 }

@@ -35,7 +35,7 @@
 .album-art {
   width: 64px;
   height: 64px;
-  border-radius: 8px;
+  /* border-radius: 8px; */
 }
 
 .track-details {
@@ -94,7 +94,7 @@
   color: white;
   border: none;
   padding: 4px 8px;
-  border-radius: 4px;
+  /* border-radius: 4px; */
   cursor: pointer;
   font-size: 20px;
 }
