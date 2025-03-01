@@ -130,7 +130,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  padding: 6px 6px 6px 6px;
+  padding: 6px 6px 4px 6px;
 }
 
 .close-button:hover {

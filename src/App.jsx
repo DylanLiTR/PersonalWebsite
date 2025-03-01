@@ -1,10 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Phaser from "phaser";
+import LoadingScreen from "./LoadingScreen"
 import MainScene from "./scenes/MainScene";
 import SpotifyPlayer from './components/SpotifyPlayer';
 import './App.css';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const phaserRef = useRef(null);
+
   useEffect(() => {
     const config = {
       type: Phaser.AUTO,
@@ -16,17 +21,29 @@ function App() {
         mode: Phaser.Scale.RESIZE, // 🚀 Makes Phaser resize dynamically
         autoCenter: Phaser.Scale.CENTER_BOTH,
       },
-    };    
-    
-    const game = new Phaser.Game(config);
+    };
+
+    phaserRef.current = new Phaser.Game(config);
+
+    phaserRef.current.events.on("progress", (progress) => {
+      setLoadingProgress(progress * 100);
+    });
+
+    phaserRef.current.events.once("loadingComplete", () => {
+      setTimeout(() => {
+        setIsLoading(false); // Hide the loading screen after the delay
+      }, 1000);
+    });
+
     return () => {
-      game.destroy(true); // Destroy game on unmount
+      phaserRef.current.destroy(true); // Destroy game on unmount
     };
   }, []);
 
   return (
     <div>
-      <div id="phaser-game"></div>
+      {isLoading && <LoadingScreen progress={loadingProgress}/>}
+      <div id="phaser-game" style={{ display: isLoading ? "none" : "block" }}></div>
       <SpotifyPlayer /> {/* Display Now Playing */}
     </div>
   );

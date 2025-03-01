@@ -23,14 +23,21 @@ export default class MainScene extends Phaser.Scene {
       // Start loading the images
       this.load.start();
     });
+
+    this.load.on("progress", (progress) => {
+      this.game.events.emit("progress", progress); // Emit progress (0-1)
+    });
+
+    this.load.once("complete", () => {
+      this.game.events.emit("loadingComplete"); // Emit loading complete
+    });
   }
 
   create() {
-    this.zoom = DEFAULT_ZOOM;
+    this.isLoading = true;
     let cam = this.cameras.main;
-    cam.setZoom(this.zoom);
-    cam.setScroll(-cam.width / 2, -cam.height / 2);
     cam.setBackgroundColor("#87CEEB"); // sky colour
+    cam.setScroll(-cam.width / 2, -cam.height / 2);
     this.calcBounds();
 
     // Initialize CloudManager
@@ -40,10 +47,6 @@ export default class MainScene extends Phaser.Scene {
     for (let i = 0; i < 10; i++) {
       this.cloudManager.spawnCloud();
     }
-
-    // Enable camera controls
-    this.enablePanning();
-    this.enableZooming();
 
     // Resize objects accordingly
     this.initialWidth = this.scale.width;
@@ -77,14 +80,49 @@ export default class MainScene extends Phaser.Scene {
     this.animationManager.addSprite(this.objects['duo'], duoTextures);
 
     this.createMinimap();
+    setTimeout(() => {
+      this.drawLoadingScreen();
+    }, 1000);
   }
 
   update() {
     // Update clouds
     this.cloudManager.update();
-    this.applyIntertia();
-
+    
     this.updateMinimap();
+    if (!this.isLoading) {
+      this.applyIntertia();
+    }
+  }
+
+  drawLoadingScreen() {
+    // Add a white screen covering the entire scene
+    const loadingScreen = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0xffffff).setDepth(100);
+
+    // Fade out the white screen
+    this.tweens.add({
+      targets: loadingScreen,
+      alpha: 0, // Fade to transparent
+      duration: 2000,
+      ease: "Linear",
+    });
+
+    this.cameras.main.zoomTo(DEFAULT_ZOOM, 3000, "Power2", true, (camera, progress) => {
+      if (progress === 1) {
+        loadingScreen.destroy();
+
+        this.zoom = DEFAULT_ZOOM;
+        let cam = this.cameras.main;
+        cam.setScroll(-cam.width / 2, -cam.height / 2);
+        cam.setZoom(this.zoom);
+        this.calcBounds();
+
+        // Enable camera controls
+        this.enablePanning();
+        this.enableZooming();
+        this.isLoading = false;
+      }
+    });
   }
 
   enableZooming() {
@@ -225,10 +263,6 @@ export default class MainScene extends Phaser.Scene {
   updateMinimap() {
     const main = this.cameras.main;
     const mini = this.minimap;
-
-    // Calculate the scale of the minimap relative to the game world
-    const scaleX = mini.width / main.width;
-    const scaleY = mini.height / main.height;
 
     // Calculate the position and size of the rectangle
     const rectX = main.scrollX + main.width / 2 + mini.width / 2 - MINIMAP_XOFFSET;
