@@ -4,6 +4,7 @@ import { DEFAULT_ZOOM, MIN_ZOOM, MAX_ZOOM, ROOM_SIZE, MINIMAP_XOFFSET, MINIMAP_Y
 import CloudManager from "../components/CloudManager";
 import { trimTo } from "../components/utils"
 import AnimationManager from "../components/AnimationManager";
+import SpeechBubble from "../components/SpeechBubble";
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -12,24 +13,25 @@ export default class MainScene extends Phaser.Scene {
 
   preload() {
     this.load.json('assets', '/src/assets/sprites/sprites.json');
-
-    // Load images dynamically based on the JSON file
+  
     this.load.on('filecomplete-json-assets', () => {
       const assets = this.cache.json.get('assets');
       assets.images.forEach((asset) => {
         this.load.image(asset.key, asset.path);
       });
-
-      // Start loading the images
+  
+      // Load speech bubble
+      this.load.image("bubble", "/src/assets/sprites/speech_bubble/bubble.png");
+  
       this.load.start();
     });
-
+  
     this.load.on("progress", (progress) => {
-      this.game.events.emit("progress", progress); // Emit progress (0-1)
+      this.game.events.emit("progress", progress);
     });
-
+  
     this.load.once("complete", () => {
-      this.game.events.emit("loadingComplete"); // Emit loading complete
+      this.game.events.emit("loadingComplete");
     });
   }
 
@@ -51,7 +53,7 @@ export default class MainScene extends Phaser.Scene {
     // Resize objects accordingly
     this.initialWidth = this.scale.width;
     this.initialHeight = this.scale.height;
-    this.scale.on("resize", (gameSize) => this.resizeScene(gameSize));
+    this.scale.on("resize", () => this.resizeScene());
 
     const assets = this.cache.json.get('assets');
     const xOffset = -ROOM_SIZE / 2;
@@ -83,6 +85,9 @@ export default class MainScene extends Phaser.Scene {
     setTimeout(() => {
       this.drawLoadingScreen();
     }, 1000);
+
+    this.speechBubble = new SpeechBubble(this, this.objects['npc'].x, this.objects['npc'].y - 10);
+    this.speechBubble.addText("Hi, my name is Dylan and welcome to my website! Feel free to look around and ask me any questions.");
   }
 
   update() {
@@ -211,8 +216,7 @@ export default class MainScene extends Phaser.Scene {
   }
 
   // Handle window resizing
-  resizeScene(gameSize) {
-    const { width, height } = gameSize;
+  resizeScene() {
     const xOffset = - ROOM_SIZE / 2;
     const yOffset = - ROOM_SIZE / 2;
 
