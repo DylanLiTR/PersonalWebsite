@@ -13,7 +13,6 @@ export default class SpeechBubble {
     this.typing = false;
 
     this.container = this.scene.add.container(this.x, this.y).setDepth(11);
-    scene.minimap.ignore(this.container);
   }
 
   addText(text) {
@@ -65,6 +64,8 @@ export default class SpeechBubble {
     // Add the text
     this.speechText = this.createText("");
     this.container.add(this.speechText);
+
+    this.scene.minimap.ignore([this.bubble, this.speechText]);
   }
 
   createText(content) {
