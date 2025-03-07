@@ -5,14 +5,13 @@ const WRAP_WIDTH = 200 / TEXT_SCALE;
 const FONT_SIZE = 4 / TEXT_SCALE;
 
 export default class SpeechBubble {
-  constructor(scene, x, y) {
+  constructor(scene, npc) {
     this.scene = scene;
-    this.x = x;
-    this.y = y;
+    this.npc = npc
     this.sentenceQueue = [];
     this.typing = false;
 
-    this.container = this.scene.add.container(this.x, this.y).setDepth(11);
+    this.container = this.scene.add.container(this.npc.x, this.npc.y).setDepth(11);
   }
 
   addText(text) {
@@ -93,6 +92,11 @@ export default class SpeechBubble {
         }
       }
     });
+  }
+
+  update() {
+    // Update speech bubble position to follow the NPC
+    this.container.setPosition(this.npc.x + (this.npc.texture.key.includes("hover") ? 1 : 0), this.npc.y - 10 + (this.npc.texture.key.includes("hover") ? 1 : 0));
   }
 
   destroy() {

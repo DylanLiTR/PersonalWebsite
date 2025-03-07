@@ -1,11 +1,12 @@
-import { MIN_ZOOM, MAX_ZOOM, DEFAULT_ZOOM } from "../components/constants";
+import { MIN_ZOOM, MAX_ZOOM } from "../components/constants";
 
 export default class CameraControls {
   constructor(scene) {
     this.scene = scene;
+    this.cam = this.scene.cameras.main;
     this.zoom = 1;
-    this.isDragging = false;
-    this.dragStart = new Phaser.Math.Vector2();
+    this.isPanning = false;
+    this.dragStartWorld = new Phaser.Math.Vector2(); // World coordinate at drag start
     this.dragVelocity = new Phaser.Math.Vector2();
     this.inertiaDecay = 0.9;
 
@@ -20,36 +21,50 @@ export default class CameraControls {
   }
 
   enablePanning() {
+    // Enable panning using pointer events
     this.scene.input.on("pointerdown", (pointer) => {
-      this.isDragging = true;
-      this.dragStart.set(pointer.x, pointer.y);
-      this.dragVelocity.set(0, 0);
-    });
+      const pointerCoord = this.cam.getWorldPoint(pointer.x, pointer.y);
+      const npcHover = this.scene.sceneManager.objects["npc"].getBounds().contains(pointerCoord.x, pointerCoord.y);
+      
+      if (!npcHover) {
+        this.isPanning = true;
 
-    this.scene.input.on("pointerup", () => {
-      this.isDragging = false;
+        // Store the world coordinate under the pointer at drag start
+        this.dragStartWorld = this.scene.cameras.main.getWorldPoint(pointer.x, pointer.y);
+
+        // Reset velocity
+        this.dragVelocity.set(0, 0);
+      }
     });
 
     this.scene.input.on("pointermove", (pointer) => {
-      if (this.isDragging && pointer.isDown) {
-        const camera = this.scene.cameras.main;
-        const dragDelta = new Phaser.Math.Vector2(
-          Phaser.Math.RoundTo((pointer.x - this.dragStart.x) / this.zoom, 0),
-          Phaser.Math.RoundTo((pointer.y - this.dragStart.y) / this.zoom, 0)
-        );
+      if (this.isPanning && pointer.isDown) {
+        const camera = this.cam;
 
-        camera.scrollX -= dragDelta.x;
-        camera.scrollY -= dragDelta.y;
+        // Get the current world coordinate under the pointer
+        const currentWorld = camera.getWorldPoint(pointer.x, pointer.y);
 
-        this.dragVelocity.set(dragDelta.x, dragDelta.y);
-        this.dragStart.set(pointer.x, pointer.y);
+        // Calculate the delta in world coordinates
+        const deltaX = currentWorld.x - this.dragStartWorld.x;
+        const deltaY = currentWorld.y - this.dragStartWorld.y;
+
+        // Update camera scroll to keep the pointer over the same world coordinate
+        camera.scrollX -= deltaX;
+        camera.scrollY -= deltaY;
+
+        // Update velocity for inertia
+        this.dragVelocity.set(deltaX, deltaY);
       }
+    });
+
+    this.scene.input.on("pointerup", () => {
+      this.isPanning = false;
     });
   }
 
   applyInertia() {
     // Apply inertia if not dragging
-    if (!this.isDragging && this.dragVelocity.length() > 0) {
+    if (!this.isPanning && this.dragVelocity.length() > 0) {
       const camera = this.scene.cameras.main;
 
       // Update camera scroll based on velocity

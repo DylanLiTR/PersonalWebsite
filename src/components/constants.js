@@ -6,3 +6,5 @@ export const DEFAULT_ZOOM = 4.0;
 
 export const MINIMAP_XOFFSET = 10;
 export const MINIMAP_YOFFSET = 10;
+
+export const GRAVITY = 200;

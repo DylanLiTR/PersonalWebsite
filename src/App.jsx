@@ -15,6 +15,13 @@ function App() {
       type: Phaser.AUTO,
       width: window.innerWidth,  // Set width to full page
       height: window.innerHeight, // Set height to full page
+      physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 200 },
+            debug: false
+        }
+      },
       pixelArt: true,  // Keeps pixel art crisp
       scene: [MainScene],
       scale: {

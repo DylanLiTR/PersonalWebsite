@@ -33,7 +33,7 @@ export default class CloudManager {
     const cloudKey = getRandomCloud(CLOUD_SPRITES); // Randomly select a cloud sprite
     const cloud = this.scene.add.image(
       Phaser.Math.Between(-this.scene.scale.width, 0), // Start slightly off-screen
-      Phaser.Math.Between(0, this.scene.scale.height), // Random Y position
+      Phaser.Math.Between(-this.scene.scale.height / 2, this.scene.scale.height / 2), // Random Y position
       cloudKey
     );
 

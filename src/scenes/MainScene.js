@@ -8,6 +8,7 @@ import SceneManager from "../components/SceneManager";
 import CameraControls from "../components/CameraControls";
 import MinimapManager from "../components/MinimapManager";
 import LoadingScreen from "../components/LoadingScreen";
+import NPC from "../components/NPC";
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -37,6 +38,8 @@ export default class MainScene extends Phaser.Scene {
     this.sceneManager.createObjects();
     this.sceneManager.createClouds(10);
 
+    this.npc = new NPC(this);
+
     // Handle scene resizing
     this.scale.on("resize", () => this.sceneManager.resizeScene());
 
@@ -50,5 +53,9 @@ export default class MainScene extends Phaser.Scene {
     this.cloudManager.update();
     this.minimapManager.updateMinimap();
     this.cameraControls.applyInertia();
+    this.sceneManager.speechBubble.update();
+    this.animationManager.updateAnimations();
+
+    this.npc.update();
   }
 }
