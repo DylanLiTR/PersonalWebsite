@@ -3,6 +3,7 @@ import Phaser from "phaser";
 import LoadingScreen from "./LoadingScreen"
 import MainScene from "./scenes/MainScene";
 import SpotifyPlayer from './components/SpotifyPlayer';
+import YouTubePlayer from './components/YouTubePlayer';
 import './App.css';
 
 function App() {
@@ -51,7 +52,8 @@ function App() {
     <div>
       {isLoading && <LoadingScreen progress={loadingProgress}/>}
       <div id="phaser-game" style={{ display: isLoading ? "none" : "block" }}></div>
-      <SpotifyPlayer /> {/* Display Now Playing */}
+      <SpotifyPlayer /> {}
+      <YouTubePlayer /> {}
     </div>
   );
 }

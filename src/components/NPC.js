@@ -1,4 +1,3 @@
-import { GRAVITY } from "../components/constants";
 import { isPointInPolygon } from "../components/utils";
 
 export default class NPC {

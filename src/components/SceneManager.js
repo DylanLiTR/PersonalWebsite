@@ -22,7 +22,7 @@ export default class SceneManager {
         this.objects[key] = this.scene.physics.add.sprite(xOffset + asset.boundingBox.x, yOffset + asset.boundingBox.y, asset.key)
           .setOrigin(0)
           .setDepth(1)
-          .setInteractive()
+          .setInteractive({ useHandCursor: true })
           .setName(key);
 
         this.objects[key].body.setAllowGravity(false);
@@ -47,7 +47,11 @@ export default class SceneManager {
     // this.enableHover();
 
     this.objects['floor'].setVisible(false);
+    this.objects['piano'].on("pointerdown", () => {
+      window.openYouTubePlaylist('PL5PnGHCu4otZLuNWBhpGLjbt8MBgeMZri');
+    });
 
+    // Duo animations
     const duoTextures = [{ texture: 'duo_sprite', duration: 10000 }, { texture: 'duo_right', duration: 5000 }];
     this.scene.animationManager.addSprite(this.objects['duo'], duoTextures);
 
@@ -93,12 +97,10 @@ export default class SceneManager {
       prevTexture = obj.texture.key;
       this.scene.animationManager.pauseSprite(obj);
       obj.setTexture(spriteName + "_hover").setPosition(obj.x - 1, obj.y - 1);
-      this.scene.input.setDefaultCursor("pointer");
     });
 
     obj.on("pointerout", () => {
       obj.setTexture(prevTexture).setPosition(obj.x + 1, obj.y + 1);
-      this.scene.input.setDefaultCursor("default");
       this.scene.animationManager.resumeSprite(obj);
     });
   }
