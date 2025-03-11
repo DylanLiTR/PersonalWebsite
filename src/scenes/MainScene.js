@@ -36,7 +36,7 @@ export default class MainScene extends Phaser.Scene {
     this.cameraControls.calcBounds();
     this.minimapManager.createMinimap();
     this.sceneManager.createObjects();
-    this.sceneManager.createClouds(10);
+    this.sceneManager.createClouds(25);
 
     this.npc = new NPC(this);
 

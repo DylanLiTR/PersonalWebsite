@@ -1,5 +1,5 @@
-export const FAR_CLOUD_SPEED = 0.05;
-export const CLOSE_CLOUD_SPEED = 0.2;
+export const FAR_CLOUD_SPEED = 0.02;
+export const CLOSE_CLOUD_SPEED = 0.1;
 
 const CLOUD_SPRITES = [
   { key: "cloud_big", weight: 0.5 },
@@ -29,10 +29,10 @@ export default class CloudManager {
     this.clouds = [];
   }
 
-  spawnCloud() {
+  spawnCloud(offset = 0) {
     const cloudKey = getRandomCloud(CLOUD_SPRITES); // Randomly select a cloud sprite
     const cloud = this.scene.add.image(
-      Phaser.Math.Between(-this.scene.scale.width, 0), // Start slightly off-screen
+      Phaser.Math.Between(-this.scene.scale.width / 2 - offset, this.scene.scale.width / 2 - offset), // Start slightly off-screen
       Phaser.Math.Between(-this.scene.scale.height / 2, this.scene.scale.height / 2), // Random Y position
       cloudKey
     );
@@ -56,10 +56,10 @@ export default class CloudManager {
       cloud.x += cloud.speed;
 
       // Despawn if off-screen
-      if (cloud.x > this.scene.scale.width + cloud.displayWidth / 2) {
+      if (cloud.x > this.scene.scale.width / 2 + cloud.displayWidth / 2) {
         cloud.destroy(); // Remove the cloud from the scene
         this.clouds.splice(i, 1); // Remove the cloud from the array
-        this.spawnCloud(); // Spawn a new cloud
+        this.spawnCloud(-this.scene.scale.width); // Spawn a new cloud
       }
     }
   }
