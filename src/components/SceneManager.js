@@ -50,6 +50,9 @@ export default class SceneManager {
     this.objects['piano'].on("pointerdown", () => {
       window.openYouTubePlaylist('PL5PnGHCu4otZLuNWBhpGLjbt8MBgeMZri');
     });
+    this.objects['duo'].on("pointerdown", () => {
+      window.openDuolingoProfile();
+    });
 
     // Duo animations
     const duoTextures = [{ texture: 'duo_sprite', duration: 10000 }, { texture: 'duo_right', duration: 5000 }];

@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+/* Base styles */
+.duolingo-profile {
+  font-family: 'Nunito', 'din-round', sans-serif;
+  color: #4b4b4b;
+}
+
+/* Button styling */
+.duolingo-profile-button {
+  background-color: #58cc02;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Nunito', 'din-round', sans-serif;
+}
+
+.duolingo-profile-button:hover {
+  background-color: #46a302;
+}
+
+/* Overlay styling */
+.duolingo-overlay {
+  position: fixed;
+  cursor: move;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  width: 400px;
+  overflow: hidden;
+  font-family: 'Nunito', 'din-round', sans-serif;
+  z-index: 100;
+}
+
+/* Header styling */
+.duolingo-header {
+  background-color: #58cc02;
+  padding: 6px 12px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.duolingo-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.duolingo-close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+/* Content area */
+.duolingo-content {
+  padding: 20px;
+}
+
+/* User info section */
+.duolingo-user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.duolingo-user-details {
+  width: 100%;
+}
+
+.duolingo-user-details h3 {
+  margin: 0 0 5px 0;
+  font-size: 20px;
+}
+
+.duolingo-user-details p {
+  margin: 0 0 2px 0;
+  color: #777;
+  font-size: 14px;
+}
+
+.duolingo-plus-badge {
+  background: #f7c800;
+  color: #45433f;
+  border-radius: 4px;
+  padding: 2px 8px;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+/* Stats section */
+.duolingo-stats {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f7f7f7;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+.duolingo-stat {
+  text-align: center;
+}
+
+.duolingo-stat-value {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.duolingo-streak-color {
+  color: #58cc02;
+}
+
+.duolingo-xp-color {
+  color: #ff9600;
+}
+
+.duolingo-join-color {
+  color: #1cb0f6;
+}
+
+.duolingo-stat-label {
+  margin: 0;
+  font-size: 12px;
+  color: #777;
+}
+
+.duolingo-language-section h4 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  color: #4b4b4b;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 5px;
+}
+
+.duolingo-language-item {
+  display: flex;
+  align-items: center;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  padding: 10px 15px;
+}
+
+.duolingo-language-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #1cb0f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.duolingo-language-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.duolingo-language-from {
+  margin: 0;
+  font-size: 12px;
+  color: #777;
+}
+
+/* Loading state */
+.duolingo-loading {
+  text-align: center;
+  padding: 30px 0;
+}
+
+/* Error state */
+.duolingo-error {
+  text-align: center;
+  padding: 20px;
+  color: #ea2b2b;
+  background-color: #ffeeee;
+  border-radius: 8px;
+}
+
+.duolingo-retry-button {
+  background-color: #58cc02;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-family: 'Nunito', 'din-round', sans-serif;
+}

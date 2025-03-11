@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import Phaser from "phaser";
-import LoadingScreen from "./LoadingScreen"
+import LoadingScreen from "./components/LoadingScreen.jsx"
 import MainScene from "./scenes/MainScene";
 import SpotifyPlayer from './components/SpotifyPlayer';
 import YouTubePlayer from './components/YouTubePlayer';
+import DuolingoProfile from './components/Duolingo';
 import './App.css';
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
       <div id="phaser-game" style={{ display: isLoading ? "none" : "block" }}></div>
       <SpotifyPlayer /> {}
       <YouTubePlayer /> {}
+      <DuolingoProfile />
     </div>
   );
 }
