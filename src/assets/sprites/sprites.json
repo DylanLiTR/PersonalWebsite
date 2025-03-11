@@ -2,10 +2,53 @@
   "images": [
 
     {
-      "key": "background",
-      "path": "/src/assets/sprites/room/background.png",
-      "draw": false,
-      "type": "static",
+      "boundingBox": 
+      {
+        "height": 75,
+        "y": 146,
+        "x": 36,
+        "width": 158
+      },
+      "type": "env",
+      "key": "floor_env",
+      "draw": true,
+      "vertices": 
+      {
+        "1": 
+        {
+          "x": 112,
+          "y": 146
+        },
+        "2": 
+        {
+          "x": 193,
+          "y": 188
+        },
+        "3": 
+        {
+          "x": 128,
+          "y": 220
+        },
+        "4": 
+        {
+          "x": 36,
+          "y": 174
+        },
+        "5": 
+        {
+          "x": 71,
+          "y": 167
+        },
+        "6": 
+        {
+          "x": 111,
+          "y": 147
+        }
+      },
+      "path": "/src/assets/sprites/floor_env.png"
+    },
+
+    {
       "boundingBox": 
       {
         "height": 256,
@@ -13,17 +56,17 @@
         "x": 0,
         "width": 256
       },
+      "type": "static",
+      "key": "background",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/room/background.png"
     },
 
     {
-      "key": "cloud_small_2",
-      "path": "/src/assets/sprites/room/cloud_small_2.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 10,
@@ -31,17 +74,17 @@
         "x": -2,
         "width": 20
       },
+      "type": "static",
+      "key": "cloud_small_2",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/room/cloud_small_2.png"
     },
 
     {
-      "key": "cloud_small_1",
-      "path": "/src/assets/sprites/room/cloud_small_1.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 9,
@@ -49,17 +92,17 @@
         "x": 0,
         "width": 17
       },
+      "type": "static",
+      "key": "cloud_small_1",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/room/cloud_small_1.png"
     },
 
     {
-      "key": "cloud_big",
-      "path": "/src/assets/sprites/room/cloud_big.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 18,
@@ -67,17 +110,17 @@
         "x": 0,
         "width": 32
       },
+      "type": "static",
+      "key": "cloud_big",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/room/cloud_big.png"
     },
 
     {
-      "key": "cloud_otter",
-      "path": "/src/assets/sprites/room/cloud_otter.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 18,
@@ -85,17 +128,17 @@
         "x": 0,
         "width": 40
       },
+      "type": "static",
+      "key": "cloud_otter",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/room/cloud_otter.png"
     },
 
     {
-      "key": "cloud_Cinnamoroll",
-      "path": "/src/assets/sprites/room/cloud_Cinnamoroll.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 17,
@@ -103,17 +146,17 @@
         "x": 0,
         "width": 55
       },
+      "type": "static",
+      "key": "cloud_Cinnamoroll",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/room/cloud_Cinnamoroll.png"
     },
 
     {
-      "key": "room_base",
-      "path": "/src/assets/sprites/room/room_base.png",
-      "draw": true,
-      "type": "static",
       "boundingBox": 
       {
         "height": 197,
@@ -121,17 +164,17 @@
         "x": 14,
         "width": 228
       },
+      "type": "static",
+      "key": "room_base",
+      "draw": true,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/room/room_base.png"
     },
 
     {
-      "key": "bed_base",
-      "path": "/src/assets/sprites/bed/bed_base.png",
-      "draw": true,
-      "type": "static",
       "boundingBox": 
       {
         "height": 69,
@@ -139,17 +182,17 @@
         "x": 91,
         "width": 88
       },
+      "type": "static",
+      "key": "bed_base",
+      "draw": true,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/bed/bed_base.png"
     },
 
     {
-      "key": "blanket",
-      "path": "/src/assets/sprites/bed/blanket.png",
-      "draw": true,
-      "type": "static",
       "boundingBox": 
       {
         "height": 52,
@@ -157,17 +200,17 @@
         "x": 92,
         "width": 89
       },
+      "type": "static",
+      "key": "blanket",
+      "draw": true,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/bed/blanket.png"
     },
 
     {
-      "key": "right_pillow",
-      "path": "/src/assets/sprites/bed/right_pillow.png",
-      "draw": true,
-      "type": "static",
       "boundingBox": 
       {
         "height": 16,
@@ -175,17 +218,17 @@
         "x": 113,
         "width": 22
       },
+      "type": "static",
+      "key": "right_pillow",
+      "draw": true,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/bed/right_pillow.png"
     },
 
     {
-      "key": "left_pillow",
-      "path": "/src/assets/sprites/bed/left_pillow.png",
-      "draw": true,
-      "type": "static",
       "boundingBox": 
       {
         "height": 16,
@@ -193,17 +236,17 @@
         "x": 99,
         "width": 20
       },
+      "type": "static",
+      "key": "left_pillow",
+      "draw": true,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/bed/left_pillow.png"
     },
 
     {
-      "key": "duo_shadow",
-      "path": "/src/assets/sprites/bed/duo/duo_shadow.png",
-      "draw": true,
-      "type": "static",
       "boundingBox": 
       {
         "height": 8,
@@ -211,17 +254,17 @@
         "x": 134,
         "width": 17
       },
+      "type": "static",
+      "key": "duo_shadow",
+      "draw": true,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/bed/duo/duo_shadow.png"
     },
 
     {
-      "key": "duo_sprite",
-      "path": "/src/assets/sprites/bed/duo/duo_sprite.png",
-      "draw": true,
-      "type": "sprite",
       "boundingBox": 
       {
         "height": 18,
@@ -229,6 +272,9 @@
         "x": 133,
         "width": 18
       },
+      "type": "sprite",
+      "key": "duo_sprite",
+      "draw": true,
       "vertices": 
       {
         "1": 
@@ -261,14 +307,11 @@
           "x": 136,
           "y": 98
         }
-      }
+      },
+      "path": "/src/assets/sprites/bed/duo/duo_sprite.png"
     },
 
     {
-      "key": "duo_right",
-      "path": "/src/assets/sprites/bed/duo/duo_right.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 18,
@@ -276,17 +319,17 @@
         "x": 133,
         "width": 18
       },
+      "type": "static",
+      "key": "duo_right",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/bed/duo/duo_right.png"
     },
 
     {
-      "key": "duo_hover",
-      "path": "/src/assets/sprites/bed/duo/duo_hover.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 20,
@@ -294,17 +337,17 @@
         "x": 132,
         "width": 20
       },
+      "type": "static",
+      "key": "duo_hover",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/bed/duo/duo_hover.png"
     },
 
     {
-      "key": "Pikachu_shadow",
-      "path": "/src/assets/sprites/bed/Pikachu/Pikachu_shadow.png",
-      "draw": true,
-      "type": "static",
       "boundingBox": 
       {
         "height": 8,
@@ -312,17 +355,17 @@
         "x": 150,
         "width": 17
       },
+      "type": "static",
+      "key": "Pikachu_shadow",
+      "draw": true,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/bed/Pikachu/Pikachu_shadow.png"
     },
 
     {
-      "key": "Pikachu_sprite",
-      "path": "/src/assets/sprites/bed/Pikachu/Pikachu_sprite.png",
-      "draw": true,
-      "type": "sprite",
       "boundingBox": 
       {
         "height": 21,
@@ -330,6 +373,9 @@
         "x": 151,
         "width": 19
       },
+      "type": "sprite",
+      "key": "Pikachu_sprite",
+      "draw": true,
       "vertices": 
       {
         "1": 
@@ -337,14 +383,11 @@
           "x": 158,
           "y": 100
         }
-      }
+      },
+      "path": "/src/assets/sprites/bed/Pikachu/Pikachu_sprite.png"
     },
 
     {
-      "key": "Pikachu_hover",
-      "path": "/src/assets/sprites/bed/Pikachu/Pikachu_hover.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 23,
@@ -352,17 +395,17 @@
         "x": 150,
         "width": 21
       },
+      "type": "static",
+      "key": "Pikachu_hover",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/bed/Pikachu/Pikachu_hover.png"
     },
 
     {
-      "key": "desk",
-      "path": "/src/assets/sprites/desk/desk.png",
-      "draw": true,
-      "type": "static",
       "boundingBox": 
       {
         "height": 48,
@@ -370,17 +413,17 @@
         "x": 176,
         "width": 56
       },
+      "type": "static",
+      "key": "desk",
+      "draw": true,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/desk/desk.png"
     },
 
     {
-      "key": "monitor",
-      "path": "/src/assets/sprites/desk/display/monitor.png",
-      "draw": true,
-      "type": "static",
       "boundingBox": 
       {
         "height": 36,
@@ -388,17 +431,17 @@
         "x": 181,
         "width": 33
       },
+      "type": "static",
+      "key": "monitor",
+      "draw": true,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/desk/display/monitor.png"
     },
 
     {
-      "key": "screen_sprite",
-      "path": "/src/assets/sprites/desk/display/screen_sprite.png",
-      "draw": true,
-      "type": "sprite",
       "boundingBox": 
       {
         "height": 32,
@@ -406,6 +449,9 @@
         "x": 182,
         "width": 30
       },
+      "type": "sprite",
+      "key": "screen_sprite",
+      "draw": true,
       "vertices": 
       {
         "1": 
@@ -433,14 +479,11 @@
           "x": 182,
           "y": 103
         }
-      }
+      },
+      "path": "/src/assets/sprites/desk/display/screen_sprite.png"
     },
 
     {
-      "key": "screen_hover",
-      "path": "/src/assets/sprites/desk/display/screen_hover.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 34,
@@ -448,17 +491,17 @@
         "x": 181,
         "width": 32
       },
+      "type": "static",
+      "key": "screen_hover",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/desk/display/screen_hover.png"
     },
 
     {
-      "key": "Spotify",
-      "path": "/src/assets/sprites/desk/display/Spotify.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 14,
@@ -466,17 +509,17 @@
         "x": 203,
         "width": 7
       },
+      "type": "static",
+      "key": "Spotify",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/desk/display/Spotify.png"
     },
 
     {
-      "key": "LeetCode",
-      "path": "/src/assets/sprites/desk/display/LeetCode.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 6,
@@ -484,17 +527,17 @@
         "x": 184,
         "width": 5
       },
+      "type": "static",
+      "key": "LeetCode",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/desk/display/LeetCode.png"
     },
 
     {
-      "key": "Notion",
-      "path": "/src/assets/sprites/desk/display/Notion.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 15,
@@ -502,17 +545,17 @@
         "x": 192,
         "width": 9
       },
+      "type": "static",
+      "key": "Notion",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/desk/display/Notion.png"
     },
 
     {
-      "key": "TickTick",
-      "path": "/src/assets/sprites/desk/display/TickTick.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 6,
@@ -520,17 +563,17 @@
         "x": 184,
         "width": 6
       },
+      "type": "static",
+      "key": "TickTick",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/desk/display/TickTick.png"
     },
 
     {
-      "key": "Chrome",
-      "path": "/src/assets/sprites/desk/display/Chrome.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 3,
@@ -538,17 +581,17 @@
         "x": 182,
         "width": 3
       },
+      "type": "static",
+      "key": "Chrome",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/desk/display/Chrome.png"
     },
 
     {
-      "key": "Discord",
-      "path": "/src/assets/sprites/desk/display/Discord.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 8,
@@ -556,17 +599,17 @@
         "x": 202,
         "width": 9
       },
+      "type": "static",
+      "key": "Discord",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/desk/display/Discord.png"
     },
 
     {
-      "key": "Aseprite",
-      "path": "/src/assets/sprites/desk/display/Aseprite.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 8,
@@ -574,17 +617,17 @@
         "x": 203,
         "width": 7
       },
+      "type": "static",
+      "key": "Aseprite",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/desk/display/Aseprite.png"
     },
 
     {
-      "key": "Floorp",
-      "path": "/src/assets/sprites/desk/display/Floorp.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 8,
@@ -592,17 +635,17 @@
         "x": 184,
         "width": 6
       },
+      "type": "static",
+      "key": "Floorp",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/desk/display/Floorp.png"
     },
 
     {
-      "key": "Meta",
-      "path": "/src/assets/sprites/desk/display/Meta.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 5,
@@ -610,17 +653,17 @@
         "x": 193,
         "width": 7
       },
+      "type": "static",
+      "key": "Meta",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/desk/display/Meta.png"
     },
 
     {
-      "key": "UWaterloo",
-      "path": "/src/assets/sprites/desk/display/UWaterloo.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 8,
@@ -628,17 +671,17 @@
         "x": 157,
         "width": 7
       },
+      "type": "static",
+      "key": "UWaterloo",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/desk/display/UWaterloo.png"
     },
 
     {
-      "key": "laptop_sprite",
-      "path": "/src/assets/sprites/desk/laptop_sprite.png",
-      "draw": true,
-      "type": "sprite",
       "boundingBox": 
       {
         "height": 17,
@@ -646,6 +689,9 @@
         "x": 184,
         "width": 16
       },
+      "type": "sprite",
+      "key": "laptop_sprite",
+      "draw": true,
       "vertices": 
       {
         "1": 
@@ -678,14 +724,11 @@
           "x": 187,
           "y": 124
         }
-      }
+      },
+      "path": "/src/assets/sprites/desk/laptop_sprite.png"
     },
 
     {
-      "key": "laptop_hover",
-      "path": "/src/assets/sprites/desk/laptop_hover.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 19,
@@ -693,17 +736,17 @@
         "x": 183,
         "width": 18
       },
+      "type": "static",
+      "key": "laptop_hover",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/desk/laptop_hover.png"
     },
 
     {
-      "key": "office_chair_sprite",
-      "path": "/src/assets/sprites/desk/office_chair_sprite.png",
-      "draw": true,
-      "type": "sprite",
       "boundingBox": 
       {
         "height": 36,
@@ -711,6 +754,9 @@
         "x": 164,
         "width": 28
       },
+      "type": "sprite",
+      "key": "office_chair_sprite",
+      "draw": true,
       "vertices": 
       {
         "1": 
@@ -748,14 +794,11 @@
           "x": 164,
           "y": 133
         }
-      }
+      },
+      "path": "/src/assets/sprites/desk/office_chair_sprite.png"
     },
 
     {
-      "key": "office_chair_hover",
-      "path": "/src/assets/sprites/desk/office_chair_hover.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 38,
@@ -763,17 +806,17 @@
         "x": 163,
         "width": 30
       },
+      "type": "static",
+      "key": "office_chair_hover",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/desk/office_chair_hover.png"
     },
 
     {
-      "key": "nightstand",
-      "path": "/src/assets/sprites/nightstand.png",
-      "draw": true,
-      "type": "static",
       "boundingBox": 
       {
         "height": 18,
@@ -781,17 +824,17 @@
         "x": 83,
         "width": 16
       },
+      "type": "static",
+      "key": "nightstand",
+      "draw": true,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/nightstand.png"
     },
 
     {
-      "key": "lamp",
-      "path": "/src/assets/sprites/lamp.png",
-      "draw": true,
-      "type": "static",
       "boundingBox": 
       {
         "height": 40,
@@ -799,17 +842,17 @@
         "x": 76,
         "width": 12
       },
+      "type": "static",
+      "key": "lamp",
+      "draw": true,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/lamp.png"
     },
 
     {
-      "key": "piano_sprite",
-      "path": "/src/assets/sprites/piano/piano_sprite.png",
-      "draw": true,
-      "type": "sprite",
       "boundingBox": 
       {
         "height": 41,
@@ -817,6 +860,9 @@
         "x": 45,
         "width": 40
       },
+      "type": "sprite",
+      "key": "piano_sprite",
+      "draw": true,
       "vertices": 
       {
         "1": 
@@ -844,14 +890,11 @@
           "x": 75,
           "y": 118
         }
-      }
+      },
+      "path": "/src/assets/sprites/piano/piano_sprite.png"
     },
 
     {
-      "key": "piano_hover",
-      "path": "/src/assets/sprites/piano/piano_hover.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 43,
@@ -859,17 +902,17 @@
         "x": 44,
         "width": 42
       },
+      "type": "static",
+      "key": "piano_hover",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/piano/piano_hover.png"
     },
 
     {
-      "key": "piano_bench",
-      "path": "/src/assets/sprites/piano/piano_bench.png",
-      "draw": true,
-      "type": "static",
       "boundingBox": 
       {
         "height": 23,
@@ -877,17 +920,17 @@
         "x": 64,
         "width": 24
       },
+      "type": "static",
+      "key": "piano_bench",
+      "draw": true,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/piano/piano_bench.png"
     },
 
     {
-      "key": "wardrobe",
-      "path": "/src/assets/sprites/wardrobe.png",
-      "draw": true,
-      "type": "static",
       "boundingBox": 
       {
         "height": 68,
@@ -895,17 +938,17 @@
         "x": 18,
         "width": 34
       },
+      "type": "static",
+      "key": "wardrobe",
+      "draw": true,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/wardrobe.png"
     },
 
     {
-      "key": "tennis_bag_sprite",
-      "path": "/src/assets/sprites/tennis/tennis_bag_sprite.png",
-      "draw": true,
-      "type": "sprite",
       "boundingBox": 
       {
         "height": 17,
@@ -913,6 +956,9 @@
         "x": 16,
         "width": 24
       },
+      "type": "sprite",
+      "key": "tennis_bag_sprite",
+      "draw": true,
       "vertices": 
       {
         "1": 
@@ -940,14 +986,11 @@
           "x": 26,
           "y": 106
         }
-      }
+      },
+      "path": "/src/assets/sprites/tennis/tennis_bag_sprite.png"
     },
 
     {
-      "key": "tennis_bag_hover",
-      "path": "/src/assets/sprites/tennis/tennis_bag_hover.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 19,
@@ -955,17 +998,17 @@
         "x": 15,
         "width": 26
       },
+      "type": "static",
+      "key": "tennis_bag_hover",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/tennis/tennis_bag_hover.png"
     },
 
     {
-      "key": "hockey_sticks",
-      "path": "/src/assets/sprites/hockey/hockey_sticks.png",
-      "draw": true,
-      "type": "static",
       "boundingBox": 
       {
         "height": 34,
@@ -973,17 +1016,17 @@
         "x": 232,
         "width": 8
       },
+      "type": "static",
+      "key": "hockey_sticks",
+      "draw": true,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/hockey/hockey_sticks.png"
     },
 
     {
-      "key": "hockey_bag_sprite",
-      "path": "/src/assets/sprites/hockey/hockey_bag_sprite.png",
-      "draw": true,
-      "type": "sprite",
       "boundingBox": 
       {
         "height": 22,
@@ -991,6 +1034,9 @@
         "x": 192,
         "width": 28
       },
+      "type": "sprite",
+      "key": "hockey_bag_sprite",
+      "draw": true,
       "vertices": 
       {
         "1": 
@@ -1018,14 +1064,11 @@
           "x": 203,
           "y": 166
         }
-      }
+      },
+      "path": "/src/assets/sprites/hockey/hockey_bag_sprite.png"
     },
 
     {
-      "key": "hockey_bag_hover",
-      "path": "/src/assets/sprites/hockey/hockey_bag_hover.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 24,
@@ -1033,17 +1076,17 @@
         "x": 191,
         "width": 30
       },
+      "type": "static",
+      "key": "hockey_bag_hover",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/hockey/hockey_bag_hover.png"
     },
 
     {
-      "key": "npc_shadow",
-      "path": "/src/assets/sprites/npc/npc_shadow.png",
-      "draw": true,
-      "type": "static",
       "boundingBox": 
       {
         "height": 8,
@@ -1051,17 +1094,17 @@
         "x": 101,
         "width": 16
       },
+      "type": "static",
+      "key": "npc_shadow",
+      "draw": true,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/npc/npc_shadow.png"
     },
 
     {
-      "key": "npc_sprite",
-      "path": "/src/assets/sprites/npc/npc_sprite.png",
-      "draw": true,
-      "type": "sprite",
       "boundingBox": 
       {
         "height": 42,
@@ -1069,6 +1112,9 @@
         "x": 100,
         "width": 19
       },
+      "type": "sprite",
+      "key": "npc_sprite",
+      "draw": true,
       "vertices": 
       {
         "1": 
@@ -1111,14 +1157,47 @@
           "x": 103,
           "y": 119
         }
-      }
+      },
+      "path": "/src/assets/sprites/npc/npc_sprite.png"
     },
 
     {
-      "key": "npc_hover",
-      "path": "/src/assets/sprites/npc/npc_hover.png",
-      "draw": false,
+      "boundingBox": 
+      {
+        "height": 42,
+        "y": 118,
+        "x": 97,
+        "width": 25
+      },
       "type": "static",
+      "key": "npc_hands_up",
+      "draw": false,
+      "vertices": 
+      {
+
+      },
+      "path": "/src/assets/sprites/npc/npc_hands_up.png"
+    },
+
+    {
+      "boundingBox": 
+      {
+        "height": 42,
+        "y": 118,
+        "x": 98,
+        "width": 22
+      },
+      "type": "static",
+      "key": "npc_hands_down",
+      "draw": false,
+      "vertices": 
+      {
+
+      },
+      "path": "/src/assets/sprites/npc/npc_hands_down.png"
+    },
+
+    {
       "boundingBox": 
       {
         "height": 44,
@@ -1126,64 +1205,17 @@
         "x": 99,
         "width": 21
       },
-      "vertices": 
-      {
-
-      }
-    },
-
-    {
-      "key": "floor_env",
-      "path": "/src/assets/sprites/floor_env.png",
-      "draw": true,
-      "type": "env",
-      "boundingBox": 
-      {
-        "height": 75,
-        "y": 146,
-        "x": 36,
-        "width": 158
-      },
-      "vertices": 
-      {
-        "1": 
-        {
-          "x": 112,
-          "y": 146
-        },
-        "2": 
-        {
-          "x": 193,
-          "y": 188
-        },
-        "3": 
-        {
-          "x": 128,
-          "y": 220
-        },
-        "4": 
-        {
-          "x": 36,
-          "y": 174
-        },
-        "5": 
-        {
-          "x": 71,
-          "y": 167
-        },
-        "6": 
-        {
-          "x": 111,
-          "y": 147
-        }
-      }
-    },
-
-    {
-      "key": "bigblock",
-      "path": "/src/assets/sprites/references/bigblock.png",
-      "draw": false,
       "type": "static",
+      "key": "npc_hover",
+      "draw": false,
+      "vertices": 
+      {
+
+      },
+      "path": "/src/assets/sprites/npc/npc_hover.png"
+    },
+
+    {
       "boundingBox": 
       {
         "height": 16,
@@ -1191,17 +1223,17 @@
         "x": 0,
         "width": 16
       },
+      "type": "static",
+      "key": "bigblock",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/references/bigblock.png"
     },
 
     {
-      "key": "block",
-      "path": "/src/assets/sprites/references/block.png",
-      "draw": false,
-      "type": "static",
       "boundingBox": 
       {
         "height": 8,
@@ -1209,10 +1241,14 @@
         "x": 0,
         "width": 8
       },
+      "type": "static",
+      "key": "block",
+      "draw": false,
       "vertices": 
       {
 
-      }
+      },
+      "path": "/src/assets/sprites/references/block.png"
     }
   ]
 }

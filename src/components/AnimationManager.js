@@ -1,3 +1,5 @@
+import { trimTo, isPointInPolygon } from "../components/utils";
+
 export default class AnimationManager {
   constructor(scene) {
       this.scene = scene; // Phaser scene
@@ -6,13 +8,14 @@ export default class AnimationManager {
   }
 
   // Add a sprite to the animation manager with texture-duration pairs
-  addSprite(sprite, textureDurations) {
+  addSprite(sprite, textureDurations, canOverride = false) {
       this.sprites.push({
           sprite: sprite,
           textureDurations: textureDurations, // Array of { texture, duration }
           currentIndex: 0,
           elapsedTime: 0, // Track elapsed time for the current texture
-          paused: false // Track whether the sprite's animation is paused
+          paused: false, // Track whether the sprite's animation is paused
+          canOverride: canOverride
       });
 
       // Start the animation loop if it's not already running
@@ -94,4 +97,60 @@ export default class AnimationManager {
           entry.paused = false;
       }
   }
+  
+  setTexture(sprite, texture) {
+    const sceneManager = this.scene.sceneManager;
+    const xOffset = sceneManager.offsets[texture].xBound - sceneManager.offsets[sprite.texture.key].xBound;
+    const yOffset = sceneManager.offsets[texture].yBound - sceneManager.offsets[sprite.texture.key].yBound;
+
+    sprite.setPosition(sprite.x + xOffset, sprite.y + yOffset);
+    sprite.setTexture(texture);
+    return sprite;
+  }
+
+  addHoverEffect(spriteName) {
+    const obj = this.scene.sceneManager.objects[spriteName];
+    const trimmedSpriteName = trimTo(spriteName, "_");
+    let prevTexture = spriteName;
+
+    obj.on("pointerover", () => {
+      if (obj.texture.key === trimmedSpriteName + "_sprite" || this.sprites.find(entry => entry.sprite === obj)?.canOverride) {
+        prevTexture = obj.texture.key;
+        this.pauseSprite(obj);
+        this.setTexture(obj, trimmedSpriteName + "_hover");
+      }
+    });
+
+    obj.on("pointerout", () => {
+      if (obj.texture.key === trimmedSpriteName + "_hover") {
+        this.setTexture(obj, prevTexture);
+        this.resumeSprite(obj);
+      }
+    });
+  }
+
+  // enableHover() {
+  //   this.scene.input.on("pointermove", (pointer) => {
+  //     const pointerCoord = this.scene.cameras.main.getWorldPoint(pointer.x, pointer.y);
+
+  //     // Query nearby objects using Phaser's built-in spatial lookup
+  //     const nearbyObjects = this.scene.physics.overlapRect(pointerCoord.x, pointerCoord.y, 5, 5);
+
+  //     for (let obj of nearbyObjects) {
+  //       const sprite = obj.gameObject;
+  //       const localPointer = [pointerCoord.x - sprite.x, pointerCoord.y - sprite.y];
+  //       if (isPointInPolygon(localPointer, sprite.vertices)) {
+  //         if (sprite.texture.key !== sprite.name + "_hover") {
+  //           sprite.setTexture(sprite.name + "_hover").setPosition(sprite.x - 1, sprite.y - 1);
+  //         }
+  //         this.scene.input.setDefaultCursor("pointer");
+  //       } else {
+  //         if (sprite.texture.key === sprite.name + "_hover") {
+  //           sprite.setTexture(sprite.name + "_sprite").setPosition(sprite.x + 1, sprite.y + 1);
+  //           this.scene.input.setDefaultCursor("default");
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
 }

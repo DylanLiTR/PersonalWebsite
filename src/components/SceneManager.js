@@ -15,9 +15,10 @@ export default class SceneManager {
     const yOffset = -ROOM_SIZE / 2;
 
     assets.images.forEach((asset) => {
+      this.offsets[asset.key] = { xBound: asset.boundingBox.x, yBound: asset.boundingBox.y };
       if (!asset.draw) return;
 
-      const key = asset.type === "sprite" || asset.type === "env" ? trimTo(asset.key, "_") : asset.key;
+      const key = /*asset.type === "sprite" || asset.type === "env" ? trimTo(asset.key, "_") :*/ asset.key;
       if (asset.type === "sprite") {
         this.objects[key] = this.scene.physics.add.sprite(xOffset + asset.boundingBox.x, yOffset + asset.boundingBox.y, asset.key)
           .setOrigin(0)
@@ -27,7 +28,7 @@ export default class SceneManager {
 
         this.objects[key].body.setAllowGravity(false);
         // this.setVertices(asset, key);
-        this.addHoverEffect(key);
+        this.scene.animationManager.addHoverEffect(key);
       } else if (asset.type === "env") {
         this.objects[key] = this.scene.physics.add.staticSprite(xOffset + asset.boundingBox.x, yOffset + asset.boundingBox.y, asset.key)
           .setOrigin(0)
@@ -41,25 +42,24 @@ export default class SceneManager {
           .setDepth(1)
           .setName(key);
       }
-      this.offsets[key] = { xBound: asset.boundingBox.x, yBound: asset.boundingBox.y };
     });
 
     // this.enableHover();
 
-    this.objects['floor'].setVisible(false);
-    this.objects['piano'].on("pointerdown", () => {
+    this.objects['floor_env'].setVisible(false);
+    this.objects['piano_sprite'].on("pointerdown", () => {
       window.openYouTubePlaylist('PL5PnGHCu4otZLuNWBhpGLjbt8MBgeMZri');
     });
-    this.objects['duo'].on("pointerdown", () => {
+    this.objects['duo_sprite'].on("pointerdown", () => {
       window.openDuolingoProfile();
     });
 
     // Duo animations
     const duoTextures = [{ texture: 'duo_sprite', duration: 10000 }, { texture: 'duo_right', duration: 5000 }];
-    this.scene.animationManager.addSprite(this.objects['duo'], duoTextures);
+    this.scene.animationManager.addSprite(this.objects['duo_sprite'], duoTextures, true);
 
     // Create and display speech bubble
-    this.speechBubble = new SpeechBubble(this.scene, this.objects['npc']);
+    this.speechBubble = new SpeechBubble(this.scene, this.objects['npc_sprite']);
     this.speechBubble.addText("Hi, my name is Dylan and welcome to my website! Feel free to look around and ask me any questions.");
   }
 
@@ -91,45 +91,4 @@ export default class SceneManager {
     });
     this.scene.cameraControls.calcBounds();
   }
-
-  addHoverEffect(spriteName) {
-    const obj = this.objects[spriteName];
-    let prevTexture = spriteName + "_sprite";
-
-    obj.on("pointerover", () => {
-      prevTexture = obj.texture.key;
-      this.scene.animationManager.pauseSprite(obj);
-      obj.setTexture(spriteName + "_hover").setPosition(obj.x - 1, obj.y - 1);
-    });
-
-    obj.on("pointerout", () => {
-      obj.setTexture(prevTexture).setPosition(obj.x + 1, obj.y + 1);
-      this.scene.animationManager.resumeSprite(obj);
-    });
-  }
-
-  // enableHover() {
-  //   this.scene.input.on("pointermove", (pointer) => {
-  //     const pointerCoord = this.scene.cameras.main.getWorldPoint(pointer.x, pointer.y);
-
-  //     // Query nearby objects using Phaser's built-in spatial lookup
-  //     const nearbyObjects = this.scene.physics.overlapRect(pointerCoord.x, pointerCoord.y, 5, 5);
-
-  //     for (let obj of nearbyObjects) {
-  //       const sprite = obj.gameObject;
-  //       const localPointer = [pointerCoord.x - sprite.x, pointerCoord.y - sprite.y];
-  //       if (isPointInPolygon(localPointer, sprite.vertices)) {
-  //         if (sprite.texture.key !== sprite.name + "_hover") {
-  //           sprite.setTexture(sprite.name + "_hover").setPosition(sprite.x - 1, sprite.y - 1);
-  //         }
-  //         this.scene.input.setDefaultCursor("pointer");
-  //       } else {
-  //         if (sprite.texture.key === sprite.name + "_hover") {
-  //           sprite.setTexture(sprite.name + "_sprite").setPosition(sprite.x + 1, sprite.y + 1);
-  //           this.scene.input.setDefaultCursor("default");
-  //         }
-  //       }
-  //     }
-  //   });
-  // }
 }

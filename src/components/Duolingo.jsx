@@ -7,7 +7,7 @@ const USERNAME = "leibei8";
 
 const DuolingoProfile = () => {
   const [showOverlay, setShowOverlay] = useState(false);
-  const [position, setPosition] = useState({ x: 100, y: 100 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

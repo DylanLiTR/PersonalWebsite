@@ -24,7 +24,7 @@ export default class CameraControls {
     // Enable panning using pointer events
     this.scene.input.on("pointerdown", (pointer) => {
       const pointerCoord = this.cam.getWorldPoint(pointer.x, pointer.y);
-      const npcHover = this.scene.sceneManager.objects["npc"].getBounds().contains(pointerCoord.x, pointerCoord.y);
+      const npcHover = this.scene.sceneManager.objects["npc_sprite"].getBounds().contains(pointerCoord.x, pointerCoord.y);
       
       if (!npcHover) {
         this.isPanning = true;
