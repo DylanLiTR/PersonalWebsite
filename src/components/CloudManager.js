@@ -1,5 +1,5 @@
-export const FAR_CLOUD_SPEED = 0.02;
-export const CLOSE_CLOUD_SPEED = 0.1;
+const FAR_CLOUD_SPEED = 0.05;
+const CLOSE_CLOUD_SPEED = 0.3;
 
 const CLOUD_SPRITES = [
   { key: "cloud_big", weight: 0.5 },
@@ -27,6 +27,7 @@ export default class CloudManager {
   constructor(scene) {
     this.scene = scene;
     this.clouds = [];
+    this.prevTime = this.scene.time.now;
   }
 
   spawnCloud(offset = 0) {
@@ -48,8 +49,11 @@ export default class CloudManager {
   }
 
   update() {
+    if (this.prevTime + 100 > this.scene.time.now) return;
+    this.prevTime = this.scene.time.now;
+
     // Move clouds and handle despawning
-    for (let i = this.clouds.length - 1; i >= 0; i--) {
+    for (let i = this.clouds.length - 1; i >= 0; --i) {
       const cloud = this.clouds[i];
 
       // Move the cloud
