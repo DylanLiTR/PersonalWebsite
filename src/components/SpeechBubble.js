@@ -1,5 +1,5 @@
-const TYPING_SPEED = 50;
-const SENTENCE_DELAY = 2000; // Delay before showing the next sentence
+const TYPING_DELAY = 50;
+const DELAY_FACTOR = 60; // ms of delay per character in sentence
 const TEXT_SCALE = 0.3;
 const WRAP_WIDTH = 200 / TEXT_SCALE;
 const FONT_SIZE = 4 / TEXT_SCALE;
@@ -10,6 +10,14 @@ export default class SpeechBubble {
     this.npc = npc
     this.sentenceQueue = [];
     this.typing = false;
+    this.generating = false; // start as false, true when generating a response
+    
+    this.reminder = this.scene.time.addEvent({
+      delay: 30000,
+      callback: this.remindPrompt,
+      callbackScope: this,
+      loop: true
+  });
 
     this.container = this.scene.add.container(this.npc.x, this.npc.y).setDepth(11);
   }
@@ -25,10 +33,13 @@ export default class SpeechBubble {
 
   processQueue() {
     if (this.sentenceQueue.length === 0) {
-      this.speechText.destroy();
-      this.bubble.destroy();
-      this.typing = false;
-      return;
+      if (!this.generating) {
+        this.speechText.destroy();
+        this.bubble.destroy();
+        this.typing = false;
+        return;
+      }
+      this.sentenceQueue.push("...");
     }
     if (this.speechText) this.speechText.destroy();
     if (this.bubble) this.bubble.destroy();
@@ -37,7 +48,7 @@ export default class SpeechBubble {
     const sentence = this.sentenceQueue.shift().trim();
     this.createBubble(sentence);
     this.typeText(sentence, () => {
-      this.scene.time.delayedCall(SENTENCE_DELAY, () => this.processQueue());
+      this.scene.time.delayedCall(DELAY_FACTOR * sentence.length, () => this.processQueue());
     });
   }
 
@@ -81,8 +92,10 @@ export default class SpeechBubble {
     let i = 0;
     this.speechText.setText('');
 
+    let typingDelay = TYPING_DELAY;
+    if (this.generating && sentence === "...") typingDelay *= 5;
     this.scene.time.addEvent({
-      delay: TYPING_SPEED,
+      delay: typingDelay,
       repeat: sentence.length - 1,
       callback: () => {
         this.speechText.setText(sentence.substring(0, i + 1));
@@ -92,6 +105,12 @@ export default class SpeechBubble {
         }
       }
     });
+  }
+
+  remindPrompt() {
+    if (this.sentenceQueue.length !== 0 || this.typing) return;
+    this.sentenceQueue.push("Remember that I'm here to answer any of your questions!");
+    this.processQueue();
   }
 
   update() {
