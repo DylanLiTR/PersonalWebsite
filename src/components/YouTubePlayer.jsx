@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import '../fonts/fonts.css';
-import '../App.css';
+import './player.css';
 
 const YouTubePlayer = () => {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -57,7 +57,7 @@ const YouTubePlayer = () => {
           }}
           onMouseDown={handleMouseDown}
         >
-          <button onClick={closeOverlay} className="close-button">
+          <button onClick={closeOverlay} className="floating-close-button">
             &times;
           </button>
           <div className="iframe-container">

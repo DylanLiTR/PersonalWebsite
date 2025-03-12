@@ -2,7 +2,7 @@
 
 /* Base styles */
 .duolingo-profile {
-  font-family: 'Nunito', 'din-round', sans-serif;
+  font-family: 'Press Start 2P', 'Nunito', 'din-round', sans-serif;
   color: #4b4b4b;
 }
 
@@ -16,7 +16,7 @@
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: 'Nunito', 'din-round', sans-serif;
+  font-family: 'Press Start 2P', 'Nunito', 'din-round', sans-serif;
 }
 
 .duolingo-profile-button:hover {
@@ -30,9 +30,9 @@
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  width: 400px;
+  width: 480px;
   overflow: hidden;
-  font-family: 'Nunito', 'din-round', sans-serif;
+  font-family: 'Press Start 2P', 'Nunito', 'din-round', sans-serif;
   z-index: 100;
 }
 
@@ -48,7 +48,7 @@
 
 .duolingo-header h2 {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -56,9 +56,9 @@
   background: none;
   border: none;
   color: white;
-  font-size: 22px;
+  font-size: 24px;
   cursor: pointer;
-  padding: 0 5px;
+  padding: 0;
 }
 
 /* Content area */
@@ -79,13 +79,13 @@
 
 .duolingo-user-details h3 {
   margin: 0 0 5px 0;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .duolingo-user-details p {
   margin: 0 0 2px 0;
   color: #777;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .duolingo-plus-badge {
@@ -105,7 +105,7 @@
   justify-content: space-between;
   background-color: #f7f7f7;
   border-radius: 12px;
-  padding: 15px;
+  padding: 16px;
   margin-bottom: 10px;
 }
 
@@ -115,7 +115,7 @@
 
 .duolingo-stat-value {
   margin: 0;
-  font-size: 24px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -133,13 +133,13 @@
 
 .duolingo-stat-label {
   margin: 0;
-  font-size: 12px;
+  font-size: 10px;
   color: #777;
 }
 
 .duolingo-language-section h4 {
   margin: 0 0 10px 0;
-  font-size: 16px;
+  font-size: 12px;
   color: #4b4b4b;
   border-bottom: 1px solid #e5e5e5;
   padding-bottom: 5px;
@@ -150,7 +150,7 @@
   align-items: center;
   background-color: #f7f7f7;
   border-radius: 8px;
-  padding: 10px 15px;
+  padding: 10px 14px;
 }
 
 .duolingo-language-icon {
@@ -169,13 +169,13 @@
 
 .duolingo-language-name {
   margin: 0;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bold;
 }
 
 .duolingo-language-from {
   margin: 0;
-  font-size: 12px;
+  font-size: 10px;
   color: #777;
 }
 

@@ -51,6 +51,9 @@ export default class SceneManager {
     this.objects['duo_sprite'].on("pointerdown", () => {
       window.openDuolingoProfile();
     });
+    this.objects['laptop_sprite'].on("pointerdown", () => {
+      window.openLeetCodeProfile();
+    });
 
     // Duo animations
     const duoTextures = [{ texture: 'duo_sprite', duration: 10000 }, { texture: 'duo_right', duration: 5000 }];

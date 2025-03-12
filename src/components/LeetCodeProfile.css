@@ -1,0 +1,290 @@
+/* LeetCodeProfile.css */
+
+/* Button styling */
+.profile-button {
+  background-color: #0a84ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.profile-button:hover {
+  background-color: #0070e0;
+}
+
+/* Overlay styling */
+.leetcode-overlay {
+  position: fixed;
+  width: 400px;
+  overflow: hidden;
+  background-color: #000;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  font-family: 'Press Start 2P';
+  z-index: 1000;
+}
+
+/* Header styling */
+.leetcode-header {
+  background-color: #0a84ff;
+  padding: 6px 16px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: move;
+}
+
+.leetcode-header h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.leetcode-close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Content area */
+.leetcode-content {
+  padding: 20px;
+  color: #d2d2d2;
+}
+
+/* Loading and error states */
+.loading, .error {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.error {
+  color: #ff2d55;
+}
+
+/* User info section */
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.profile-image {
+  width: 80px;
+  height: 80px;
+  /* border-radius: 50%; */
+  overflow: hidden;
+  margin-right: 16px;
+  border: 3px solid #0a84ff;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-details h3 {
+  margin: 0 0 5px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.username {
+  margin: 0 0 8px 0;
+  color: #666;
+  font-size: 12px;
+}
+
+.rank {
+  display: inline-block;
+  background-color: #2d2d2d;
+  border-radius: 16px;
+  padding: 4px 12px;
+}
+
+.rank-number {
+  font-weight: bold;
+  color: #0a84ff;
+  margin-left: 5px;
+}
+
+.rank-label {
+  font-size: 10px;
+  color: #d2d2d2;
+}
+
+/* Stats section */
+.stats-section {
+  display: flex;
+  justify-content: space-between;
+  background-color: #2d2d2d;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-value {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #0a84ff;
+}
+
+.stat-label {
+  margin: 5px 0 0 0;
+  font-size: 10px;
+  color: #fff;
+}
+
+/* Submission stats */
+.submission-stats {
+  margin-bottom: 10px;
+}
+
+.submission-stats h4, .recent-activity h4 {
+  margin: 0 0 12px 0;
+  font-size: 12px;
+  color: #d2d2d2;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 6px;
+}
+
+.difficulty-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.difficulty-bar {
+  width: 100%;
+}
+
+.difficulty-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.count {
+  margin-left: auto;
+  font-size: 12px;
+  color: #fff;
+}
+
+.progress-bar {
+  height: 8px;
+  background-color: #eaeaea;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  border-radius: 4px;
+}
+
+/* Recent submissions */
+.recent-activity {
+  margin-bottom: 20px;
+}
+
+.submission-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.submission-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #eaeaea;
+  display: flex;
+  align-items: center;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.status-indicator.accepted {
+  background-color: #00af9b;
+}
+
+.status-indicator.wrong {
+  background-color: #ff2d55;
+}
+
+.status-indicator.tle {
+  background-color: #ff9500;
+}
+
+.submission-info {
+  flex: 1;
+}
+
+.difficulty {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.difficulty.easy {
+  background-color: rgba(0, 175, 155, 0.1);
+  color: #00af9b;
+}
+
+.difficulty.medium {
+  background-color: rgba(255, 184, 0, 0.1);
+  color: #ffb800;
+}
+
+.difficulty.hard {
+  background-color: rgba(255, 45, 85, 0.1);
+  color: #ff2d55;
+}
+
+.submission-time {
+  color: #888;
+}
+
+.no-submissions {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 10px;
+}
+
+/* Footer */
+.leetcode-footer {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 10px;
+  color: #666;
+}

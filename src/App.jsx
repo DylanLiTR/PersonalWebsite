@@ -4,8 +4,8 @@ import LoadingScreen from "./components/LoadingScreen.jsx"
 import MainScene from "./scenes/MainScene";
 import SpotifyPlayer from './components/SpotifyPlayer';
 import YouTubePlayer from './components/YouTubePlayer';
-import DuolingoProfile from './components/Duolingo';
-import './App.css';
+import DuolingoProfile from './components/DuolingoProfile';
+import LeetCodeProfile from './components/LeetCodeProfile';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -53,9 +53,10 @@ function App() {
     <div>
       {isLoading && <LoadingScreen progress={loadingProgress}/>}
       <div id="phaser-game" style={{ display: isLoading ? "none" : "block" }}></div>
-      <SpotifyPlayer /> {}
-      <YouTubePlayer /> {}
+      <SpotifyPlayer />
+      <YouTubePlayer />
       <DuolingoProfile />
+      <LeetCodeProfile />
     </div>
   );
 }

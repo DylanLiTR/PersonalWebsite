@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../fonts/fonts.css';
-import '../App.css';
+import './player.css';
 
 const SpotifyPlayer = () => {
   const [currentTrack, setCurrentTrack] = useState(null);
@@ -52,7 +52,7 @@ const SpotifyPlayer = () => {
   // Fetch currently playing track
   const getCurrentTrack = async () => {
     try {
-      const response = await fetch('http://localhost:3001/currently-playing');
+      const response = await fetch('http://localhost:3001/spotify/currently-playing');
       if (response.status === 204) {
         setCurrentTrack(null);
         return;
@@ -167,7 +167,7 @@ const SpotifyPlayer = () => {
           }}
           onMouseDown={handleMouseDown}
         >
-          <button onClick={closeOverlay} className="close-button">
+          <button onClick={closeOverlay} className="floating-close-button">
             &times;
           </button>
           <div className="iframe-container">
@@ -177,7 +177,6 @@ const SpotifyPlayer = () => {
               width="300"
               height="360"
               allowFullScreen=""
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
             ></iframe>
           </div>

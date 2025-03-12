@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../fonts/fonts.css';
-import '../App.css';
 import './DuolingoProfile.css';
 
 const USERNAME = "leibei8";
