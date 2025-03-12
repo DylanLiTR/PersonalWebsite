@@ -20,13 +20,19 @@ export default class NPC {
       this.sprite.body.setAllowGravity(false);
       this.sprite.body.setVelocity(0); // Stop existing motion
 
+      this.oldxBound = this.sceneManager.offsets[this.sprite.texture.key].xBound;
+      this.oldyBound = this.sceneManager.offsets[this.sprite.texture.key].yBound;
+
       const npcTextures = [{ texture: 'npc_hands_down', duration: 300 }, { texture: 'npc_hands_up', duration: 300 }];
       this.scene.animationManager.addSprite(this.sprite, npcTextures);
       if (this.onGround) this.scene.animationManager.pauseSprite(this.sprite);
     });
     
     this.sprite.on("drag", (pointer, dragX, dragY) => {
-      this.sprite.setPosition(dragX, dragY); // Move NPC with the pointer
+      const xOffset = this.sceneManager.offsets[this.sprite.texture.key].xBound - this.oldxBound;
+      const yOffset = this.sceneManager.offsets[this.sprite.texture.key].yBound - this.oldyBound;
+
+      this.sprite.setPosition(dragX + xOffset, dragY + yOffset); // Move NPC with the pointer
       this.sprite.body.setVelocity(0); // Prevent unwanted motion
 
       if (this.onGround) this.scene.animationManager.pauseSprite(this.sprite);

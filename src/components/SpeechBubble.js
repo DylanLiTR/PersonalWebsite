@@ -96,7 +96,7 @@ export default class SpeechBubble {
 
   update() {
     // Update speech bubble position to follow the NPC
-    this.container.setPosition(this.npc.x + (this.npc.texture.key.includes("hover") ? 1 : 0), this.npc.y - 10 + (this.npc.texture.key.includes("hover") ? 1 : 0));
+    this.container.setPosition(this.npc.x, this.npc.y - 10);
   }
 
   destroy() {

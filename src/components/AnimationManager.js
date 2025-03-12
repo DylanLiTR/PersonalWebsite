@@ -74,7 +74,7 @@ export default class AnimationManager {
               entry.currentIndex = (currentIndex + 1) % textureDurations.length;
 
               // Update the sprite's texture
-              sprite.setTexture(textureDurations[entry.currentIndex].texture);
+              this.setTexture(sprite, textureDurations[entry.currentIndex].texture);
 
               // Reset the elapsed time for the new texture
               entry.elapsedTime = now;

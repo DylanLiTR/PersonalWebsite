@@ -55,7 +55,6 @@ export default class MainScene extends Phaser.Scene {
     this.cameraControls.applyInertia();
     this.sceneManager.speechBubble.update();
     this.animationManager.updateAnimations();
-
     this.npc.update();
   }
 }

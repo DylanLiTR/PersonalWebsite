@@ -44,8 +44,6 @@ export default class SceneManager {
       }
     });
 
-    // this.enableHover();
-
     this.objects['floor_env'].setVisible(false);
     this.objects['piano_sprite'].on("pointerdown", () => {
       window.openYouTubePlaylist('PL5PnGHCu4otZLuNWBhpGLjbt8MBgeMZri');
@@ -58,7 +56,7 @@ export default class SceneManager {
     const duoTextures = [{ texture: 'duo_sprite', duration: 10000 }, { texture: 'duo_right', duration: 5000 }];
     this.scene.animationManager.addSprite(this.objects['duo_sprite'], duoTextures, true);
 
-    // Create and display speech bubble
+    // Create and display speech bubble with welcome message
     this.speechBubble = new SpeechBubble(this.scene, this.objects['npc_sprite']);
     this.speechBubble.addText("Hi, my name is Dylan and welcome to my website! Feel free to look around and ask me any questions.");
   }
@@ -83,12 +81,6 @@ export default class SceneManager {
   }
 
   resizeScene() {
-    const xOffset = -ROOM_SIZE / 2;
-    const yOffset = -ROOM_SIZE / 2;
-
-    Object.entries(this.offsets).forEach(([key, obj]) => {
-      this.objects[key].setPosition(xOffset + obj.xBound, yOffset + obj.yBound);
-    });
     this.scene.cameraControls.calcBounds();
   }
 }
