@@ -53,14 +53,14 @@ export default class SpeechBubble {
   }
 
   createBubble(sentence) {
-    const textObject = this.createText(sentence);
+    const textObject = this.createText(sentence, WRAP_WIDTH);
 
     // Measure text size
     const textWidth = textObject.width * TEXT_SCALE;
     const textHeight = textObject.height * TEXT_SCALE;
     textObject.destroy();
 
-    this.wrapWidth = Math.min(WRAP_WIDTH, textWidth / TEXT_SCALE);
+    const wrapWidth = Math.min(WRAP_WIDTH, textWidth / TEXT_SCALE);
 
     // Create the speech bubble
     this.bubble = this.scene.add.nineslice(
@@ -72,18 +72,18 @@ export default class SpeechBubble {
     this.container.add(this.bubble);
 
     // Add the text
-    this.speechText = this.createText("");
+    this.speechText = this.createText("", wrapWidth);
     this.container.add(this.speechText);
 
     this.scene.minimap.ignore([this.bubble, this.speechText]);
   }
 
-  createText(content) {
+  createText(content, wrapWidth) {
     return this.scene.add.text(0, 0, content, {
       fontFamily: '"Press Start 2P", sans-serif',
       fontSize: FONT_SIZE + 'px',
       color: '#000',
-      wordWrap: { width: this.wrapWidth },
+      wordWrap: { width: wrapWidth },
       align: 'left'
     }).setOrigin(0.5).setScale(TEXT_SCALE).setLineSpacing(FONT_SIZE / 4);
   }

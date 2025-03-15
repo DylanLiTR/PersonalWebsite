@@ -3,7 +3,7 @@ import './LeetCodeProfile.css';
 
 const LeetCodeProfile = () => {
   const [showOverlay, setShowOverlay] = useState(false);
-  const [position, setPosition] = useState({ x: 100, y: 100 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -35,6 +35,24 @@ const LeetCodeProfile = () => {
   useEffect(() => {
     if (showOverlay && !profileData && !loading) {
       fetchProfileData();
+    } else if (showOverlay && !loading) {
+      const overlay = overlayRef.current;
+      const overlayHeight = overlay.offsetHeight;
+
+      setPosition({
+        x: 10,
+        y: Math.max(0, window.innerHeight - overlayHeight - 10),
+      });
+    }
+
+    if (showOverlay && loading) {
+      const overlay = overlayRef.current;
+      const overlayHeight = overlay.offsetHeight;
+
+      setPosition({
+        x: 10,
+        y: Math.max(0, window.innerHeight - overlayHeight - 10),
+      });
     }
   }, [showOverlay, profileData, loading]);
 
@@ -140,7 +158,7 @@ const LeetCodeProfile = () => {
                     <canvas ref={canvasRef} className="profile-image"/>
                   )}
                   <div className="user-details">
-                    <h3>{profileData.name}</h3>
+                  <h3><a href="https://leetcode.com/u/LeiBei/" target="_blank">{profileData.name || "User"}</a></h3>
                     <p className="username">@{profileData.username}</p>
                     <div className="rank">
                       <span className="rank-label">Rank</span>
@@ -175,7 +193,7 @@ const LeetCodeProfile = () => {
                         <span className="difficulty easy">Easy</span>
                         <span className="count">{profileData.easySolved}/{profileData.easyTotal}</span>
                       </div>
-                      <div className="progress-bar">
+                      <div className="progress-bar easy">
                         <div 
                           className="progress" 
                           style={{ 
@@ -192,7 +210,7 @@ const LeetCodeProfile = () => {
                         <span className="difficulty medium">Medium</span>
                         <span className="count">{profileData.mediumSolved}/{profileData.mediumTotal}</span>
                       </div>
-                      <div className="progress-bar">
+                      <div className="progress-bar medium">
                         <div 
                           className="progress" 
                           style={{ 
@@ -209,7 +227,7 @@ const LeetCodeProfile = () => {
                         <span className="difficulty hard">Hard</span>
                         <span className="count">{profileData.hardSolved}/{profileData.hardTotal}</span>
                       </div>
-                      <div className="progress-bar">
+                      <div className="progress-bar hard">
                         <div 
                           className="progress" 
                           style={{ 

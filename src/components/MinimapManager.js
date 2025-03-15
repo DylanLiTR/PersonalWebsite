@@ -3,19 +3,20 @@ import { MINIMAP_XOFFSET, MINIMAP_YOFFSET, MIN_ZOOM } from "../components/consta
 export default class MinimapManager {
   constructor(scene) {
     this.scene = scene;
-    this.createMinimap();
+    this.scale = 8;
+    this.offsetx = scene.cameras.main.width - this.scene.cameras.main.width / this.scale - 10;
+    this.offsety = 10;
   }
 
   createMinimap() {
-    const scale = 8;
     const zoom = MIN_ZOOM / 16;
 
     this.scene.minimap = this.scene.cameras
       .add(
-        MINIMAP_XOFFSET,
-        MINIMAP_YOFFSET,
-        this.scene.cameras.main.width / scale,
-        this.scene.cameras.main.height / scale
+        this.offsetx,
+        this.offsety,
+        this.scene.cameras.main.width / this.scale,
+        this.scene.cameras.main.height / this.scale
       )
       .setZoom(zoom)
       .setName("mini");
@@ -39,12 +40,18 @@ export default class MinimapManager {
     const mini = this.scene.minimap;
 
     // Calculate the position and size of the rectangle
-    const rectX = main.scrollX + main.width / 2 + mini.width / 2 - MINIMAP_XOFFSET;
-    const rectY = main.scrollY + main.height / 2 + mini.height / 2 - MINIMAP_YOFFSET;
+    const rectX = main.scrollX + main.width / 2 + mini.width / 2 - this.offsetx;
+    const rectY = main.scrollY + main.height / 2 + mini.height / 2 - this.offsety;
     const rectWidth = main.width / main.zoom;
     const rectHeight = main.height / main.zoom;
 
     // Update the rectangle's position and size
     this.scene.cameraRect.setPosition(rectX + mini.x, rectY + mini.y).setSize(rectWidth, rectHeight);
+  }
+
+  resize() {
+    this.offsetx = this.scene.cameras.main.width - this.scene.cameras.main.width / this.scale - 10;
+    this.scene.minimap.setPosition(this.offsetx, this.offsety);
+    this.scene.minimap.setSize(this.scene.cameras.main.width / this.scale, this.scene.cameras.main.height / this.scale);
   }
 }

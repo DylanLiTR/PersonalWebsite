@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import '../fonts/fonts.css';
 import './DuolingoProfile.css';
 
 const USERNAME = "leibei8";
@@ -56,6 +55,24 @@ const DuolingoProfile = () => {
   useEffect(() => {
     if (showOverlay && !profileData && !loading) {
       fetchProfileData(USERNAME);
+    } else if (showOverlay && !loading) {
+      const overlay = overlayRef.current;
+      const overlayHeight = overlay.offsetHeight;
+
+      setPosition({
+        x: 10,
+        y: Math.max(0, window.innerHeight - overlayHeight - 10),
+      });
+    }
+
+    if (showOverlay && loading) {
+      const overlay = overlayRef.current;
+      const overlayHeight = overlay.offsetHeight;
+
+      setPosition({
+        x: 10,
+        y: Math.max(0, window.innerHeight - overlayHeight - 10),
+      });
     }
   }, [showOverlay, profileData, loading]);
 
@@ -70,7 +87,7 @@ const DuolingoProfile = () => {
 
   // Dragging logic
   const handleMouseDown = (e) => {
-    if (!overlayRef.current) return;
+    if (!e.target.closest('.duolingo-header')) return;
     
     e.preventDefault();
     const overlay = overlayRef.current;
@@ -149,7 +166,7 @@ const DuolingoProfile = () => {
                 {/* User info section */}
                 <div className="duolingo-user-info">
                   <div className="duolingo-user-details">
-                    <h3>{profileData.name || "User"}</h3>
+                    <h3><a href="https://www.duolingo.com/profile/LeiBei8" target="_blank">{profileData.name || "User"}</a></h3>
                     <p>@{profileData.username || "username"}</p>
                     {profileData.hasPlus && (
                       <div className="duolingo-plus-badge">
@@ -169,7 +186,7 @@ const DuolingoProfile = () => {
                   </div>
                   <div className="duolingo-stat">
                     <p className="duolingo-stat-value duolingo-xp-color">
-                      {profileData.totalXp !== undefined ? profileData.totalXp.toLocaleString() : "-"}
+                      {profileData.totalXp !== undefined ? profileData.totalXp : "-"}
                     </p>
                     <p className="duolingo-stat-label">Total XP</p>
                   </div>

@@ -1,17 +1,18 @@
 /* Spotify Player Container */
 .spotify-player {
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.75);
   color: white;
   padding: 16px;
   box-sizing: border-box;
   height: 100px;
   display: flex;
+  /* align-items: center; */
   flex-direction: column;
   justify-content: space-between;
+  text-shadow: 2px 2px 0px black;
 }
 
 .pixel-font {
@@ -41,6 +42,7 @@
 .track-details {
   display: flex;
   flex-direction: column;
+  /* text-align: right; */
 }
 
 .track-name {
@@ -49,19 +51,21 @@
 }
 
 .artist-names {
-  color: #a0a0a0;
-  font-size: 14px;
+  color: #ddd;
+  font-size: 12px;
 }
 
 /* Player Controls */
 .player-controls {
   display: flex;
+  /* justify-content: flex-end; */
   align-items: center;
   gap: 16px;
 }
 
 .play-status {
-  font-size: 14px;
+  font-size: 12px;
+  /* align-items: right; */
 }
 
 .play-status.playing {
@@ -69,12 +73,12 @@
 }
 
 .play-status.paused {
-  color: #a0a0a0;
+  color: #eee;
 }
 
 /* Playlist Buttons (to the right of the player) */
 .playlist-container {
-  border-left: solid #bbbbbb;
+  border-left: solid #ddd;
   border-width: 2px;
   padding-left: 12px;
 }
@@ -94,7 +98,6 @@
   color: white;
   border: none;
   padding: 4px 8px;
-  /* border-radius: 4px; */
   cursor: pointer;
   font-size: 20px;
 }

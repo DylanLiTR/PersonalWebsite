@@ -26,7 +26,6 @@
 /* Overlay styling */
 .duolingo-overlay {
   position: fixed;
-  cursor: move;
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
@@ -39,6 +38,7 @@
 /* Header styling */
 .duolingo-header {
   background-color: #58cc02;
+  cursor: move;
   padding: 6px 12px;
   color: white;
   display: flex;
@@ -80,6 +80,14 @@
 .duolingo-user-details h3 {
   margin: 0 0 5px 0;
   font-size: 18px;
+}
+
+.duolingo-user-details h3 a {
+  color: inherit;
+}
+
+.duolingo-user-details h3 a:hover {
+  text-shadow: 2px 2px 5px #58cc02;
 }
 
 .duolingo-user-details p {

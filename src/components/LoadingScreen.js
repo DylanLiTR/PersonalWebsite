@@ -21,7 +21,6 @@ export default class LoadingScreen {
 
         scene.cameraControls.zoom = DEFAULT_ZOOM;
         let cam = scene.cameras.main;
-        cam.setScroll(-cam.width / 2, -cam.height / 2);
         cam.setZoom(scene.cameraControls.zoom);
         scene.cameraControls.calcBounds();
 

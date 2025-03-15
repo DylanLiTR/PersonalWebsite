@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import '../fonts/fonts.css';
 import './player.css';
+
+const WIDTH = 300;
+const HEIGHT = 360;
 
 const SpotifyPlayer = () => {
   const [currentTrack, setCurrentTrack] = useState(null);
   const [error, setError] = useState(null);
   const [showOverlay, setShowOverlay] = useState(false);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: 20, y: window.innerHeight - HEIGHT - 20 });
   const overlayRef = useRef(null);
 
   const playlists = [
@@ -111,13 +113,6 @@ const SpotifyPlayer = () => {
     <div className="spotify-player pixel-font">
       <div className="player-container">
         <div className="track-info">
-          {/* {currentTrack?.item?.album?.images?.[0] && (
-            <img 
-              src={currentTrack.item.album.images[0].url} 
-              alt="Album Art" 
-              className="album-art"
-            />
-          )} */}
           {currentTrack?.item?.album?.images?.[0] && (
             <canvas ref={canvasRef} className="album-art" />
           )}
@@ -174,8 +169,8 @@ const SpotifyPlayer = () => {
             <iframe
               style={{ borderRadius: '12px' }}
               src={`https://open.spotify.com/embed/playlist/${selectedPlaylist}?utm_source=generator&theme=0`}
-              width="300"
-              height="360"
+              width={WIDTH}
+              height={HEIGHT}
               allowFullScreen=""
               loading="lazy"
             ></iframe>

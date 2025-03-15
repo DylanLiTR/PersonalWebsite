@@ -1,17 +1,21 @@
 import React, { useState, useRef } from 'react';
-import '../fonts/fonts.css';
 import './player.css';
+
+const WIDTH = 540;
+const HEIGHT = 300;
 
 const YouTubePlayer = () => {
   const [showOverlay, setShowOverlay] = useState(false);
+  const [isPlaylist, setIsPlaylist] = useState(true);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: 10, y: window.innerHeight - HEIGHT - 20 });
   const overlayRef = useRef(null);
 
   // Function that can be called from Phaser
-  window.openYouTubePlaylist = (playlistId) => {
+  window.openYouTubePlaylist = (playlistId, isPlaylist) => {
     setSelectedPlaylist(playlistId);
     setShowOverlay(true);
+    setIsPlaylist(isPlaylist);
   };
 
   const closeOverlay = () => {
@@ -63,9 +67,9 @@ const YouTubePlayer = () => {
           <div className="iframe-container">
             <iframe
               style={{ borderRadius: '12px' }}
-              width="540"
-              height="300"
-              src={`https://www.youtube.com/embed/videoseries?list=${selectedPlaylist}`} // &autoplay=1
+              width={WIDTH}
+              height={HEIGHT}
+              src={`https://www.youtube.com/embed/${isPlaylist?"videoseries?list=" : ""}${selectedPlaylist}`} // &autoplay=1
               title="YouTube video player"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen

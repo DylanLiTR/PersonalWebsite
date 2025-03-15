@@ -9,6 +9,7 @@ import CameraControls from "../components/CameraControls";
 import MinimapManager from "../components/MinimapManager";
 import LoadingScreen from "../components/LoadingScreen";
 import NPC from "../components/NPC";
+import { ROOM_SIZE } from "../components/constants";
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -24,7 +25,7 @@ export default class MainScene extends Phaser.Scene {
     this.isLoading = true;
     let cam = this.cameras.main;
     cam.setBackgroundColor("#87CEEB"); // sky color
-    cam.setScroll(-cam.width / 2, -cam.height / 2);
+    cam.setScroll(-cam.width / 2 - ROOM_SIZE / 4, -cam.height / 2);
 
     // Initialize managers
     this.cloudManager = new CloudManager(this);

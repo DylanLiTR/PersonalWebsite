@@ -2,7 +2,7 @@
 
 /* Button styling */
 .profile-button {
-  background-color: #0a84ff;
+  background-color: #ffa116;
   color: white;
   border: none;
   border-radius: 4px;
@@ -21,7 +21,7 @@
   position: fixed;
   width: 400px;
   overflow: hidden;
-  background-color: #000;
+  background-color: #1a1a1a;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   font-family: 'Press Start 2P';
@@ -30,7 +30,7 @@
 
 /* Header styling */
 .leetcode-header {
-  background-color: #0a84ff;
+  background-color: #2a2a2a;
   padding: 6px 16px;
   color: white;
   display: flex;
@@ -84,7 +84,7 @@
   /* border-radius: 50%; */
   overflow: hidden;
   margin-right: 16px;
-  border: 3px solid #0a84ff;
+  border: 3px solid #ffa116;
 }
 
 .profile-image img {
@@ -97,6 +97,15 @@
   margin: 0 0 5px 0;
   font-size: 18px;
   font-weight: 600;
+  color: white;
+}
+
+.user-details h3 a {
+  color: inherit;
+}
+
+.user-details h3 a:hover {
+  text-shadow: 2px 2px 5px #ffb700;
 }
 
 .username {
@@ -114,7 +123,7 @@
 
 .rank-number {
   font-weight: bold;
-  color: #0a84ff;
+  color: white;
   margin-left: 5px;
 }
 
@@ -127,7 +136,7 @@
 .stats-section {
   display: flex;
   justify-content: space-between;
-  background-color: #2d2d2d;
+  background-color: #282828;
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 24px;
@@ -142,7 +151,7 @@
   margin: 0;
   font-size: 20px;
   font-weight: 600;
-  color: #0a84ff;
+  color: #ffa116;
 }
 
 .stat-label {
@@ -201,6 +210,18 @@
   overflow: hidden;
 }
 
+.progress-bar.easy {
+  background-color: #254545;
+}
+
+.progress-bar.medium {
+  background-color: #534520;
+}
+
+.progress-bar.hard {
+  background-color: #512b2b;
+}
+
 .progress {
   height: 100%;
   border-radius: 4px;
@@ -232,15 +253,15 @@
 }
 
 .status-indicator.accepted {
-  background-color: #00af9b;
+  background-color: #1cbaba;
 }
 
 .status-indicator.wrong {
-  background-color: #ff2d55;
+  background-color: #f63737;
 }
 
 .status-indicator.tle {
-  background-color: #ff9500;
+  background-color: #ffb700;
 }
 
 .submission-info {
@@ -255,17 +276,17 @@
 
 .difficulty.easy {
   background-color: rgba(0, 175, 155, 0.1);
-  color: #00af9b;
+  color: #1cbaba;
 }
 
 .difficulty.medium {
   background-color: rgba(255, 184, 0, 0.1);
-  color: #ffb800;
+  color: #ffb700;
 }
 
 .difficulty.hard {
   background-color: rgba(255, 45, 85, 0.1);
-  color: #ff2d55;
+  color: #f63737;
 }
 
 .submission-time {

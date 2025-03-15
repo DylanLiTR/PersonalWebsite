@@ -1,5 +1,4 @@
 import { ROOM_SIZE } from "../components/constants";
-import { trimTo, isPointInPolygon } from "../components/utils";
 import SpeechBubble from "../components/SpeechBubble";
 
 export default class SceneManager {
@@ -18,7 +17,7 @@ export default class SceneManager {
       this.offsets[asset.key] = { xBound: asset.boundingBox.x, yBound: asset.boundingBox.y };
       if (!asset.draw) return;
 
-      const key = /*asset.type === "sprite" || asset.type === "env" ? trimTo(asset.key, "_") :*/ asset.key;
+      const key = asset.key;
       if (asset.type === "sprite") {
         this.objects[key] = this.scene.physics.add.sprite(xOffset + asset.boundingBox.x, yOffset + asset.boundingBox.y, asset.key)
           .setOrigin(0)
@@ -46,13 +45,16 @@ export default class SceneManager {
 
     this.objects['floor_env'].setVisible(false);
     this.objects['piano_sprite'].on("pointerdown", () => {
-      window.openYouTubePlaylist('PL5PnGHCu4otZLuNWBhpGLjbt8MBgeMZri');
+      window.openYouTubePlaylist('PL5PnGHCu4otZLuNWBhpGLjbt8MBgeMZri', true);
     });
     this.objects['duo_sprite'].on("pointerdown", () => {
       window.openDuolingoProfile();
     });
     this.objects['laptop_sprite'].on("pointerdown", () => {
       window.openLeetCodeProfile();
+    });
+    this.objects['hockey_bag_sprite'].on("pointerdown", () => {
+      window.openYouTubePlaylist('IA-fIDRE9Wg', false);
     });
 
     // Duo animations
@@ -85,5 +87,6 @@ export default class SceneManager {
 
   resizeScene() {
     this.scene.cameraControls.calcBounds();
+    this.scene.minimapManager.resize();
   }
 }
