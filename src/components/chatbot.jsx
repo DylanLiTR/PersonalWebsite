@@ -27,10 +27,12 @@ const Chatbot = () => {
 
   const sendMessage = async () => {
     if (!input.trim()) return;
+
+    const sanitizedInput = input.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;');
     
     const userMessage = { 
       role: "user", 
-      content: input,
+      content: sanitizedInput,
       time: formatTime()
     };
     
@@ -44,7 +46,7 @@ const Chatbot = () => {
       setTimeout(async () => {
         try {
           const response = await axios.post("http://localhost:3001/npc/chat", {
-            messages: [...messages, { role: "user", content: input }]
+            messages: [...messages, { role: "user", content: sanitizedInput }]
           });
           
           const botMessage = {
@@ -57,11 +59,23 @@ const Chatbot = () => {
           setIsTyping(false);
         } catch (error) {
           console.error("Error:", error);
-          setMessages(prevMessages => [...prevMessages, {
-            role: "assistant",
-            content: "Sorry, I'm having trouble connecting right now.",
-            time: formatTime()
-          }]);
+
+          // Check for rate limit error (429 status code)
+          if (error.response && error.response.status === 429) {
+            const cooldown = error.response.data.cooldown || 900;
+            const rateLimitReset = Math.ceil(cooldown / 60);
+            setMessages(prevMessages => [...prevMessages, {
+              role: "assistant",
+              content: `Time flies so fast talking with you! I'll need a quick ${rateLimitReset}min break, but let's talk again soon!`,
+              time: formatTime()
+            }]);
+          } else {
+            setMessages(prevMessages => [...prevMessages, {
+              role: "assistant",
+              content: "Sorry, I'm having trouble connecting right now.",
+              time: formatTime()
+            }]);
+          }
           setIsTyping(false);
         }
       }, 1000 + Math.random() * 1000); // Random delay between 1-2 seconds
@@ -160,6 +174,7 @@ const Chatbot = () => {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type your message..."
           onKeyDown={handleKeyDown}
+          maxLength={200}
         />
         <button className="send-button" onClick={sendMessage}>
           Send

@@ -16,7 +16,7 @@ export const PhaserProvider = ({ children }) => {
   const [loadingProgress, setLoadingProgress] = useState(0);
 
   const sendResponse = (data) => {
-    if (sceneRef.current) {
+    if (sceneRef.current?.sceneManager?.speechBubble) {
       sceneRef.current.sceneManager.speechBubble.addText(data);
     }
   };

@@ -1,5 +1,6 @@
 const TYPING_DELAY = 50;
-const DELAY_FACTOR = 60; // ms of delay per character in sentence
+const DELAY_FACTOR = 1000; 
+const DELAY_RATE = 50; // ms of delay per character in sentence
 const TEXT_SCALE = 0.3;
 const WRAP_WIDTH = 200 / TEXT_SCALE;
 const FONT_SIZE = 4 / TEXT_SCALE;
@@ -48,7 +49,7 @@ export default class SpeechBubble {
     const sentence = this.sentenceQueue.shift().trim();
     this.createBubble(sentence);
     this.typeText(sentence, () => {
-      this.scene.time.delayedCall(DELAY_FACTOR * sentence.length, () => this.processQueue());
+      this.scene.time.delayedCall(DELAY_FACTOR + DELAY_RATE * sentence.length, () => this.processQueue());
     });
   }
 
