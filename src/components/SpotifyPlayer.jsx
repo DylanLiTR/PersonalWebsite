@@ -54,7 +54,7 @@ const SpotifyPlayer = () => {
   // Fetch currently playing track
   const getCurrentTrack = async () => {
     try {
-      const response = await fetch('http://localhost:3001/spotify/currently-playing');
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/spotify/currently-playing`);
       if (response.status === 204) {
         setCurrentTrack(null);
         return;

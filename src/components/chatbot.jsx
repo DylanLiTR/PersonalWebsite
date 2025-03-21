@@ -60,7 +60,7 @@ const Chatbot = () => {
       // Simulate response delay for typing effect
       setTimeout(async () => {
         try {
-          const response = await axios.post("http://localhost:3001/npc/chat", {
+          const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/npc/chat`, {
             messages: [...messages, { role: "user", content: sanitizedInput }]
           });
           

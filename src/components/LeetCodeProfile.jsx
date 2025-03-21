@@ -19,7 +19,7 @@ const LeetCodeProfile = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`http://localhost:3001/leetcode/profile`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/leetcode/profile`);
       if (!response.ok) {
         throw new Error('Failed to fetch profile data');
       }

@@ -17,7 +17,7 @@ const DuolingoProfile = () => {
     setError(null);
     
     try {
-      const response = await fetch(`http://localhost:3001/duolingo/${username}`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/duolingo/${username}`);
       const userData = await response.json();
       
       // Transform the API response to match the expected shape if needed
