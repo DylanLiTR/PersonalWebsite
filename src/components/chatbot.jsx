@@ -9,14 +9,27 @@ const Chatbot = () => {
   const [input, setInput] = useState("");
   const [position, setPosition] = useState({ x: 10, y: window.innerHeight - 300 });
   const [isTyping, setIsTyping] = useState(false);
+  const [messagesHeight, setMessagesHeight] = useState(160);
   const chatRef = useRef(null);
+  const headerRef = useRef(null);
+  const messagesRef = useRef(null);
   const messagesEndRef = useRef(null);
-  const { sendResponse } = usePhaser();
+  const { sendResponse, drawEllipsis } = usePhaser();
 
   // Scroll to bottom when messages change
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+    
+    if (messagesRef.current) {
+      if (!collapsed) {
+        setPosition({
+          x: Math.max(0, Math.min(window.innerWidth - chatRef.current.clientWidth, chatRef.current.getBoundingClientRect().left)),
+          y: Math.max(0, Math.min(window.innerHeight - chatRef.current.clientHeight + messagesRef.current.clientHeight, chatRef.current.getBoundingClientRect().top + messagesHeight - messagesRef.current.clientHeight)),
+        });
+        setMessagesHeight(messagesRef.current.clientHeight);
+      }
     }
   }, [messages]);
 
@@ -39,7 +52,7 @@ const Chatbot = () => {
     setMessages([...messages, userMessage]);
     setInput("");
     setIsTyping(true);
-    setCollapsed(false); // Expand when a new message is sent
+    drawEllipsis();
     
     try {
       // Simulate response delay for typing effect
@@ -60,22 +73,24 @@ const Chatbot = () => {
         } catch (error) {
           console.error("Error:", error);
 
+          let errorResponse = {
+            role: "assistant",
+            content: "Sorry, I'm having trouble connecting right now.",
+            time: formatTime()
+          };
+
           // Check for rate limit error (429 status code)
           if (error.response && error.response.status === 429) {
             const cooldown = error.response.data.cooldown || 900;
             const rateLimitReset = Math.ceil(cooldown / 60);
-            setMessages(prevMessages => [...prevMessages, {
+            errorResponse = {
               role: "assistant",
               content: `Time flies so fast talking with you! I'll need a quick ${rateLimitReset}min break, but let's talk again soon!`,
               time: formatTime()
-            }]);
-          } else {
-            setMessages(prevMessages => [...prevMessages, {
-              role: "assistant",
-              content: "Sorry, I'm having trouble connecting right now.",
-              time: formatTime()
-            }]);
+            };
           }
+          sendResponse(errorResponse.content);
+          setMessages(prevMessages => [...prevMessages, errorResponse]);
           setIsTyping(false);
         }
       }, 1000 + Math.random() * 1000); // Random delay between 1-2 seconds
@@ -117,8 +132,13 @@ const Chatbot = () => {
     }
   };
 
-  // Generate a brown-toned pixelated avatar
-  const botAvatar = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAASklEQVQYlWNgQAL/////z4AuzsQABUwMRAAmZIH///+TpghdJyMDA5rC//9JUISsEK6IgYGBwH9GBgb8ChkZGGB24FXEyMjwn4EBAD5eKYcQ1Rb/AAAAAElFTkSuQmCC";
+  const handleCollapse = (newCollapsed) => {
+    setCollapsed(newCollapsed);
+    setPosition({
+      x: Math.max(0, Math.min(window.innerWidth - chatRef.current.clientWidth, chatRef.current.getBoundingClientRect().left)),
+      y: Math.max(0, Math.min(window.innerHeight - chatRef.current.clientHeight + messagesHeight, chatRef.current.getBoundingClientRect().top + messagesHeight * (newCollapsed ? 1 : -1))),
+    });
+  };
 
   return (
     <div
@@ -127,21 +147,20 @@ const Chatbot = () => {
       style={{ left: `${position.x}px`, top: `${position.y}px` }}
       onMouseDown={handleMouseDown}
     >
-      <div className="chatbot-header">
+      <div className="chatbot-header" ref={headerRef}>
         <div className="bot-header">
-          <img src={botAvatar} alt="" className="avatar" />
           <h2>Dylan</h2>
         </div>
         <button 
           className="chat-collapse-button" 
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={() => handleCollapse(!collapsed)}
         >
           {collapsed ? "▲" : "▼"}
         </button>
       </div>
       
-      {!collapsed && (
-        <div className="chat-messages">
+      {(
+        <div className="chat-messages" ref={messagesRef} style={{ display: collapsed ? "none" : "block" }}>
           {messages.length === 0 && (
             <div className="bot-msg">
               Hi, my name is Dylan and welcome to my website! Feel free to look around and ask me any questions.

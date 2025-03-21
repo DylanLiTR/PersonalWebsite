@@ -51,7 +51,6 @@
   padding: 15px;
   max-height: 300px;
   font-size: 12px;
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAEklEQVQImWNgYGD4z0AswK4SAFXuAf8PA28PAAAAAElFTkSuQmCC") repeat;
   background-color: #402b1b;
   scroll-behavior: smooth;
 }

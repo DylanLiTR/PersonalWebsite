@@ -1,6 +1,6 @@
 const TYPING_DELAY = 50;
 const DELAY_FACTOR = 1000; 
-const DELAY_RATE = 50; // ms of delay per character in sentence
+const DELAY_RATE = 30; // ms of delay per character in sentence
 const TEXT_SCALE = 0.3;
 const WRAP_WIDTH = 200 / TEXT_SCALE;
 const FONT_SIZE = 4 / TEXT_SCALE;
@@ -14,18 +14,19 @@ export default class SpeechBubble {
     this.generating = false; // start as false, true when generating a response
     
     this.reminder = this.scene.time.addEvent({
-      delay: 30000,
+      delay: 45000,
       callback: this.remindPrompt,
       callbackScope: this,
       loop: true
-  });
+    });
 
-    this.container = this.scene.add.container(this.npc.x, this.npc.y).setDepth(11);
+    this.container = this.scene.add.container(this.npc.x + this.npc.width / 2, this.npc.y - 12).setDepth(11);
   }
 
   addText(text) {
     const newSentences = text.match(/[^.!?]+[.!?]*/g) || [text]; // Split text into sentences
     this.sentenceQueue.push(...newSentences);
+    this.generating = false;
 
     if (!this.typing) {
       this.processQueue();
@@ -47,6 +48,7 @@ export default class SpeechBubble {
 
     this.typing = true;
     const sentence = this.sentenceQueue.shift().trim();
+    console.log("NEW SENTENCE: ", sentence);
     this.createBubble(sentence);
     this.typeText(sentence, () => {
       this.scene.time.delayedCall(DELAY_FACTOR + DELAY_RATE * sentence.length, () => this.processQueue());
@@ -109,14 +111,14 @@ export default class SpeechBubble {
   }
 
   remindPrompt() {
-    if (this.sentenceQueue.length !== 0 || this.typing) return;
+    if (this.sentenceQueue.length !== 0 || this.typing || this.generating) return;
     this.sentenceQueue.push("Remember that I'm here to answer any of your questions!");
     this.processQueue();
   }
 
   update() {
     // Update speech bubble position to follow the NPC
-    this.container.setPosition(this.npc.x, this.npc.y - 10);
+    this.container.setPosition(this.npc.x + this.npc.width / 2, this.npc.y - 12);
   }
 
   destroy() {
