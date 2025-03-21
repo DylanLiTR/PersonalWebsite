@@ -8,7 +8,7 @@ const YouTubePlayer = () => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [isPlaylist, setIsPlaylist] = useState(true);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
-  const [position, setPosition] = useState({ x: 10, y: window.innerHeight - HEIGHT - 20 });
+  const [position, setPosition] = useState({ x: window.innerWidth - WIDTH - 20, y: window.innerHeight - HEIGHT - 20 });
   const overlayRef = useRef(null);
 
   // Function that can be called from Phaser
@@ -71,7 +71,6 @@ const YouTubePlayer = () => {
               height={HEIGHT}
               src={`https://www.youtube.com/embed/${isPlaylist?"videoseries?list=" : ""}${selectedPlaylist}`} // &autoplay=1
               title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
             ></iframe>
           </div>

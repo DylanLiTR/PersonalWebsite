@@ -37,20 +37,22 @@ const LeetCodeProfile = () => {
       fetchProfileData();
     } else if (showOverlay && !loading) {
       const overlay = overlayRef.current;
+      const overlayWidth = overlay.offsetWidth;
       const overlayHeight = overlay.offsetHeight;
 
       setPosition({
-        x: 10,
+        x: Math.max(0, window.innerWidth - overlayWidth - 10),
         y: Math.max(0, window.innerHeight - overlayHeight - 10),
       });
     }
 
     if (showOverlay && loading) {
       const overlay = overlayRef.current;
+      const overlayWidth = overlay.offsetWidth;
       const overlayHeight = overlay.offsetHeight;
 
       setPosition({
-        x: 10,
+        x: Math.max(0, window.innerWidth - overlayWidth - 10),
         y: Math.max(0, window.innerHeight - overlayHeight - 10),
       });
     }

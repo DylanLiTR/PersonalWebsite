@@ -9,7 +9,7 @@ const SpotifyPlayer = () => {
   const [error, setError] = useState(null);
   const [showOverlay, setShowOverlay] = useState(false);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
-  const [position, setPosition] = useState({ x: 20, y: window.innerHeight - HEIGHT - 20 });
+  const [position, setPosition] = useState({ x: window.innerWidth - WIDTH - 20, y: window.innerHeight - HEIGHT - 20 });
   const overlayRef = useRef(null);
 
   const playlists = [
@@ -119,9 +119,9 @@ const SpotifyPlayer = () => {
           <div className="track-details">
             <div className="player-controls">
               {currentTrack?.is_playing ? (
-                <span className="play-status playing">▶ Léi is playing</span>
+                <span className="play-status playing">▶ Dylan is playing</span>
               ) : (
-                <span className="play-status paused">❚❚ Léi has paused</span>
+                <span className="play-status paused">❚❚ Dylan has paused</span>
               )}
             </div>
             <div className="track-name">
@@ -133,7 +133,7 @@ const SpotifyPlayer = () => {
           </div>
           <div className="playlist-container">
             {/* Playlist Buttons (to the right of the player) */}
-            <div className="playlist-title">Léi's Playlists</div>
+            <div className="playlist-title">Dylan's Playlists</div>
             <div className="playlist-buttons">
               {playlists.map((playlist) => (
                 <button

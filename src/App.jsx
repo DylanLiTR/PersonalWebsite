@@ -19,7 +19,7 @@ function App() {
       <DuolingoProfile />
       <LeetCodeProfile />
       <Chatbot />
-      <div className="top-right">
+      <div className="bottom-left">
         <button
           className="button pixel-font"
           onClick={() => window.open("/Li_Dylan_Resume.pdf")}

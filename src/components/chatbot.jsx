@@ -3,11 +3,13 @@ import axios from "axios";
 import "./chatbot.css";
 import { usePhaser } from "./PhaserContext";
 
+const WIDTH = 480;
+
 const Chatbot = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [position, setPosition] = useState({ x: 10, y: window.innerHeight - 300 });
+  const [position, setPosition] = useState({ x: window.innerWidth * 0.5 - WIDTH / 2, y: window.innerHeight - 140 });
   const [isTyping, setIsTyping] = useState(false);
   const [messagesHeight, setMessagesHeight] = useState(160);
   const chatRef = useRef(null);

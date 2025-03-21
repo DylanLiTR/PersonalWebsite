@@ -48,7 +48,6 @@ export default class SpeechBubble {
 
     this.typing = true;
     const sentence = this.sentenceQueue.shift().trim();
-    console.log("NEW SENTENCE: ", sentence);
     this.createBubble(sentence);
     this.typeText(sentence, () => {
       this.scene.time.delayedCall(DELAY_FACTOR + DELAY_RATE * sentence.length, () => this.processQueue());
