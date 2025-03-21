@@ -36,6 +36,7 @@ export default class MinimapManager {
   }
 
   updateMinimap() {
+    if (!this.scene.minimap) return;
     const main = this.scene.cameras.main;
     const mini = this.scene.minimap;
 

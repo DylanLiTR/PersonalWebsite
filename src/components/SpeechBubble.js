@@ -77,7 +77,7 @@ export default class SpeechBubble {
     this.speechText = this.createText("", wrapWidth);
     this.container.add(this.speechText);
 
-    this.scene.minimap.ignore([this.bubble, this.speechText]);
+    if (this.scene.minimap) this.scene.minimap.ignore([this.bubble, this.speechText]);
   }
 
   createText(content, wrapWidth) {

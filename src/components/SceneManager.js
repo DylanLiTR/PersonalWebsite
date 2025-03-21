@@ -87,6 +87,6 @@ export default class SceneManager {
 
   resizeScene() {
     this.scene.cameraControls.calcBounds();
-    this.scene.minimapManager.resize();
+    if (this.scene.minimap) this.scene.minimapManager.resize();
   }
 }

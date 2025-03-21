@@ -35,7 +35,7 @@ export default class MainScene extends Phaser.Scene {
     this.animationManager = new AnimationManager(this);
 
     this.cameraControls.calcBounds();
-    this.minimapManager.createMinimap();
+    if (cam.width >= cam.height) this.minimapManager.createMinimap();
     this.sceneManager.createObjects();
     this.sceneManager.createClouds(25);
 
