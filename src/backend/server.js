@@ -18,6 +18,10 @@ app.use("/duolingo/", DuolingoRouter);
 app.use("/leetcode/", LeetCodeRouter);
 app.use("/npc/", chatbotRouter);
 
+app.get("/", (req, res) => {
+  res.send("Server is running!");
+});
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
