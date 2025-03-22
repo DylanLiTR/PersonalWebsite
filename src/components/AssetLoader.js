@@ -1,10 +1,12 @@
+const baseUrl = import.meta.env.VITE_BASE_URL;
+
 export default class AssetLoader {
   constructor(scene) {
     this.scene = scene;
   }
 
   loadAssets() {
-    this.scene.load.json("assets", "/public/assets/sprites/sprites.json");
+    this.scene.load.json("assets", `${baseUrl}assets/sprites/sprites.json`);
 
     this.scene.load.on("filecomplete-json-assets", () => {
       const assets = this.scene.cache.json.get("assets");
@@ -13,7 +15,7 @@ export default class AssetLoader {
       });
 
       // Load speech bubble
-      this.scene.load.image("bubble", "/public/assets/sprites/speech_bubble/bubble.png");
+      this.scene.load.image("bubble", `${baseUrl}assets/sprites/speech_bubble/bubble.png`);
 
       this.scene.load.start();
     });
