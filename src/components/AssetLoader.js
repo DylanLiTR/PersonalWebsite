@@ -11,7 +11,7 @@ export default class AssetLoader {
     this.scene.load.on("filecomplete-json-assets", () => {
       const assets = this.scene.cache.json.get("assets");
       assets.images.forEach((asset) => {
-        this.scene.load.image(asset.key, asset.path);
+        this.scene.load.image(asset.key, baseUrl + asset.path);
       });
 
       // Load speech bubble
