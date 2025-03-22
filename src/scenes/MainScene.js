@@ -9,7 +9,6 @@ import CameraControls from "../components/CameraControls";
 import MinimapManager from "../components/MinimapManager";
 import LoadingScreen from "../components/LoadingScreen";
 import NPC from "../components/NPC";
-import { ROOM_SIZE } from "../components/constants";
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
