@@ -24,7 +24,7 @@ export default class MainScene extends Phaser.Scene {
     this.isLoading = true;
     let cam = this.cameras.main;
     cam.setBackgroundColor("#87CEEB"); // sky color
-    cam.setScroll(-cam.width / 2, -cam.height / 2);
+    cam.setScroll(-cam.width / 2, -cam.height / 2.1);
 
     // Initialize managers
     this.cloudManager = new CloudManager(this);

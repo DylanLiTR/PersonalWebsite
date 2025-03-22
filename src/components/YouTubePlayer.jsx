@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import './player.css';
 
-const WIDTH = 540;
-const HEIGHT = 300;
+const WIDTH = 450;
+const HEIGHT = 250;
 
 const YouTubePlayer = () => {
   const [showOverlay, setShowOverlay] = useState(false);
