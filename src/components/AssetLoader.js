@@ -6,16 +6,16 @@ export default class AssetLoader {
   }
 
   loadAssets() {
-    this.scene.load.json("assets", `${baseUrl}assets/sprites/sprites.json`);
+    this.scene.load.json("assets", "/assets/sprites/sprites.json");
 
     this.scene.load.on("filecomplete-json-assets", () => {
       const assets = this.scene.cache.json.get("assets");
       assets.images.forEach((asset) => {
-        this.scene.load.image(asset.key, baseUrl + asset.path);
+        this.scene.load.image(asset.key, asset.path);
       });
 
       // Load speech bubble
-      this.scene.load.image("bubble", `${baseUrl}assets/sprites/speech_bubble/bubble.png`);
+      this.scene.load.image("bubble", "/assets/sprites/speech_bubble/bubble.png");
 
       this.scene.load.start();
     });
