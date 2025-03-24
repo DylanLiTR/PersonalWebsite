@@ -116,7 +116,7 @@ const Chatbot = () => {
     setIsTyping(true);
     drawEllipsis();
 
-    if (checkEmail(sanitizedInput) === true) {
+    if (await checkEmail(sanitizedInput)) {
       setIsTyping(false);
       return;
     }
