@@ -44,16 +44,16 @@ export default class SceneManager {
     });
 
     this.objects['floor_env'].setVisible(false);
-    this.objects['piano_sprite'].on("pointerdown", () => {
+    this.objects['piano_sprite'].on("pointerup", () => {
       window.openYouTubePlaylist('PL5PnGHCu4otZLuNWBhpGLjbt8MBgeMZri', true);
     });
-    this.objects['duo_sprite'].on("pointerdown", () => {
+    this.objects['duo_sprite'].on("pointerup", () => {
       window.openDuolingoProfile();
     });
-    this.objects['laptop_sprite'].on("pointerdown", () => {
+    this.objects['laptop_sprite'].on("pointerup", () => {
       window.openLeetCodeProfile();
     });
-    this.objects['hockey_bag_sprite'].on("pointerdown", () => {
+    this.objects['hockey_bag_sprite'].on("pointerup", () => {
       window.openYouTubePlaylist('IA-fIDRE9Wg', false);
     });
 
