@@ -211,6 +211,7 @@ const Chatbot = () => {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type your message..."
           onKeyDown={handleKeyDown}
+          onTouchStart={(e) => e.stopPropagation()}
           maxLength={200}
         />
         <button className="send-button" onClick={sendMessage}>
