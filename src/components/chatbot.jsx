@@ -42,6 +42,17 @@ const Chatbot = () => {
     }
   }, [collapsed]);
 
+  useEffect(() => {
+    const handleTouchOutside = (e) => {
+      if (!e?.target?.closest(".chat-input input")) {
+        document.activeElement?.blur();
+      }
+    };
+  
+    document.addEventListener("touchstart", handleTouchOutside);
+    return () => document.removeEventListener("touchstart", handleTouchOutside);
+  }, []);
+
   const formatTime = () => {
     const now = new Date();
     return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
@@ -211,7 +222,6 @@ const Chatbot = () => {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type your message..."
           onKeyDown={handleKeyDown}
-          onTouchStart={(e) => e.stopPropagation()}
           maxLength={200}
         />
         <button className="send-button" onClick={sendMessage}>
