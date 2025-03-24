@@ -70,7 +70,7 @@ const SpotifyPlayer = () => {
   // Poll for currently playing track
   useEffect(() => {
     getCurrentTrack();
-    const interval = setInterval(getCurrentTrack, 1000);
+    const interval = setInterval(getCurrentTrack, 3000);
     return () => clearInterval(interval);
   }, []);
 
