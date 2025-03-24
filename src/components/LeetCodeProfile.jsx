@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './LeetCodeProfile.css';
+import { startDragging } from './overlay.js'
 
 const LeetCodeProfile = () => {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -93,39 +94,6 @@ const LeetCodeProfile = () => {
     setShowOverlay(false);
   };
 
-  // Dragging logic
-  const startDragging = (e, clientX, clientY) => {
-    // Only handle dragging from the header
-    if (!e.target.closest('.leetcode-header')) return;
-    
-    e.preventDefault();
-    const overlay = overlayRef.current;
-    const offsetX = clientX - overlay.getBoundingClientRect().left;
-    const offsetY = clientY - overlay.getBoundingClientRect().top;
-
-    const moveOverlay = (clientX, clientY) => {
-      setPosition({
-        x: Math.max(0, Math.min(window.innerWidth - overlay.offsetWidth, clientX - offsetX)),
-        y: Math.max(0, Math.min(window.innerHeight - overlay.offsetHeight, clientY - offsetY)),
-      });
-    };
-
-    const handleMouseMove = (e) => moveOverlay(e.clientX, e.clientY);
-    const handleTouchMove = (e) => moveOverlay(e.touches[0].clientX, e.touches[0].clientY);
-
-    const stopDragging = () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', stopDragging);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', stopDragging);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', stopDragging);
-    window.addEventListener('touchmove', handleTouchMove);
-    window.addEventListener('touchend', stopDragging);
-  };
-
   // Sample difficulty distribution colors
   const difficultyColors = {
     easy: '#00af9b',
@@ -144,8 +112,18 @@ const LeetCodeProfile = () => {
             left: `${position.x}px`,
             top: `${position.y}px`,
           }}
-          onMouseDown={(e) => startDragging(e, e.clientX, e.clientY)}
-          onTouchStart={(e) => startDragging(e, e.touches[0].clientX, e.touches[0].clientY)}
+          onMouseDown={(e) => { 
+            if (e.target.closest('.leetcode-header')) {
+              e.preventDefault();
+              startDragging(e.clientX, e.clientY, overlayRef.current, setPosition); 
+            }
+          }}
+          onTouchStart={(e) => { 
+            if (e.target.closest('.leetcode-header')) {
+              e.preventDefault();
+              startDragging(e.touches[0].clientX, e.touches[0].clientY, overlayRef.current, setPosition); 
+            }
+          }}
         >
           {/* Header with close button */}
           <div className="leetcode-header">

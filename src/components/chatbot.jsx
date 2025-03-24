@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import "./chatbot.css";
 import { usePhaser } from "./PhaserContext";
+import { startDragging } from './overlay.js'
 
 const WIDTH = window.innerWidth > 500 ? 480 : window.innerWidth * 0.95;
 const HEIGHT = window.innerWidth > 500 ? 140 : 100;
@@ -121,39 +122,6 @@ const Chatbot = () => {
     }
   };
 
-  // Dragging logic
-  const startDragging = (e, clientX, clientY) => {
-    // Only handle dragging from the header
-    if (!e.target.closest('.chatbot-header')) return;
-    
-    e.preventDefault();
-    const overlay = chatRef.current;
-    const offsetX = clientX - overlay.getBoundingClientRect().left;
-    const offsetY = clientY - overlay.getBoundingClientRect().top;
-
-    const moveOverlay = (clientX, clientY) => {
-      setPosition({
-        x: Math.max(0, Math.min(window.innerWidth - overlay.offsetWidth, clientX - offsetX)),
-        y: Math.max(0, Math.min(window.innerHeight - overlay.offsetHeight, clientY - offsetY)),
-      });
-    };
-
-    const handleMouseMove = (e) => moveOverlay(e.clientX, e.clientY);
-    const handleTouchMove = (e) => moveOverlay(e.touches[0].clientX, e.touches[0].clientY);
-
-    const stopDragging = () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', stopDragging);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', stopDragging);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', stopDragging);
-    window.addEventListener('touchmove', handleTouchMove);
-    window.addEventListener('touchend', stopDragging);
-  };
-
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       sendMessage();
@@ -173,8 +141,18 @@ const Chatbot = () => {
       className="chat-overlay"
       ref={chatRef}
       style={{ left: `${position.x}px`, top: `${position.y}px` }}
-      onMouseDown={(e) => startDragging(e, e.clientX, e.clientY)}
-      onTouchStart={(e) => startDragging(e, e.touches[0].clientX, e.touches[0].clientY)}
+      onMouseDown={(e) => { 
+        if (e.target.closest('.chatbot-header')) {
+          e.preventDefault();
+          startDragging(e.clientX, e.clientY, chatRef.current, setPosition); 
+        }
+      }}
+      onTouchStart={(e) => { 
+        if (e.target.closest('.chatbot-header')) {
+          e.preventDefault();
+          startDragging(e.touches[0].clientX, e.touches[0].clientY, chatRef.current, setPosition); 
+        }
+      }}
     >
       <div className="chatbot-header" ref={headerRef}>
         <div className="bot-header">

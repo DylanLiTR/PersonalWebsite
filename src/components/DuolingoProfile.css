@@ -33,7 +33,7 @@
   max-width: 300px; /* Prevents excessive stretching */
   overflow: hidden;
   font-family: 'Press Start 2P', 'Nunito', 'din-round', sans-serif;
-  z-index: 100;
+  z-index: 104;
 }
 
 /* Header styling */

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './player.css';
+import { startDragging } from './overlay.js'
 
 const WIDTH = 300;
 const HEIGHT = 360;
@@ -38,35 +39,6 @@ const SpotifyPlayer = () => {
   // Responsive width & height
   const getDynamicWidth = () => Math.min(WIDTH, window.innerWidth * 0.9);
   const getDynamicHeight = () => (getDynamicWidth() / 5) * 6;
-
-  // Dragging logic
-  const startDragging = (clientX, clientY) => {
-    const overlay = overlayRef.current;
-    const offsetX = clientX - overlay.getBoundingClientRect().left;
-    const offsetY = clientY - overlay.getBoundingClientRect().top;
-
-    const moveOverlay = (clientX, clientY) => {
-      setPosition({
-        x: Math.max(0, Math.min(window.innerWidth - overlay.offsetWidth, clientX - offsetX)),
-        y: Math.max(0, Math.min(window.innerHeight - overlay.offsetHeight, clientY - offsetY)),
-      });
-    };
-
-    const handleMouseMove = (e) => moveOverlay(e.clientX, e.clientY);
-    const handleTouchMove = (e) => moveOverlay(e.touches[0].clientX, e.touches[0].clientY);
-
-    const stopDragging = () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', stopDragging);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', stopDragging);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', stopDragging);
-    window.addEventListener('touchmove', handleTouchMove);
-    window.addEventListener('touchend', stopDragging);
-  };
 
   // Fetch currently playing track
   const getCurrentTrack = async () => {
@@ -178,8 +150,8 @@ const SpotifyPlayer = () => {
             width: `${getDynamicWidth()}px`,
             height: `${getDynamicHeight()}px`,
           }}
-          onMouseDown={(e) => startDragging(e.clientX, e.clientY)}
-          onTouchStart={(e) => startDragging(e.touches[0].clientX, e.touches[0].clientY)}
+          onMouseDown={(e) => startDragging(e.clientX, e.clientY, overlayRef.current, setPosition)}
+          onTouchStart={(e) => startDragging(e.touches[0].clientX, e.touches[0].clientY, overlayRef.current, setPosition)}
         >
           <button onClick={closeOverlay} className="floating-close-button">
             &times;

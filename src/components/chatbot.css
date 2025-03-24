@@ -12,6 +12,7 @@
   border-radius: 8px;
   image-rendering: pixelated;
   filter: drop-shadow(3px 3px 0px black);
+  z-index: 105;
 }
 
 .chat-collapse-button {
