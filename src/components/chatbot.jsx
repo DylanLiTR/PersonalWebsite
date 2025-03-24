@@ -60,6 +60,46 @@ const Chatbot = () => {
     return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
   };
 
+  const checkEmail = async (sanitizedInput) => {
+    const emailPattern = /Name:\s*(.+)\s*Email:\s*(.+)\s*Message:\s*(.+)/i;
+    const match = sanitizedInput.match(emailPattern);
+
+    if (match) {
+      const [_, name, email, message] = match;
+      console.log(match);
+  
+      try {
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/email/leave-message`, {
+          name,
+          email,
+          message,
+        });
+  
+        const reply = {
+          role: "assistant",
+          content: response.data.success ? "Your message has been sent! I'll get back to you soon. 😊" : "Hmm something went wrong. Try again later or contact me directly by email!",
+          time: formatTime()
+        };
+
+        sendResponse(reply.content);
+        setMessages(prevMessages => [...prevMessages, reply]);
+      } catch (error) {
+        console.error("Axios error:", error);
+        
+        const reply = {
+          role: "assistant",
+          content: "It seems like there was an error sending your message. Please try again later!",
+          time: formatTime()
+        };
+
+        sendResponse(reply.content);
+        setMessages(prevMessages => [...prevMessages, reply]);
+      }
+      return true;
+    }
+    return false;
+  }
+
   const sendMessage = async () => {
     if (!input.trim()) return;
 
@@ -75,6 +115,11 @@ const Chatbot = () => {
     setInput("");
     setIsTyping(true);
     drawEllipsis();
+
+    if (checkEmail(sanitizedInput)) {
+      setIsTyping(false);
+      return;
+    }
     
     try {
       // Simulate response delay for typing effect

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import axios from "axios";
 import './DuolingoProfile.css';
 import { startDragging } from './overlay.js'
 
@@ -16,11 +17,11 @@ const DuolingoProfile = () => {
   const fetchProfileData = async (username) => {
     setLoading(true);
     setError(null);
-    
+
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/duolingo/${username}`);
-      const userData = await response.json();
-      
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/duolingo/${username}`);
+      const userData = response.data;
+
       // Transform the API response to match the expected shape if needed
       const formattedData = {
         username: userData.username,
@@ -31,13 +32,13 @@ const DuolingoProfile = () => {
         fromLanguage: userData.fromLanguage,
         picture: userData.picture,
         hasPlus: userData.hasPlus,
-        joinDate: new Date(userData.creationDate * 1000).toLocaleDateString()
+        joinDate: new Date(userData.creationDate * 1000).toLocaleDateString(),
       };
-      
+
       setProfileData(formattedData);
     } catch (err) {
-      console.error('Error fetching Duolingo profile:', err);
-      setError('Failed to load profile data');
+      console.error("Error fetching Duolingo profile:", err);
+      setError("Failed to load profile data");
     } finally {
       setLoading(false);
     }
@@ -109,16 +110,16 @@ const DuolingoProfile = () => {
             left: `${position.x}px`,
             top: `${position.y}px`,
           }}
-          onMouseDown={(e) => { 
+          onMouseDown={(e) => {
             if (e.target.closest('.duolingo-header')) {
               e.preventDefault();
-              startDragging(e.clientX, e.clientY, overlayRef.current, setPosition); 
+              startDragging(e.clientX, e.clientY, overlayRef.current, setPosition);
             }
           }}
-          onTouchStart={(e) => { 
+          onTouchStart={(e) => {
             if (e.target.closest('.duolingo-header')) {
               e.preventDefault();
-              startDragging(e.touches[0].clientX, e.touches[0].clientY, overlayRef.current, setPosition); 
+              startDragging(e.touches[0].clientX, e.touches[0].clientY, overlayRef.current, setPosition);
             }
           }}
         >
@@ -139,7 +140,7 @@ const DuolingoProfile = () => {
             )}
 
             {error && (
-              <div className="duolingo-error"> 
+              <div className="duolingo-error">
                 <p>{error}</p>
                 <button
                   onClick={fetchProfileData}
@@ -166,7 +167,7 @@ const DuolingoProfile = () => {
                 </div>
 
                 {/* Stats section */}
-                <div className="duolingo-stats"> 
+                <div className="duolingo-stats">
                   <div className="duolingo-stat">
                     <p className="duolingo-stat-value duolingo-streak-color">
                       {profileData.streak !== undefined ? profileData.streak : "-"}

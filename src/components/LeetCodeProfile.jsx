@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import axios from "axios";
 import './LeetCodeProfile.css';
 import { startDragging } from './overlay.js'
 
@@ -20,12 +21,8 @@ const LeetCodeProfile = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/leetcode/profile`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch profile data');
-      }
-      const data = await response.json();
-      setProfileData(data);
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/leetcode/profile`);
+      setProfileData(response.data);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -112,16 +109,16 @@ const LeetCodeProfile = () => {
             left: `${position.x}px`,
             top: `${position.y}px`,
           }}
-          onMouseDown={(e) => { 
+          onMouseDown={(e) => {
             if (e.target.closest('.leetcode-header')) {
               e.preventDefault();
-              startDragging(e.clientX, e.clientY, overlayRef.current, setPosition); 
+              startDragging(e.clientX, e.clientY, overlayRef.current, setPosition);
             }
           }}
-          onTouchStart={(e) => { 
+          onTouchStart={(e) => {
             if (e.target.closest('.leetcode-header')) {
               e.preventDefault();
-              startDragging(e.touches[0].clientX, e.touches[0].clientY, overlayRef.current, setPosition); 
+              startDragging(e.touches[0].clientX, e.touches[0].clientY, overlayRef.current, setPosition);
             }
           }}
         >
@@ -136,18 +133,18 @@ const LeetCodeProfile = () => {
           {/* Profile content */}
           <div className="leetcode-content">
             {loading && <div className="loading">Loading profile data...</div>}
-            
+
             {error && <div className="error">Error: {error}</div>}
-            
+
             {!loading && !error && profileData && (
               <>
                 {/* User info section */}
                 <div className="user-info">
                   {(
-                    <canvas ref={canvasRef} className="profile-image"/>
+                    <canvas ref={canvasRef} className="profile-image" />
                   )}
                   <div className="user-details">
-                  <h3><a href="https://leetcode.com/u/LeiBei/" target="_blank">{profileData.name || "User"}</a></h3>
+                    <h3><a href="https://leetcode.com/u/LeiBei/" target="_blank">{profileData.name || "User"}</a></h3>
                     <p className="username">@{profileData.username}</p>
                     <div className="rank">
                       <span className="rank-label">Rank</span>
@@ -183,16 +180,16 @@ const LeetCodeProfile = () => {
                         <span className="count">{profileData.easySolved}/{profileData.easyTotal}</span>
                       </div>
                       <div className="progress-bar easy">
-                        <div 
-                          className="progress" 
-                          style={{ 
+                        <div
+                          className="progress"
+                          style={{
                             width: `${(profileData.easySolved / profileData.easyTotal) * 100}%`,
                             backgroundColor: difficultyColors.easy
                           }}
                         ></div>
                       </div>
                     </div>
-                    
+
                     <div className="difficulty-bar">
                       <div className="difficulty-label">
                         <span className="dot" style={{ backgroundColor: difficultyColors.medium }}></span>
@@ -200,16 +197,16 @@ const LeetCodeProfile = () => {
                         <span className="count">{profileData.mediumSolved}/{profileData.mediumTotal}</span>
                       </div>
                       <div className="progress-bar medium">
-                        <div 
-                          className="progress" 
-                          style={{ 
+                        <div
+                          className="progress"
+                          style={{
                             width: `${(profileData.mediumSolved / profileData.mediumTotal) * 100}%`,
                             backgroundColor: difficultyColors.medium
                           }}
                         ></div>
                       </div>
                     </div>
-                    
+
                     <div className="difficulty-bar">
                       <div className="difficulty-label">
                         <span className="dot" style={{ backgroundColor: difficultyColors.hard }}></span>
@@ -217,9 +214,9 @@ const LeetCodeProfile = () => {
                         <span className="count">{profileData.hardSolved}/{profileData.hardTotal}</span>
                       </div>
                       <div className="progress-bar hard">
-                        <div 
-                          className="progress" 
-                          style={{ 
+                        <div
+                          className="progress"
+                          style={{
                             width: `${(profileData.hardSolved / profileData.hardTotal) * 100}%`,
                             backgroundColor: difficultyColors.hard
                           }}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from "axios";
 import './player.css';
 import { startDragging } from './overlay.js'
 
@@ -43,16 +44,17 @@ const SpotifyPlayer = () => {
   // Fetch currently playing track
   const getCurrentTrack = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/spotify/currently-playing`);
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/spotify/currently-playing`);
+
       if (response.status === 204) {
         setCurrentTrack(null);
         return;
       }
-      const data = await response.json();
-      setCurrentTrack(data);
+
+      setCurrentTrack(response.data);
     } catch (error) {
-      console.error('Error:', error);
-      setError('Failed to fetch current track');
+      console.error("Error:", error);
+      setError("Failed to fetch current track");
     }
   };
 
@@ -99,43 +101,45 @@ const SpotifyPlayer = () => {
   }
 
   return (
-    <div className="spotify-player pixel-font">
-      <div className="player-container">
-        <div className="track-info">
-          {currentTrack?.item?.album?.images?.[0] && (
-            <canvas ref={canvasRef} className="album-art" />
-          )}
-          <div className="track-details">
-            <div className="player-controls">
-              {currentTrack?.is_playing ? (
-                <span className="play-status playing">▶ Dylan is playing</span>
-              ) : (
-                <span className="play-status paused">❚❚ Dylan has paused</span>
-              )}
+    <div>
+      <div className="spotify-player pixel-font">
+        <div className="player-container">
+          <div className="track-info">
+            {currentTrack?.item?.album?.images?.[0] && (
+              <canvas ref={canvasRef} className="album-art" />
+            )}
+            <div className="track-details">
+              <div className="player-controls">
+                {currentTrack?.is_playing ? (
+                  <span className="play-status playing">▶ Dylan is playing</span>
+                ) : (
+                  <span className="play-status paused">❚❚ Dylan has paused</span>
+                )}
+              </div>
+              <div className="track-name">
+                {currentTrack?.item?.name || 'No track playing'}
+              </div>
+              <div className="artist-names">
+                {currentTrack?.item?.artists?.map(artist => artist.name).join(', ')}
+              </div>
             </div>
-            <div className="track-name">
-              {currentTrack?.item?.name || 'No track playing'}
+            {window.innerWidth > 500 && <div className="playlist-container">
+              {/* Playlist Buttons (to the right of the player) */}
+              <div className="playlist-title">Dylan's Playlists</div>
+              <div className="playlist-buttons">
+                {playlists.map((playlist) => (
+                  <button
+                    key={playlist.id}
+                    onClick={() => handlePlaylistClick(playlist.id)}
+                    className="playlist-button pixel-button"
+                  >
+                    {playlist.name}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className="artist-names">
-              {currentTrack?.item?.artists?.map(artist => artist.name).join(', ')}
-            </div>
+            }
           </div>
-          {window.innerWidth > 500 && <div className="playlist-container">
-            {/* Playlist Buttons (to the right of the player) */}
-            <div className="playlist-title">Dylan's Playlists</div>
-            <div className="playlist-buttons">
-              {playlists.map((playlist) => (
-                <button
-                  key={playlist.id}
-                  onClick={() => handlePlaylistClick(playlist.id)}
-                  className="playlist-button pixel-button"
-                >
-                  {playlist.name}
-                </button>
-              ))}
-            </div>
-          </div>
-          }
         </div>
       </div>
 
