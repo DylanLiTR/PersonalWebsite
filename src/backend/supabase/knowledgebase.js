@@ -86,7 +86,7 @@ export async function searchKnowledge(query) {
 
     const { data, error } = await supabase.rpc("match_knowledge", {
         query_embedding: queryEmbedding,
-        match_threshold: 0.5,
+        match_threshold: 0.4,
         match_count: 1,
     });
 

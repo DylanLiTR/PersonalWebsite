@@ -32,3 +32,16 @@
 .pixel-font {
   font-family: 'Press Start 2P';
 }
+
+@media (max-width: 500px) {
+  .button {
+    font-size: 10px;
+    padding: 4px 8px;
+    margin-right: 6px;
+    filter: drop-shadow(2px 2px 0px black);
+  }
+
+  .button:hover {
+    filter: drop-shadow(3px 3px 0px black);
+  }
+}

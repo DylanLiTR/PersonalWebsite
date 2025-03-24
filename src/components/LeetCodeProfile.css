@@ -1,5 +1,3 @@
-/* LeetCodeProfile.css */
-
 /* Button styling */
 .profile-button {
   background-color: #ffa116;
@@ -19,7 +17,8 @@
 /* Overlay styling */
 .leetcode-overlay {
   position: fixed;
-  width: 400px;
+  width: 90vw; /* Responsive width */
+  max-width: 400px; /* Prevents excessive stretching */
   overflow: hidden;
   background-color: #1a1a1a;
   border-radius: 8px;
@@ -56,7 +55,7 @@
 
 /* Content area */
 .leetcode-content {
-  padding: 20px;
+  padding: 12px 20px;
   color: #d2d2d2;
 }
 
@@ -308,4 +307,85 @@
   text-align: center;
   font-size: 10px;
   color: #666;
+}
+
+@media (max-width: 500px) {
+  .leetcode-overlay {
+    width: 95vw;
+    max-width: none;
+  }
+
+  .leetcode-header h2 {
+    font-size: 0.8rem;
+  }
+
+  .leetcode-close-button {
+    font-size: 1.2rem;
+  }
+
+  .leetcode-content {
+    padding: 0.75rem;
+  }
+
+  .user-info {
+    margin-bottom: 12px;
+  }
+
+  .profile-image {
+    width: 30%;
+    max-width: 80px;
+    height: auto;
+  }
+
+  .user-details h3 {
+    font-size: 0.9rem;
+  }
+
+  .username {
+    font-size: 0.7rem;
+  }
+
+  .rank-number {
+    font-size: 0.8rem;
+  }
+
+  .rank-label {
+    font-size: 0.5rem;
+  }
+
+  .stats-section {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+  }
+
+  .stat-value {
+    font-size: 0.8rem;
+  }
+
+  .stat-label {
+    font-size: 0.5rem;
+  }
+
+  .count {
+    font-size: 0.5rem;
+  }
+
+  .progress-bar {
+    height: 4px;
+  }
+  
+  .difficulty {
+    padding: 2px 6px;
+    font-size: 0.5rem;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .submission-stats h4, .recent-activity h4 {
+    margin: 0 0 10px 0;
+    font-size: 0.7rem;
+  }
 }

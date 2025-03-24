@@ -28,27 +28,44 @@ const SpotifyPlayer = () => {
     setSelectedPlaylist(null);
   };
 
-  // Dragging logic
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    const overlay = overlayRef.current;
-    const offsetX = e.clientX - overlay.getBoundingClientRect().left;
-    const offsetY = e.clientY - overlay.getBoundingClientRect().top;
+  useEffect(() => {
+    setPosition({
+      x: Math.max(10, window.innerWidth - getDynamicWidth() - 20),
+      y: Math.max(10, window.innerHeight - getDynamicHeight() - 20),
+    });
+  }, []);
 
-    const handleMouseMove = (e) => {
+  // Responsive width & height
+  const getDynamicWidth = () => Math.min(WIDTH, window.innerWidth * 0.9);
+  const getDynamicHeight = () => (getDynamicWidth() / 5) * 6;
+
+  // Dragging logic
+  const startDragging = (clientX, clientY) => {
+    const overlay = overlayRef.current;
+    const offsetX = clientX - overlay.getBoundingClientRect().left;
+    const offsetY = clientY - overlay.getBoundingClientRect().top;
+
+    const moveOverlay = (clientX, clientY) => {
       setPosition({
-        x: Math.max(0, Math.min(window.innerWidth - overlay.getBoundingClientRect().width, e.clientX - offsetX)),
-        y: Math.max(0, Math.min(window.innerHeight - overlay.getBoundingClientRect().height, e.clientY - offsetY)),
+        x: Math.max(0, Math.min(window.innerWidth - overlay.offsetWidth, clientX - offsetX)),
+        y: Math.max(0, Math.min(window.innerHeight - overlay.offsetHeight, clientY - offsetY)),
       });
     };
 
-    const handleMouseUp = () => {
+    const handleMouseMove = (e) => moveOverlay(e.clientX, e.clientY);
+    const handleTouchMove = (e) => moveOverlay(e.touches[0].clientX, e.touches[0].clientY);
+
+    const stopDragging = () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mouseup', stopDragging);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', stopDragging);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mouseup', stopDragging);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', stopDragging);
   };
 
   // Fetch currently playing track
@@ -131,7 +148,7 @@ const SpotifyPlayer = () => {
               {currentTrack?.item?.artists?.map(artist => artist.name).join(', ')}
             </div>
           </div>
-          <div className="playlist-container">
+          {window.innerWidth > 500 && <div className="playlist-container">
             {/* Playlist Buttons (to the right of the player) */}
             <div className="playlist-title">Dylan's Playlists</div>
             <div className="playlist-buttons">
@@ -146,6 +163,7 @@ const SpotifyPlayer = () => {
               ))}
             </div>
           </div>
+          }
         </div>
       </div>
 
@@ -155,22 +173,22 @@ const SpotifyPlayer = () => {
           className="overlay"
           ref={overlayRef}
           style={{
-            position: 'fixed',
             left: `${position.x}px`,
             top: `${position.y}px`,
-            cursor: 'move',
+            width: `${getDynamicWidth()}px`,
+            height: `${getDynamicHeight()}px`,
           }}
-          onMouseDown={handleMouseDown}
+          onMouseDown={(e) => startDragging(e.clientX, e.clientY)}
+          onTouchStart={(e) => startDragging(e.touches[0].clientX, e.touches[0].clientY)}
         >
           <button onClick={closeOverlay} className="floating-close-button">
             &times;
           </button>
           <div className="iframe-container">
             <iframe
-              style={{ borderRadius: '12px' }}
               src={`https://open.spotify.com/embed/playlist/${selectedPlaylist}?utm_source=generator&theme=0`}
-              width={WIDTH}
-              height={HEIGHT}
+              width={getDynamicWidth()}
+              height={getDynamicHeight()}
               allowFullScreen=""
               loading="lazy"
             ></iframe>

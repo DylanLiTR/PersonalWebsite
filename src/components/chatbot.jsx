@@ -3,15 +3,16 @@ import axios from "axios";
 import "./chatbot.css";
 import { usePhaser } from "./PhaserContext";
 
-const WIDTH = 480;
+const WIDTH = window.innerWidth > 500 ? 480 : window.innerWidth * 0.95;
+const HEIGHT = window.innerWidth > 500 ? 140 : 100;
 
 const Chatbot = () => {
   const [collapsed, setCollapsed] = useState(true);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [position, setPosition] = useState({ x: window.innerWidth * 0.5 - WIDTH / 2, y: window.innerHeight - 140 });
+  const [position, setPosition] = useState({ x: window.innerWidth / 2 - WIDTH / 2 - 5, y: window.innerHeight - HEIGHT - 40 });
   const [isTyping, setIsTyping] = useState(false);
-  const [messagesHeight, setMessagesHeight] = useState(140);
+  const [messagesHeight, setMessagesHeight] = useState(HEIGHT);
   const chatRef = useRef(null);
   const headerRef = useRef(null);
   const messagesRef = useRef(null);
@@ -33,7 +34,13 @@ const Chatbot = () => {
         setMessagesHeight(Math.max(messagesHeight, messagesRef.current.clientHeight));
       }
     }
-  }, [messages, collapsed]);
+  }, [messages]);
+
+  useEffect(() => {
+    if (!collapsed) {
+      setMessagesHeight(Math.max(messagesHeight, messagesRef.current.clientHeight));
+    }
+  }, [collapsed]);
 
   const formatTime = () => {
     const now = new Date();
@@ -104,28 +111,36 @@ const Chatbot = () => {
   };
 
   // Dragging logic
-  const handleMouseDown = (e) => {
+  const startDragging = (e, clientX, clientY) => {
+    // Only handle dragging from the header
     if (!e.target.closest('.chatbot-header')) return;
     
     e.preventDefault();
-    const chatWindow = chatRef.current;
-    const offsetX = e.clientX - chatWindow.getBoundingClientRect().left;
-    const offsetY = e.clientY - chatWindow.getBoundingClientRect().top;
-    
-    const handleMouseMove = (e) => {
+    const overlay = chatRef.current;
+    const offsetX = clientX - overlay.getBoundingClientRect().left;
+    const offsetY = clientY - overlay.getBoundingClientRect().top;
+
+    const moveOverlay = (clientX, clientY) => {
       setPosition({
-        x: Math.max(0, Math.min(window.innerWidth - chatWindow.clientWidth, e.clientX - offsetX)),
-        y: Math.max(0, Math.min(window.innerHeight - chatWindow.clientHeight, e.clientY - offsetY)),
+        x: Math.max(0, Math.min(window.innerWidth - overlay.offsetWidth, clientX - offsetX)),
+        y: Math.max(0, Math.min(window.innerHeight - overlay.offsetHeight, clientY - offsetY)),
       });
     };
-    
-    const handleMouseUp = () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
+
+    const handleMouseMove = (e) => moveOverlay(e.clientX, e.clientY);
+    const handleTouchMove = (e) => moveOverlay(e.touches[0].clientX, e.touches[0].clientY);
+
+    const stopDragging = () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', stopDragging);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', stopDragging);
     };
-    
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', stopDragging);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', stopDragging);
   };
 
   const handleKeyDown = (e) => {
@@ -147,7 +162,8 @@ const Chatbot = () => {
       className="chat-overlay"
       ref={chatRef}
       style={{ left: `${position.x}px`, top: `${position.y}px` }}
-      onMouseDown={handleMouseDown}
+      onMouseDown={(e) => startDragging(e, e.clientX, e.clientY)}
+      onTouchStart={(e) => startDragging(e, e.touches[0].clientX, e.touches[0].clientY)}
     >
       <div className="chatbot-header" ref={headerRef}>
         <div className="bot-header">

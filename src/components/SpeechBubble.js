@@ -1,9 +1,11 @@
+import { DEFAULT_ZOOM } from "./constants.js"
+
 const TYPING_DELAY = 40;
 const DELAY_FACTOR = 1000; 
 const DELAY_RATE = 30; // ms of delay per character in sentence
-const TEXT_SCALE = 0.3;
-const WRAP_WIDTH = 200 / TEXT_SCALE;
-const FONT_SIZE = 4 / TEXT_SCALE;
+const TEXT_SCALE = 0.2;
+const WRAP_WIDTH = Math.min(200 / TEXT_SCALE, window.innerWidth * 0.9 / TEXT_SCALE / DEFAULT_ZOOM);
+const FONT_SIZE = window.innerWidth > 500 ? 4 / TEXT_SCALE : 3 / TEXT_SCALE;
 
 export default class SpeechBubble {
   constructor(scene, npc) {

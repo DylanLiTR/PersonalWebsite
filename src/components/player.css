@@ -108,13 +108,25 @@
 
 /* Draggable Overlay */
 .overlay {
-  position: absolute;
+  position: fixed;
   z-index: 100;
   background-color: #282828;
   border-radius: 12px;
   padding: 6px;
-  padding-bottom: 2px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: move;
+}
+
+.iframe-container {
+  width: 100%;
+  height: 100%;
+}
+
+.iframe-container iframe {
+  border-radius: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
 }
 
 .floating-close-button {
@@ -138,4 +150,31 @@
 
 .floating-close-button:hover {
   color: #1db954;
+}
+
+@media (max-width: 500px) {
+  .play-status {
+    font-size: 8px;
+    text-shadow: 1px 1px 0px black;
+  }
+  
+  .album-art {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .track-name {
+    font-size: 10px;
+    text-shadow: 1px 1px 0px black;
+  }
+
+  .playlist-title {
+    font-size: 10px;
+    text-shadow: 1px 1px 0px black;
+  }
+
+  .playlist-button {
+    font-size: 12px;
+    padding: 4px 6px;
+  }
 }

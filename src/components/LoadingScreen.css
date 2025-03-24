@@ -16,8 +16,10 @@
 }
 
 .progressBar {
-  width: 400px;
-  height: 20px;
+  width: 90vw;
+  max-width: 400px;
+  height: 3vh;
+  max-height: 20px;
   border: 5px solid black;
   border-radius: 10px;
   overflow: hidden;
@@ -27,4 +29,10 @@
   height: 100%;
   background-color: #4CAF50;
   transition: width 0.3s ease;
+}
+
+@media (max-width: 500px) {
+  .loadingScreen {
+    font-size: 12px;
+  }
 }

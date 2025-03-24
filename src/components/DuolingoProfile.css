@@ -29,7 +29,8 @@
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  width: 480px;
+  width: 90vw; /* Responsive width */
+  max-width: 300px; /* Prevents excessive stretching */
   overflow: hidden;
   font-family: 'Press Start 2P', 'Nunito', 'din-round', sans-serif;
   z-index: 100;
@@ -63,7 +64,7 @@
 
 /* Content area */
 .duolingo-content {
-  padding: 20px;
+  padding: 12px 20px;
 }
 
 /* User info section */
@@ -211,4 +212,67 @@
   cursor: pointer;
   margin-top: 10px;
   font-family: 'Nunito', 'din-round', sans-serif;
+}
+
+@media (max-width: 500px) {
+  .duolingo-header {
+    padding: 4px 12px;
+  }
+
+  .duolingo-header h2 {
+    font-size: 0.8rem;
+  }
+
+  .duolingo-user-details h3 {
+    margin: 0 0 2px 0;
+    font-size: 0.8rem;
+  }
+
+  .duolingo-user-details h3 a {
+    font-size: 0.9rem;
+  }
+
+  .duolingo-user-details p {
+    margin: 0 0 1px 0;
+    color: #777;
+    font-size: 0.7rem;
+  }
+
+  .duolingo-stats {
+    padding: 12px;
+    margin-bottom: 6px;
+  }
+
+  .duolingo-stat-value {
+    font-size: 0.9rem;
+  }
+
+  .duolingo-stat-label {
+    font-size: 0.5rem;
+  }
+
+  .duolingo-language-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    font-size: 1rem;
+    padding: 0px 1px 2px 1px;
+  }
+  
+  .duolingo-language-name {
+    font-size: 0.7rem;
+  }
+  
+  .duolingo-language-from {
+    font-size: 0.5rem;
+  }
+
+  .duolingo-language-section h4 {
+    margin: 0 0 8px 0;
+    font-size: 0.7rem;
+  }
+
+  .duolingo-close-button {
+    font-size: 1.2rem;
+  }
 }

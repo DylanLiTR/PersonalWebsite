@@ -88,28 +88,36 @@ const DuolingoProfile = () => {
   };
 
   // Dragging logic
-  const handleMouseDown = (e) => {
+  const startDragging = (e, clientX, clientY) => {
+    // Only handle dragging from the header
     if (!e.target.closest('.duolingo-header')) return;
     
     e.preventDefault();
     const overlay = overlayRef.current;
-    const offsetX = e.clientX - overlay.getBoundingClientRect().left;
-    const offsetY = e.clientY - overlay.getBoundingClientRect().top;
+    const offsetX = clientX - overlay.getBoundingClientRect().left;
+    const offsetY = clientY - overlay.getBoundingClientRect().top;
 
-    const handleMouseMove = (e) => {
+    const moveOverlay = (clientX, clientY) => {
       setPosition({
-        x: Math.max(0, Math.min(window.innerWidth - overlay.getBoundingClientRect().width, e.clientX - offsetX)),
-        y: Math.max(0, Math.min(window.innerHeight - overlay.getBoundingClientRect().height, e.clientY - offsetY)),
+        x: Math.max(0, Math.min(window.innerWidth - overlay.offsetWidth, clientX - offsetX)),
+        y: Math.max(0, Math.min(window.innerHeight - overlay.offsetHeight, clientY - offsetY)),
       });
     };
 
-    const handleMouseUp = () => {
+    const handleMouseMove = (e) => moveOverlay(e.clientX, e.clientY);
+    const handleTouchMove = (e) => moveOverlay(e.touches[0].clientX, e.touches[0].clientY);
+
+    const stopDragging = () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mouseup', stopDragging);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', stopDragging);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mouseup', stopDragging);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', stopDragging);
   };
 
   // Language code to name mapping
@@ -133,7 +141,8 @@ const DuolingoProfile = () => {
             left: `${position.x}px`,
             top: `${position.y}px`,
           }}
-          onMouseDown={handleMouseDown}
+          onMouseDown={(e) => startDragging(e, e.clientX, e.clientY)}
+          onTouchStart={(e) => startDragging(e, e.touches[0].clientX, e.touches[0].clientY)}
         >
           {/* Header with close button */}
           <div className="duolingo-header">
@@ -192,12 +201,12 @@ const DuolingoProfile = () => {
                     </p>
                     <p className="duolingo-stat-label">Total XP</p>
                   </div>
-                  <div className="duolingo-stat">
+                  {/* <div className="duolingo-stat">
                     <p className="duolingo-stat-value duolingo-join-color">
                       {profileData.joinDate || "-"}
                     </p>
                     <p className="duolingo-stat-label">Joined</p>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* Language section */}
