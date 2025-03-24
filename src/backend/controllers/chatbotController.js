@@ -14,11 +14,10 @@ export const getResponse = async (req, res) => {
         const systemPrompt = `
             ${styleGuide}
 
-            Use the following information if it's relevant to the user's message:
+            Use the following example response if it's relevant to the user's message:
             ${knowledgeBaseResponse}
 
-            If the user's message is unrelated to stored knowledge, respond as Dylan would.
-            DO NOT MAKE UP FALSE INFORMATION. Stick to what you know.
+            If the user's message is unrelated to stored knowledge, DO NOT MAKE UP FALSE INFORMATION. Stick to what you know.
         `;
 
         const completion = await client.chat.completions.create({

@@ -3,6 +3,7 @@ import axios from "axios";
 import "./chatbot.css";
 import { usePhaser } from "./PhaserContext";
 import { startDragging } from './overlay.js'
+import { WELCOME_MESSAGE } from "./constants.js";
 
 const WIDTH = window.innerWidth > 500 ? 480 : window.innerWidth * 0.95;
 const HEIGHT = window.innerWidth > 500 ? 140 : 100;
@@ -11,7 +12,7 @@ const Chatbot = () => {
   const [collapsed, setCollapsed] = useState(true);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [position, setPosition] = useState({ x: window.innerWidth / 2 - WIDTH / 2 - 5, y: window.innerHeight - HEIGHT - 40 });
+  const [position, setPosition] = useState({ x: window.innerWidth / 2 - WIDTH / 2 - 5, y: window.innerHeight - HEIGHT - 35 });
   const [isTyping, setIsTyping] = useState(false);
   const [messagesHeight, setMessagesHeight] = useState(HEIGHT);
   const chatRef = useRef(null);
@@ -170,7 +171,7 @@ const Chatbot = () => {
         <div className="chat-messages" ref={messagesRef} style={{ display: collapsed ? "none" : "block" }}>
           {messages.length === 0 && (
             <div className="bot-msg">
-              Hi, my name is Dylan and welcome to my website! Feel free to look around and ask me any questions.
+              { WELCOME_MESSAGE }
               <div className="message-time">Dylan</div>
             </div>
           )}

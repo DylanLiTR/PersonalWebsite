@@ -1,4 +1,4 @@
-import { ROOM_SIZE } from "../components/constants";
+import { ROOM_SIZE, WELCOME_MESSAGE } from "../components/constants";
 import SpeechBubble from "../components/SpeechBubble";
 
 export default class SceneManager {
@@ -63,7 +63,7 @@ export default class SceneManager {
 
     // Create and display speech bubble with welcome message
     this.speechBubble = new SpeechBubble(this.scene, this.objects['npc_sprite']);
-    this.speechBubble.addText("Hi, my name is Dylan and welcome to my website! Feel free to look around and ask me any questions.");
+    this.speechBubble.addText(WELCOME_MESSAGE);
   }
 
   setVertices(asset, key) {

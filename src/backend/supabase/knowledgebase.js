@@ -48,9 +48,9 @@ export async function upsertKnowledgeBatch(entries) {
         }
 
         if (existingData && existingData.content_hash === newHash) {
-            console.log(`Skipping embedding for unchanged entry: ${question}`);
             continue;
         }
+        console.log(`Upserting: ${question}`);
 
         const response = await openai.embeddings.create({
             input: question,
