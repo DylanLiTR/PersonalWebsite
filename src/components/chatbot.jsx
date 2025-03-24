@@ -11,7 +11,7 @@ const Chatbot = () => {
   const [input, setInput] = useState("");
   const [position, setPosition] = useState({ x: window.innerWidth * 0.5 - WIDTH / 2, y: window.innerHeight - 140 });
   const [isTyping, setIsTyping] = useState(false);
-  const [messagesHeight, setMessagesHeight] = useState(160);
+  const [messagesHeight, setMessagesHeight] = useState(140);
   const chatRef = useRef(null);
   const headerRef = useRef(null);
   const messagesRef = useRef(null);
@@ -30,10 +30,10 @@ const Chatbot = () => {
           x: Math.max(0, Math.min(window.innerWidth - chatRef.current.clientWidth, chatRef.current.getBoundingClientRect().left)),
           y: Math.max(0, Math.min(window.innerHeight - chatRef.current.clientHeight + messagesRef.current.clientHeight, chatRef.current.getBoundingClientRect().top + messagesHeight - messagesRef.current.clientHeight)),
         });
-        setMessagesHeight(messagesRef.current.clientHeight);
+        setMessagesHeight(Math.max(messagesHeight, messagesRef.current.clientHeight));
       }
     }
-  }, [messages]);
+  }, [messages, collapsed]);
 
   const formatTime = () => {
     const now = new Date();

@@ -1,4 +1,4 @@
-const TYPING_DELAY = 50;
+const TYPING_DELAY = 40;
 const DELAY_FACTOR = 1000; 
 const DELAY_RATE = 30; // ms of delay per character in sentence
 const TEXT_SCALE = 0.3;
@@ -14,7 +14,7 @@ export default class SpeechBubble {
     this.generating = false; // start as false, true when generating a response
     
     this.reminder = this.scene.time.addEvent({
-      delay: 45000,
+      delay: 60000,
       callback: this.remindPrompt,
       callbackScope: this,
       loop: true
@@ -24,9 +24,10 @@ export default class SpeechBubble {
   }
 
   addText(text) {
-    const newSentences = text.match(/[^.!?]+[.!?]*/g) || [text]; // Split text into sentences
+    const newSentences = text.match(/[^.!?]+[.!?](\s|$)/g) || [text]; // Split text into sentences
     this.sentenceQueue.push(...newSentences);
     this.generating = false;
+    this.reminder.reset();
 
     if (!this.typing) {
       this.processQueue();
@@ -47,7 +48,8 @@ export default class SpeechBubble {
     if (this.bubble) this.bubble.destroy();
 
     this.typing = true;
-    const sentence = this.sentenceQueue.shift().trim();
+    let sentence = this.sentenceQueue.shift().trim();
+    while (sentence.length == 0) sentence = this.sentenceQueue.shift().trim();
     this.createBubble(sentence);
     this.typeText(sentence, () => {
       this.scene.time.delayedCall(DELAY_FACTOR + DELAY_RATE * sentence.length, () => this.processQueue());
@@ -87,7 +89,7 @@ export default class SpeechBubble {
       color: '#000',
       wordWrap: { width: wrapWidth },
       align: 'left'
-    }).setOrigin(0.5).setScale(TEXT_SCALE).setLineSpacing(FONT_SIZE / 4);
+    }).setOrigin(0.5).setScale(TEXT_SCALE).setLineSpacing(FONT_SIZE / 3);
   }
 
   typeText(sentence, onComplete) {

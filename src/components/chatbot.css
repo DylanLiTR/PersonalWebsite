@@ -20,7 +20,7 @@
   align-self: flex-end;
   border: none;
   background: none;
-  color: rgb(200, 138, 87);
+  color: white;
   transition: transform 0.2s ease;
   text-shadow: 1px 1px 0px black;
 }
@@ -32,7 +32,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #1a110a;
+  background: rgb(200, 138, 87);
   border-bottom: 3px solid #6b432c;
   border-radius: 5px 5px 0 0;
 }
@@ -41,7 +41,7 @@
   margin: 0;
   font-size: 16px;
   font-weight: bold;
-  color: rgb(200, 138, 87);
+  color: white;
   text-shadow: 2px 2px 0px black;
 }
 
@@ -120,7 +120,7 @@
   display: flex;
   padding: 12px;
   border-top: 3px solid #6b432c;
-  background: #1a110a;
+  background: rgb(200, 138, 87);
   border-radius: 0 0 5px 5px;
 }
 

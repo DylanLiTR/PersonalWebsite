@@ -1,5 +1,3 @@
-const baseUrl = import.meta.env.VITE_BASE_URL;
-
 export default class AssetLoader {
   constructor(scene) {
     this.scene = scene;
