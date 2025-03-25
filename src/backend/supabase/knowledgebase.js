@@ -10,7 +10,7 @@ function computeHash(question, answer) {
     return crypto.createHash("sha256").update(question + answer).digest("hex");
 }
 
-export async function addKnowledge(question, answer) {
+export async function addKnowledge(question, answer, tags = extractKeywords(question)) {
     const contentHash = computeHash(question, answer);
 
     const response = await openai.embeddings.create({
@@ -21,7 +21,7 @@ export async function addKnowledge(question, answer) {
     const embedding = response.data[0].embedding;
 
     const { error } = await supabase.from("knowledge_base").insert([
-        { question, answer, embedding, content_hash: contentHash }
+        { question, answer, embedding, content_hash: contentHash, tags }
     ]);
 
     if (error) console.error("Error adding knowledge:", error);
@@ -32,7 +32,7 @@ export async function upsertKnowledgeBatch(entries) {
     const updatedEntries = [];
 
     for (const entry of entries) {
-        const { question, answer } = entry;
+        const { tags, question, answer } = entry;
         const newHash = computeHash(question, answer);
 
         // Check if the content has changed
@@ -53,7 +53,7 @@ export async function upsertKnowledgeBatch(entries) {
         console.log(`Upserting: ${question}`);
 
         const response = await openai.embeddings.create({
-            input: `${question} - ${answer}`,
+            input: question, // `${question} - ${answer}`
             model: "text-embedding-3-small",
         });
 
@@ -61,7 +61,8 @@ export async function upsertKnowledgeBatch(entries) {
             question,
             answer,
             embedding: response.data[0].embedding,
-            content_hash: newHash
+            content_hash: newHash,
+            tags: tags,
         });
     }
 
@@ -76,6 +77,15 @@ export async function upsertKnowledgeBatch(entries) {
     else console.log("Knowledge batch upserted successfully!");
 }
 
+function extractKeywords(query) {
+    // Basic keyword extraction: remove stop words and split
+    const stopWords = ['a', 'an', 'the', 'about', 'me', 'tell', 'are', 'you'];
+    return query
+        .toLowerCase()
+        .split(/\s+/)
+        .filter(word => !stopWords.includes(word) && word.length > 2);
+}
+
 export async function searchKnowledge(query) {
     const response = await openai.embeddings.create({
         input: query,
@@ -83,25 +93,26 @@ export async function searchKnowledge(query) {
     });
 
     const queryEmbedding = response.data[0].embedding;
+    const queryTags = extractKeywords(query);
 
     const { data, error } = await supabase.rpc("match_knowledge", {
         query_embedding: queryEmbedding,
-        match_threshold: 0.4,
+        query_tags: queryTags,
+        match_threshold: 0.5,
         match_count: 3,
     });
 
     if (error) console.error("Search error:", error);
     if (!data || data.length === 0) {
-        return "No knowledge found. DO NOT MAKE UP AN ANSWER. Reply with 'I'm not sure, but you can ask the real Dylan! Would you like to contact him?'";
+        return `No knowledge found. DO NOT MAKE UP AN ANSWER. Reply with "I'm not sure, but you can ask the real Dylan! You can leave a message right through this chat! Just format the message as such: \"Name: [Your Name] Email: [Your Email] Message: [Your Message]\". Or you can send an email directly to dylan.li@uwaterloo.ca or connect with me on LinkedIn!"`;
     }
     
     return data.map((entry, index) => `(${index + 1}) ${entry.answer}`).join("\n\n");
 }
 
-export async function updateKnowledge(id, newQuestion, newAnswer) {
+export async function updateKnowledge(id, newQuestion, newAnswer, newTags = extractKeywords(newQuestion)) {
     const newHash = computeHash(newQuestion, newAnswer);
 
-    // Check if content has actually changed
     const { data: existingData, error: fetchError } = await supabase
         .from("knowledge_base")
         .select("content_hash")
@@ -129,7 +140,8 @@ export async function updateKnowledge(id, newQuestion, newAnswer) {
         question: newQuestion,
         answer: newAnswer,
         embedding: newEmbedding,
-        content_hash: newHash
+        content_hash: newHash,
+        tags: newTags
     }).eq("id", id);
 
     if (error) console.error("Update error:", error);

@@ -26,7 +26,7 @@ export default class SpeechBubble {
   }
 
   addText(text) {
-    const newSentences = text.match(/[^.!?]+[.!?](\s|$)/g) || [text]; // Split text into sentences
+    const newSentences = text.match(/.+?[.!?](\s|$)/g) || [text]; // Split text into sentences
     this.sentenceQueue.push(...newSentences);
     this.generating = false;
     this.reminder.reset();

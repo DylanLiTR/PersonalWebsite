@@ -122,46 +122,42 @@ const Chatbot = () => {
     }
     
     try {
-      // Simulate response delay for typing effect
-      setTimeout(async () => {
-        try {
-          const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/npc/chat`, {
-            messages: [...messages, { role: "user", content: sanitizedInput }]
-          });
-          
-          const botMessage = {
-            ...response.data.choices[0].message,
-            time: formatTime()
-          };
-          sendResponse(response.data.choices[0].message.content);
-          
-          setMessages(prevMessages => [...prevMessages, botMessage]);
-          setIsTyping(false);
-        } catch (error) {
-          console.error("Error:", error);
+      try {
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/npc/chat`, {
+          messages: [...messages, { role: "user", content: sanitizedInput }]
+        });
+        
+        const botMessage = {
+          ...response.data.choices[0].message,
+          time: formatTime()
+        };
+        sendResponse(response.data.choices[0].message.content);
+        
+        setMessages(prevMessages => [...prevMessages, botMessage]);
+        setIsTyping(false);
+      } catch (error) {
+        console.error("Error:", error);
 
-          let errorResponse = {
+        let errorResponse = {
+          role: "assistant",
+          content: "Sorry, I'm having trouble connecting right now.",
+          time: formatTime()
+        };
+
+        // Check for rate limit error (429 status code)
+        if (error.response && error.response.status === 429) {
+          const cooldown = error.response.data.cooldown || 900;
+          const rateLimitReset = Math.ceil(cooldown / 60);
+          errorResponse = {
             role: "assistant",
-            content: "Sorry, I'm having trouble connecting right now.",
+            content: `Time flies so fast talking with you! I'll need a quick ${rateLimitReset}min break, but let's talk again soon!`,
             time: formatTime()
           };
-
-          // Check for rate limit error (429 status code)
-          if (error.response && error.response.status === 429) {
-            const cooldown = error.response.data.cooldown || 900;
-            const rateLimitReset = Math.ceil(cooldown / 60);
-            errorResponse = {
-              role: "assistant",
-              content: `Time flies so fast talking with you! I'll need a quick ${rateLimitReset}min break, but let's talk again soon!`,
-              time: formatTime()
-            };
-          }
-          sendResponse(errorResponse.content);
-          setMessages(prevMessages => [...prevMessages, errorResponse]);
-          setIsTyping(false);
         }
-      }, 1000 + Math.random() * 1000); // Random delay between 1-2 seconds
-      
+        sendResponse(errorResponse.content);
+        setMessages(prevMessages => [...prevMessages, errorResponse]);
+        setIsTyping(false);
+      }
     } catch (error) {
       console.error("Error:", error);
       setIsTyping(false);
