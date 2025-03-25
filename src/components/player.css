@@ -1,29 +1,27 @@
-/* Spotify Player Container */
 .spotify-player {
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 100%;
   color: white;
   padding: 16px;
   box-sizing: border-box;
-  height: 100px;
+  /* Remove fixed height */
   display: flex;
-  /* align-items: center; */
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end; /* This pushes content to bottom */
   text-shadow: 2px 2px 0px black;
-}
-
-.pixel-font {
-  font-family: 'Press Start 2P';
 }
 
 /* Player Container (Track Info + Controls) */
 .player-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end; /* Align items at the bottom */
+  width: 100%; /* Ensure it takes full width */
+}
+
+.pixel-font {
+  font-family: 'Press Start 2P';
 }
 
 /* Track Info (Album Art + Track Details) */
@@ -36,13 +34,11 @@
 .album-art {
   width: 64px;
   height: 64px;
-  /* border-radius: 8px; */
 }
 
 .track-details {
   display: flex;
   flex-direction: column;
-  /* text-align: right; */
 }
 
 .track-name {
@@ -58,14 +54,12 @@
 /* Player Controls */
 .player-controls {
   display: flex;
-  /* justify-content: flex-end; */
   align-items: center;
   gap: 16px;
 }
 
 .play-status {
   font-size: 12px;
-  /* align-items: right; */
 }
 
 .play-status.playing {
@@ -153,8 +147,13 @@
 }
 
 @media (max-width: 500px) {
+  .spotify-player {
+    top: 24px;
+    bottom: unset;
+  }
+
   .play-status {
-    font-size: 8px;
+    font-size: 0.5rem;
     text-shadow: 1px 1px 0px black;
   }
   
@@ -164,17 +163,22 @@
   }
   
   .track-name {
-    font-size: 10px;
+    font-size: 0.7rem;
+    text-shadow: 1px 1px 0px black;
+  }
+
+  .artist-names {
+    font-size: 0.5rem;
     text-shadow: 1px 1px 0px black;
   }
 
   .playlist-title {
-    font-size: 10px;
+    font-size: 0.7rem;
     text-shadow: 1px 1px 0px black;
   }
 
   .playlist-button {
-    font-size: 12px;
+    font-size: 0.8rem;
     padding: 4px 6px;
   }
 }

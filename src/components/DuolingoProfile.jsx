@@ -53,6 +53,25 @@ const DuolingoProfile = () => {
       .join("");
   }
 
+  useEffect(() => {
+    if (!overlayRef.current) return;
+    const updatePosition = () => {
+      setPosition((prev) => ({
+        x: Math.min(
+          Math.max(10, prev.x),
+          window.innerWidth - overlayRef.current.clientWidth - 10
+        ),
+        y: Math.min(
+          Math.max(10, prev.y),
+          window.innerHeight - overlayRef.current.clientHeight - 10
+        ),
+      }));
+    };
+  
+    window.addEventListener('resize', updatePosition);
+    return () => window.removeEventListener('resize', updatePosition);
+  }, []);
+
   // Fetch data when overlay opens
   useEffect(() => {
     if (showOverlay && !profileData && !loading) {

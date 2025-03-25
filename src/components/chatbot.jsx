@@ -12,7 +12,7 @@ const Chatbot = () => {
   const [collapsed, setCollapsed] = useState(true);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [position, setPosition] = useState({ x: window.innerWidth / 2 - WIDTH / 2 - 5, y: window.innerHeight - HEIGHT - 35 });
+  const [position, setPosition] = useState({ x: window.innerWidth / 2 - WIDTH / 2 - 5, y: window.innerHeight - HEIGHT - 5 - (window.innerWidth > 500 ? 80 : 0) });
   const [isTyping, setIsTyping] = useState(false);
   const [messagesHeight, setMessagesHeight] = useState(HEIGHT);
   const chatRef = useRef(null);
@@ -53,6 +53,25 @@ const Chatbot = () => {
   
     document.addEventListener("touchstart", handleTouchOutside);
     return () => document.removeEventListener("touchstart", handleTouchOutside);
+  }, []);
+
+  useEffect(() => {
+    if (!chatRef.current) return;
+    const updatePosition = () => {
+      setPosition((prev) => ({
+        x: Math.min(
+          Math.max(10, prev.x),
+          window.innerWidth - chatRef.current.clientWidth - 10
+        ),
+        y: Math.min(
+          Math.max(10, prev.y),
+          window.innerHeight - chatRef.current.clientHeight - 10
+        ),
+      }));
+    };
+  
+    window.addEventListener('resize', updatePosition);
+    return () => window.removeEventListener('resize', updatePosition);
   }, []);
 
   const formatTime = () => {

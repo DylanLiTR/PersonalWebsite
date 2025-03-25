@@ -35,6 +35,23 @@ const SpotifyPlayer = () => {
       x: Math.max(10, window.innerWidth - getDynamicWidth() - 20),
       y: Math.max(10, window.innerHeight - getDynamicHeight() - 20),
     });
+
+    const updatePosition = () => {
+      if (!overlayRef.current) return;
+      setPosition((prev) => ({
+        x: Math.min(
+          Math.max(10, prev.x),
+          window.innerWidth - getDynamicWidth() - 10
+        ),
+        y: Math.min(
+          Math.max(10, prev.y),
+          window.innerHeight - getDynamicHeight() - 10
+        ),
+      }));
+    };
+  
+    window.addEventListener('resize', updatePosition);
+    return () => window.removeEventListener('resize', updatePosition);
   }, []);
 
   // Responsive width & height

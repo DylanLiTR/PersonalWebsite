@@ -31,6 +31,25 @@ const LeetCodeProfile = () => {
   };
 
   useEffect(() => {
+    if (!overlayRef.current) return;
+    const updatePosition = () => {
+      setPosition((prev) => ({
+        x: Math.min(
+          Math.max(10, prev.x),
+          window.innerWidth - overlayRef.current.clientWidth - 10
+        ),
+        y: Math.min(
+          Math.max(10, prev.y),
+          window.innerHeight - overlayRef.current.clientHeight - 10
+        ),
+      }));
+    };
+  
+    window.addEventListener('resize', updatePosition);
+    return () => window.removeEventListener('resize', updatePosition);
+  }, []);
+
+  useEffect(() => {
     if (showOverlay && !profileData && !loading) {
       fetchProfileData();
     } else if (showOverlay && !loading) {

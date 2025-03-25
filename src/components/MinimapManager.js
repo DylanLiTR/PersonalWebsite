@@ -51,6 +51,12 @@ export default class MinimapManager {
   }
 
   resize() {
+    if (this.scene.cameras.main.width < this.scene.cameras.main.height) {
+      if (this.scene.minimap.visible) this.scene.minimap.setVisible(false);
+      return;
+    } else if (!this.scene.minimap.visible) {
+      this.scene.minimap.setVisible(true);
+    }
     this.offsetx = this.scene.cameras.main.width - this.scene.cameras.main.width / this.scale - 10;
     this.scene.minimap.setPosition(this.offsetx, this.offsety);
     this.scene.minimap.setSize(this.scene.cameras.main.width / this.scale, this.scene.cameras.main.height / this.scale);
