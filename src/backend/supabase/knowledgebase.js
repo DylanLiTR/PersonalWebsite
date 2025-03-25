@@ -53,7 +53,7 @@ export async function upsertKnowledgeBatch(entries) {
         console.log(`Upserting: ${question}`);
 
         const response = await openai.embeddings.create({
-            input: question,
+            input: `${question} - ${answer}`,
             model: "text-embedding-3-small",
         });
 
@@ -86,12 +86,16 @@ export async function searchKnowledge(query) {
 
     const { data, error } = await supabase.rpc("match_knowledge", {
         query_embedding: queryEmbedding,
-        match_threshold: 0.4,
-        match_count: 1,
+        match_threshold: 0.3,
+        match_count: 3,
     });
 
     if (error) console.error("Search error:", error);
-    return data?.[0]?.answer || "No knowledge found. DO NOT MAKE UP AN ANSWER; JUST SAY YOU ARE NOT SURE.";
+    if (!data || data.length === 0) {
+        return "No knowledge found. DO NOT MAKE UP AN ANSWER. Reply with 'I'm not sure, but you can ask the real Dylan! Would you like to contact him?'";
+    }
+    
+    return data.map((entry, index) => `(${index + 1}) ${entry.answer}`).join("\n\n");
 }
 
 export async function updateKnowledge(id, newQuestion, newAnswer) {

@@ -246,7 +246,7 @@ const Chatbot = () => {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type your message..."
           onKeyDown={handleKeyDown}
-          maxLength={200}
+          maxLength={300}
         />
         <button className="send-button" onClick={sendMessage}>
           Send

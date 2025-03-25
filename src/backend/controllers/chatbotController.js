@@ -12,13 +12,14 @@ export const getResponse = async (req, res) => {
         const knowledgeBaseResponse = await searchKnowledge(messages[messages.length - 1].content);
         // console.log(knowledgeBaseResponse);
         const systemPrompt = `
-            ${styleGuide}
+${styleGuide}
 
-            Use the following example response if it's relevant to the user's message:
-            ${knowledgeBaseResponse}
+Use the following knowledge if it's relevant to the user's message:
+${knowledgeBaseResponse}
 
-            If the user's message is unrelated to stored knowledge, DO NOT MAKE UP FALSE INFORMATION. Stick to what you know.
+To reiterate, if the user's message is unrelated to stored knowledge, DO NOT UNDER ANY CIRCUMSTANCES MAKE UP FALSE INFORMATION.
         `;
+        console.log(systemPrompt);
 
         const completion = await client.chat.completions.create({
             model: "gpt-4o-mini",
