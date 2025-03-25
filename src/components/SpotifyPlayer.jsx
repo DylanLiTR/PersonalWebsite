@@ -154,8 +154,14 @@ const SpotifyPlayer = () => {
             width: `${getDynamicWidth()}px`,
             height: `${getDynamicHeight()}px`,
           }}
-          onMouseDown={(e) => startDragging(e.clientX, e.clientY, overlayRef.current, setPosition)}
-          onTouchStart={(e) => startDragging(e.touches[0].clientX, e.touches[0].clientY, overlayRef.current, setPosition)}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            startDragging(e.clientX, e.clientY, overlayRef.current, setPosition)
+          }}
+          onTouchStart={(e) => {
+            e.preventDefault();
+            startDragging(e.touches[0].clientX, e.touches[0].clientY, overlayRef.current, setPosition)
+          }}
         >
           <button onClick={closeOverlay} className="floating-close-button">
             &times;

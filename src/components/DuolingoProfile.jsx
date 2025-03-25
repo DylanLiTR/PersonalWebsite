@@ -111,14 +111,14 @@ const DuolingoProfile = () => {
             top: `${position.y}px`,
           }}
           onMouseDown={(e) => {
+            e.preventDefault();
             if (e.target.closest('.duolingo-header')) {
-              e.preventDefault();
               startDragging(e.clientX, e.clientY, overlayRef.current, setPosition);
             }
           }}
           onTouchStart={(e) => {
+            e.preventDefault();
             if (e.target.closest('.duolingo-header')) {
-              e.preventDefault();
               startDragging(e.touches[0].clientX, e.touches[0].clientY, overlayRef.current, setPosition);
             }
           }}
