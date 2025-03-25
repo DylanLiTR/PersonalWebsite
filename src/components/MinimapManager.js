@@ -33,6 +33,7 @@ export default class MinimapManager {
       .setDepth(10);
 
     this.scene.cameras.main.ignore(this.scene.cameraRect);
+    if (this.scene.cameras.main.width < this.scene.cameras.main.height) this.scene.minimap.setVisible(false);
   }
 
   updateMinimap() {

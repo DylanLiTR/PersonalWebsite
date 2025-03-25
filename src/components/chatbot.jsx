@@ -14,7 +14,7 @@ const Chatbot = () => {
   const [input, setInput] = useState("");
   const [position, setPosition] = useState({ x: window.innerWidth / 2 - WIDTH / 2 - 5, y: window.innerHeight - HEIGHT - 5 - (window.innerWidth > 500 ? 80 : 0) });
   const [isTyping, setIsTyping] = useState(false);
-  const [messagesHeight, setMessagesHeight] = useState(HEIGHT);
+  const [messagesHeight, setMessagesHeight] = useState(HEIGHT + (window.innerWidth > 500 ? 45 : 22));
   const chatRef = useRef(null);
   const headerRef = useRef(null);
   const messagesRef = useRef(null);

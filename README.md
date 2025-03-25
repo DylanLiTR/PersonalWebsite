@@ -12,4 +12,4 @@ Backend server: `node src/backend/server.js`
 Frontend: `npm run dev`
 Upsert Knowledgebase: `node ./src/backend/supabase/loadKnowledge.js`
 
-Add data to `knowledge.json` in format `{ "question": "", "answer": "" },`
+Add data to `knowledge.json` in format `{ "tags": [], "question": "", "answer": "" },`
