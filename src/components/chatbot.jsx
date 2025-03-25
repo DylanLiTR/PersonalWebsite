@@ -203,14 +203,16 @@ const Chatbot = () => {
       ref={chatRef}
       style={{ left: `${position.x}px`, top: `${position.y}px` }}
       onMouseDown={(e) => { 
-        e.preventDefault();
+        e.stopPropagation();
         if (e.target.closest('.chatbot-header')) {
+          e.preventDefault();
           startDragging(e.clientX, e.clientY, chatRef.current, setPosition); 
         }
       }}
       onTouchStart={(e) => { 
-        e.preventDefault();
+        e.stopPropagation();
         if (e.target.closest('.chatbot-header')) {
+          e.preventDefault();
           startDragging(e.touches[0].clientX, e.touches[0].clientY, chatRef.current, setPosition); 
         }
       }}
