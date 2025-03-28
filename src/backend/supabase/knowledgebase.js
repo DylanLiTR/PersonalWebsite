@@ -79,11 +79,9 @@ export async function upsertKnowledgeBatch(entries) {
 
 function extractKeywords(query) {
     // Basic keyword extraction: remove stop words and split
-    const stopWords = ['a', 'an', 'the', 'about', 'me', 'tell', 'are', 'you'];
     return query
         .toLowerCase()
-        .split(/\s+/)
-        .filter(word => !stopWords.includes(word) && word.length > 2);
+        .match(/[a-z]+/g);
 }
 
 export async function searchKnowledge(query) {
@@ -107,7 +105,7 @@ export async function searchKnowledge(query) {
         return `No knowledge found. DO NOT MAKE UP AN ANSWER. Reply with "I'm not sure, but you can ask the real Dylan! You can leave a message right through this chat! Just format the message as such: \"Name: [Your Name] Email: [Your Email] Message: [Your Message]\". Or you can send an email directly to dylan.li@uwaterloo.ca or connect with me on LinkedIn!"`;
     }
     
-    return data.map((entry, index) => `(${index + 1}) ${entry.answer}`).join("\n\n");
+    return data.map((entry, index) => `(${index + 1}) ${entry.question} ${entry.answer}`).join("\n\n");
 }
 
 export async function updateKnowledge(id, newQuestion, newAnswer, newTags = extractKeywords(newQuestion)) {
