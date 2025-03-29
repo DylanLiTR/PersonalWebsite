@@ -102,7 +102,7 @@ export async function searchKnowledge(query) {
 
     if (error) console.error("Search error:", error);
     if (!data || data.length === 0) {
-        return `No knowledge found. DO NOT MAKE UP AN ANSWER. Reply with "I'm not sure, but you can ask the real Dylan! You can leave a message right through this chat! Just format the message as such: \"Name: [Your Name] Email: [Your Email] Message: [Your Message]\". Or you can send an email directly to dylan.li@uwaterloo.ca or connect with me on LinkedIn!"`;
+        return `No knowledge found.`;
     }
     
     return data.map((entry, index) => `(${index + 1}) ${entry.question} ${entry.answer}`).join("\n\n");

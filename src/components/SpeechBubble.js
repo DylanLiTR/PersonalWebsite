@@ -1,6 +1,6 @@
 import { DEFAULT_ZOOM } from "./constants.js"
 
-const TYPING_DELAY = 40;
+const TYPING_DELAY = 30;
 const DELAY_FACTOR = 1000; 
 const DELAY_RATE = 30; // ms of delay per character in sentence
 const TEXT_SCALE = 0.2;
