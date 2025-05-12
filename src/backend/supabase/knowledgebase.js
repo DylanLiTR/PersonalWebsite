@@ -102,7 +102,7 @@ export async function searchKnowledge(query) {
 
     if (error) console.error("Search error:", error);
     if (!data || data.length === 0) {
-        return `No knowledge found.`;
+        return `NO KNOWLEDGE FOUND.`;
     }
     
     return data.map((entry, index) => `(${index + 1}) ${entry.question} ${entry.answer}`).join("\n\n");
