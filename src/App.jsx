@@ -22,7 +22,7 @@ function App() {
       <div className="bottom-left">
         <button
           className="button pixel-font"
-          onClick={() => window.open("/Li_Dylan_Resume.pdf")}
+          onClick={() => window.open("/Dylan_Li_Resume.pdf")}
         >
           Resumé
         </button>
