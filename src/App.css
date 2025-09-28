@@ -33,6 +33,12 @@
   font-family: 'Press Start 2P';
 }
 
+.ui-text {
+  color: white;
+  text-shadow: 2px 2px 0px black;
+  pointer-events: none;
+}
+
 @media (max-width: 500px) {
   .bottom-left {
     top: 5px;

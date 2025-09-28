@@ -1,4 +1,3 @@
-import { useState } from "react";
 import SpotifyPlayer from './components/SpotifyPlayer';
 import YouTubePlayer from './components/YouTubePlayer';
 import DuolingoProfile from './components/DuolingoProfile';
@@ -9,6 +8,7 @@ import GameContainer from "./components/GameContainer";
 import "./App.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import DylanTime from './components/DylanTime.jsx';
 
 function App() {
   return (
@@ -39,6 +39,7 @@ function App() {
           <FontAwesomeIcon size="lg" icon={faGithub} />
         </button>
       </div>
+      <DylanTime />
     </PhaserProvider>
   );
 }

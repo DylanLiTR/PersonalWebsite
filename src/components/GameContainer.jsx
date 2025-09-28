@@ -1,4 +1,3 @@
-import React from 'react';
 import PhaserGame from '../components/PhaserGame';
 import LoadingScreen from '../components/LoadingScreen.jsx';
 import { usePhaser } from '../components/PhaserContext';

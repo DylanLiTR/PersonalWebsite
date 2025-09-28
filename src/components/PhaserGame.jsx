@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Phaser from 'phaser';
 import MainScene from '../scenes/MainScene';
 import { usePhaser } from '../components/PhaserContext';
