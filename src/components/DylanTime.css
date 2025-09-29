@@ -1,0 +1,12 @@
+.dylan-time {
+  position: absolute;
+  right: 10px;
+  top: 14%;
+  font-size: 10px;
+}
+
+@media (max-width: 500px) {
+  .dylan-time {
+    display: none;
+  }
+}

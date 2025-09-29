@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import './DylanTime.css';
 
 const DylanTime = () => {
   const [time, setTime] = useState(
@@ -26,12 +27,7 @@ const DylanTime = () => {
   }, []);
 
   return (
-    <div className="pixel-font ui-text" style={{
-      position: "absolute",
-      right: "10px",
-      top: "120px",
-      fontSize: "10px",
-    }}>
+    <div className="pixel-font ui-text dylan-time">
       Dylan's Time: {time}
     </div>
   );

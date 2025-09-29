@@ -1,17 +1,35 @@
 import { ROOM_SIZE, WELCOME_MESSAGE } from "../components/constants";
 import SpeechBubble from "../components/SpeechBubble";
 
+const DRAG_THRESHOLD = 4;
+
 export default class SceneManager {
   constructor(scene) {
     this.scene = scene;
     this.objects = {};
     this.offsets = {};
+    this.lastPointerDown = new Phaser.Math.Vector2();
+  }
+
+  hasDragged(pointer) {
+    const distanceMoved = Phaser.Math.Distance.Between(
+        this.lastPointerDown.x,
+        this.lastPointerDown.y,
+        pointer.x,
+        pointer.y
+    );
+
+    return distanceMoved > DRAG_THRESHOLD;
   }
 
   createObjects() {
     const assets = this.scene.cache.json.get("assets");
     const xOffset = -ROOM_SIZE / 2;
     const yOffset = -ROOM_SIZE / 2;
+
+    this.scene.input.on('pointerdown', (pointer) => {
+      this.lastPointerDown.set(pointer.x, pointer.y);
+    });
 
     assets.images.forEach((asset) => {
       this.offsets[asset.key] = { xBound: asset.boundingBox.x, yBound: asset.boundingBox.y };
@@ -44,16 +62,21 @@ export default class SceneManager {
     });
 
     this.objects['floor_env'].setVisible(false);
-    this.objects['piano_sprite'].on("pointerdown", () => {
+
+    this.objects['piano_sprite'].on("pointerup", (pointer) => {
+      if (this.hasDragged(pointer)) return;
       window.openYouTubePlaylist('PL5PnGHCu4otZLuNWBhpGLjbt8MBgeMZri', true);
     });
-    this.objects['duo_sprite'].on("pointerdown", () => {
+    this.objects['duo_sprite'].on("pointerup", (pointer) => {
+      if (this.hasDragged(pointer)) return;
       window.openDuolingoProfile();
     });
-    this.objects['laptop_sprite'].on("pointerdown", () => {
+    this.objects['laptop_sprite'].on("pointerup", (pointer) => {
+      if (this.hasDragged(pointer)) return;
       window.openLeetCodeProfile();
     });
-    this.objects['hockey_bag_sprite'].on("pointerdown", () => {
+    this.objects['hockey_bag_sprite'].on("pointerup", (pointer) => {
+      if (this.hasDragged(pointer)) return;
       window.openYouTubePlaylist('IA-fIDRE9Wg', false);
     });
 
